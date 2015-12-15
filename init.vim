@@ -78,6 +78,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'altercation/vim-colors-solarized'
 Plug 'MarcWeber/vim-addon-local-vimrc'
 Plug 'vim-scripts/bufkill.vim'
+Plug 'airblade/vim-gitgutter'
 
 " Language specific
 Plug 'hdima/python-syntax', { 'for': 'python' }
@@ -380,3 +381,6 @@ nmap <leader>ss :w\|:Silent echo "vendor/bin/phpspec run" > test-commands<cr>
 " elzr/vim-json
 let g:vim_json_syntax_conceal = 0 " Don't hide quotes in json files
 
+" airblade/vim-gitgutter
+nmap <leader>sg :GitGutterToggle<cr>
+nmap <leader>sgh :GitGutterLineHighlightsToggle<cr>
