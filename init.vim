@@ -80,6 +80,9 @@ Plug 'MarcWeber/vim-addon-local-vimrc'
 Plug 'vim-scripts/bufkill.vim'
 Plug 'airblade/vim-gitgutter'
 
+Plug 'Yggdroot/indentLine'
+Plug 'Shougo/neocomplete.vim'
+
 " Language specific
 Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
