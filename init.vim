@@ -69,7 +69,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-dispatch' " [Review when testing]
 Plug 'tpope/vim-sleuth' " Auto detect indent style
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
 Plug 'rstacruz/sparkup'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -79,6 +78,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'MarcWeber/vim-addon-local-vimrc'
 Plug 'vim-scripts/bufkill.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 Plug 'Yggdroot/indentLine'
 Plug 'Shougo/neocomplete.vim'
@@ -255,7 +255,7 @@ augroup vimrcEx
   autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
 
   " Indent p tags
-  autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
+  "autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
 
   " Don't syntax highlight markdown because it's often wrong
   " autocmd! FileType mkd setlocal syn=off
@@ -354,9 +354,10 @@ let python_highlight_all = 1
 " Syntastic
 let g:syntastic_check_on_open = 1
 let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
-let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
+let g:syntastic_html_tidy_exec = 'tidy5'
+let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 
 " Vimux
 map <leader>vp :VimuxPromptCommand<cr>
