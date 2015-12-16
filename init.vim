@@ -215,21 +215,7 @@ set guioptions-=L                                         " turn off GUI left sc
 
 " Cursor styles 
 " Use a blinking upright bar cursor in Insert mode, a blinking block in normal
-let s:uname = system("echo -n \"$(uname)\"")
-
-if !v:shell_error && s:uname == "Darwin"
-    " Normal mode brick
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\" 
-    " Edit mode pipe
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-endif
-
-if !v:shell_error && s:uname == "Linux"
-    if &term == 'xterm-256color' || &term == 'screen-256color' || 'xterm\\|rxvt'
-        let &t_SI = "\<Esc>[5 q"
-        let &t_EI = "\<Esc>[0 q"
-    endif
-endif
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " Column colors
 "let &colorcolumn=join(range(81,999),",") " Join columns 81+ for warning color markers. 
@@ -386,3 +372,4 @@ let g:vim_json_syntax_conceal = 0 " Don't hide quotes in json files
 " airblade/vim-gitgutter
 nmap <leader>sg :GitGutterToggle<cr>
 nmap <leader>sgh :GitGutterLineHighlightsToggle<cr>
+
