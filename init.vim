@@ -284,10 +284,16 @@ cnoremap %% <c-R>=expand('%:h').'/'<cr>
 " Edit file, starting in current directory
 map <leader>e :e %%
 
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
+nnoremap <c-h> <c-w>h
+
+" Hack becuase the proper way nnoremap <c-h> <c-w>h does not currently work in
+" neovim
+if has('nvim')
+  nmap <bs> :<c-u>TmuxNavigateLeft<cr>
+endif
 
 " Toggle between normal and relative numbering.
 nnoremap <leader>r :call NumberToggle()<cr>
