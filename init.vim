@@ -72,7 +72,7 @@ Plug 'tpope/vim-sleuth' " Auto detect indent style
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
 Plug 'rstacruz/sparkup'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'altercation/vim-colors-solarized'
@@ -312,8 +312,7 @@ nmap <silent> ,md :!mkdir -p %:p:h<CR>
 map <C-b> :CtrlPBuffer<CR>
 map <C-t> :CtrlPTag<CR>
 let g:ctrlp_cmd = 'CtrlP'
-"let g:ctrlp_working_path_mode = 'r'
-let g:ctrlp_working_path_mode = 2
+let g:ctrlp_working_path_mode = 'r'
 let g:ctrl_user_command = 'ag %s -i --nocolor --nogroup --hidden 
   \ --ignore .git
   \ --ignore .svn
@@ -321,7 +320,7 @@ let g:ctrl_user_command = 'ag %s -i --nocolor --nogroup --hidden
   \ --ignore .DS_Store
   \ --ignore "**/*.pyc"
   \ -g ""'
-let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
+"let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
 
 " NerdTree
 " map <leader>n ;NERDTreeToggle<CR>
