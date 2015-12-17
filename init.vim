@@ -372,7 +372,7 @@ map <Leader>vi :VimuxInspectRunner<CR>
 map <Leader>vq :VimuxCloseRunner<CR>
 map <Leader>vx :VimuxInterruptRunner<CR>
 
-nmap <leader>tm :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha " . bufname("%"))<cr>
+nmap <leader>tm :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha-grey-patch " . bufname("%"))<cr>
 nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<cr>
 nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/nosetests --config test.cfg --nocapture " . bufname("%"))<cr>
 nmap <leader>th :w\|:call VimuxRunCommand("clear; phpunit " . bufname("%"))<cr>
