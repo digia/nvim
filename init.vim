@@ -300,7 +300,7 @@ nnoremap <c-h> <c-w>h
 " Hack becuase the proper way nnoremap <c-h> <c-w>h does not currently work in
 " neovim
 if has('nvim')
-  nmap <bs> :<c-u>TmuxNavigateLeft<cr>
+  nmap <silent> <bs> :<c-u>TmuxNavigateLeft<cr>
 endif
 
 " Toggle between normal and relative numbering.
