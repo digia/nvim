@@ -387,3 +387,7 @@ let g:vim_json_syntax_conceal = 0 " Don't hide quotes in json files
 nmap <leader>sg :GitGutterToggle<cr>
 nmap <leader>sgh :GitGutterLineHighlightsToggle<cr>
 
+" 'Yggdroot/indentLine'
+let g:indentLine_color_term = 0
+let g:indentLine_faster = 1
+
