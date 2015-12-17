@@ -112,7 +112,8 @@ call plug#end()
 " Settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set showcmd             " Show (partial) command in status line.
-set showmatch           " Show matching brackets.
+" Was causing lag in JS acceptance tests, really annoying when typing
+"set showmatch           " Show matching brackets.
 set showmode            " Show current mode.
 set showtabline=2
 set ruler               " Show the line and column numbers of the cursor.
