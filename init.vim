@@ -313,6 +313,15 @@ vnoremap > >gv
 " Make the directory of the file in the buffer
 nmap <silent> ,md :!mkdir -p %:p:h<CR>
 
+" Move lines up and down
+" http://vim.wikia.com/wiki/Moving_lines_up_or_down_in_a_file
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
