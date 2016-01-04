@@ -100,7 +100,6 @@ Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'gregsexton/MatchTag', { 'for': 'html' }
 Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] }
 Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
-Plug 'groenewege/vim-less', { 'for': 'less' }
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
