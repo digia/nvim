@@ -87,7 +87,7 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
+"Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['mustache', 'handlebar'] }
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'moll/vim-node', { 'for': 'javascript' }
@@ -105,6 +105,7 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
