@@ -54,6 +54,10 @@ function! DerekFugitiveStatusLine()
   endif
 endfunction
 
+function! StrTrim(txt)
+  return substitute(a:txt, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
+endfunction
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -68,8 +72,9 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-dispatch' " [Review when testing]
-Plug 'tpope/vim-sleuth' " Auto detect indent style
-Plug 'scrooloose/syntastic'
+"Plug 'tpope/vim-sleuth' " Auto detect indent style
+"Plug 'scrooloose/syntastic'
+Plug 'benekastah/neomake' " Async syntastic
 Plug 'rstacruz/sparkup'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
@@ -82,17 +87,21 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 Plug 'Yggdroot/indentLine'
 Plug 'Shougo/neocomplete.vim'
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' } " Better foldering in python
 
 " Language specific
 Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
 "Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
-Plug 'mustache/vim-mustache-handlebars', { 'for': ['mustache', 'handlebar'] }
+Plug 'mustache/vim-mustache-handlebars', { 'for': ['html', 'mustache', 'handlebar', 'html.handlebars'] }
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'moll/vim-node', { 'for': 'javascript' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+"Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+"Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+"Plug 'othree/yajs.vim', { 'for': 'javascript', 'tag': '1.6' }
+Plug 'isRuslan/vim-es6', { 'for': 'javascript' }
+"Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' } // Needs keybindings
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'othree/html5-syntax.vim', { 'for': 'html' }
 Plug 'othree/html5.vim', { 'for': 'html' }
@@ -103,9 +112,12 @@ Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
-Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+"Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
+Plug 'evanmiller/nginx-vim-syntax', { 'for': 'nginx' }
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -179,9 +191,12 @@ set incsearch           " Incremental search.
 set gdefault            " Use 'g' flag by default with :s/foo/bar/.
 set magic               " Use 'magic' patterns (extended regular expressions).
 
-" Turn folding off for real
-set foldmethod=manual
-set nofoldenable
+set foldmethod=syntax
+set foldlevel=99
+" set nofoldenable
+
+" Reduce the delay after pressing the leader key
+set timeoutlen=350
 
 " Use <C-L> to clear the highlighting of :set hlsearch.
 if maparg('<C-L>', 'n') ==# ''
@@ -366,12 +381,19 @@ nnoremap <silent> <leader>gm :Gedit<CR>
 let python_highlight_all = 1
 
 " Syntastic
-let g:syntastic_check_on_open = 1
-let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
+let g:syntastic_mode_map = {
+    \ 'mode': 'passive',
+    \ 'active_filetypes': [],
+    \ 'passive_filetypes': ['sass'] }
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_html_tidy_exec = 'tidy5'
-let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+let g:syntastic_javascript_checkers = ['eslint']
+map <leader>sc :SyntasticCheck<cr>
 
 " Vimux
 map <leader>vp :VimuxPromptCommand<cr>
@@ -381,12 +403,12 @@ map <Leader>vi :VimuxInspectRunner<CR>
 map <Leader>vq :VimuxCloseRunner<CR>
 map <Leader>vx :VimuxInterruptRunner<CR>
 
-nmap <leader>tm :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha-grey-patch " . bufname("%"))<cr>
+nmap <leader>tj :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha-grey-patch " . bufname("%"))<cr>
 nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<cr>
 nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/nosetests --config test.cfg --nocapture " . bufname("%"))<cr>
 nmap <leader>th :w\|:call VimuxRunCommand("clear; phpunit " . bufname("%"))<cr>
 nmap <leader>st :w\|:Silent echo "phpunit" > test-commands<cr>
-nmap <leader>s :w\|:Silent echo "vendor/bin/phpspec run %" > test-commands<cr> 
+nmap <leader>s :w\|:Silent echo "vendor/bin/phpspec run %" > test-commands<cr>
 nmap <leader>ss :w\|:Silent echo "vendor/bin/phpspec run" > test-commands<cr>
 
 " elzr/vim-json
@@ -399,4 +421,12 @@ nmap <leader>sgh :GitGutterLineHighlightsToggle<cr>
 " 'Yggdroot/indentLine'
 let g:indentLine_color_term = 0
 let g:indentLine_faster = 1
+
+" 'heavenshell/vim-jsdoc'
+" FIXME(digia): Set keybindings
+
+" 'plasticboy/vim-markdown
+" https://github.com/plasticboy/vim-markdown
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_fenced_languages = ['csharp=cs', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'nginx=nginx']
 
