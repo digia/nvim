@@ -83,7 +83,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'MarcWeber/vim-addon-local-vimrc'
 Plug 'vim-scripts/bufkill.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 
 Plug 'Yggdroot/indentLine'
 Plug 'Shougo/neocomplete.vim'
@@ -360,7 +360,6 @@ let g:ctrl_user_command = 'ag %s -i --nocolor --nogroup --hidden
 "let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
 
 " NerdTree
-" map <leader>n ;NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=0
 let NERDTreeShowLineNumbers=1
