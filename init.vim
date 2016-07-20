@@ -442,15 +442,16 @@ let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
 let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
 let g:ycm_complete_in_comments = 1 " Completion in comments
 let g:ycm_complete_in_strings = 1 " Completion in string
-map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>
+map <leader>gt :YcmCompleter GoToDefinitionElseDeclaration<cr>
 
 " Python with virtualenv support
 " https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/
-python3 << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
+" python3 << EOF
+" import os
+" import sys
+" if 'VIRTUAL_ENV' in os.environ:
+"   project_base_dir = os.environ['VIRTUAL_ENV']
+"   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"   # execfile(activate_this, dict(__file__=activate_this))
+"   exec(compile(open(activate_this, "rb").read(), activate_this, 'exec'), globals, locals)
+" EOF
