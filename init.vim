@@ -409,7 +409,8 @@ map <Leader>vx :VimuxInterruptRunner<CR>
 
 nmap <leader>tj :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha-grey-patch " . bufname("%"))<cr>
 nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<cr>
-nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/nosetests --config test.cfg --nocapture " . bufname("%"))<cr>
+" nmap <leader>tp :w\|:call VimuxRunCommand('clear; echo ' . bufname("%") . '; ./venv/bin/nosetests --config test.cfg --nocapture ' . bufname('%'))<cr>
+nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/py.test " . bufname("%"))<cr>
 nmap <leader>th :w\|:call VimuxRunCommand("clear; phpunit " . bufname("%"))<cr>
 nmap <leader>st :w\|:Silent echo "phpunit" > test-commands<cr>
 nmap <leader>s :w\|:Silent echo "vendor/bin/phpspec run %" > test-commands<cr>
