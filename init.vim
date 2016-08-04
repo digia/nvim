@@ -455,3 +455,7 @@ map <leader>gt :YcmCompleter GoToDefinitionElseDeclaration<cr>
 "   # execfile(activate_this, dict(__file__=activate_this))
 "   exec(compile(open(activate_this, "rb").read(), activate_this, 'exec'), globals, locals)
 " EOF
+
+" Cursor
+" Make cursor a pipe in insert mode and block in normal mode.
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
