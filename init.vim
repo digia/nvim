@@ -238,10 +238,6 @@ set guioptions-=T
 set guioptions-=r                                         " turn off GUI right scrollbar
 set guioptions-=L                                         " turn off GUI left scrollbar
 
-" Cursor styles 
-" Use a blinking upright bar cursor in Insert mode, a blinking block in normal
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
 " Column colors
 "let &colorcolumn=join(range(81,999),",") " Join columns 81+ for warning color markers. 
 "let &colorcolumn="80,".join(range(120,999),",") " Join columns 120+ for danger color markers.
@@ -456,6 +452,46 @@ map <leader>gt :YcmCompleter GoToDefinitionElseDeclaration<cr>
 "   exec(compile(open(activate_this, "rb").read(), activate_this, 'exec'), globals, locals)
 " EOF
 
-" Cursor
-" Make cursor a pipe in insert mode and block in normal mode.
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+" Cursor styles
+" Use a blinking upright bar cursor in Insert mode, a blinking block in normal
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
+" " insert mode - line
+" let &t_SI .= "\<Esc>[5 q"
+" "replace mode - underline
+" let &t_SR .= "\<Esc>[4 q"
+" "common - block
+" let &t_EI .= "\<Esc>[3 q"
+
+
+" if exists('$TMUX')
+"     let &t_SI = "\<Esc>Ptmux;\<Esc>\e[5 q\<Esc>\\"
+"     let &t_EI = "\<Esc>Ptmux;\<Esc>\e[2 q\<Esc>\\"
+" else
+"     let &t_SI = "\e[5 q"
+"     let &t_EI = "\e[2 q"
+" endif
+
+" let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+" let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+
+" http://vim.wikia.com/wiki/Configuring_the_cursor
+" Tmux details: http://reza.jelveh.me/2011/09/18/zsh-tmux-vi-mode-cursor
+if &term =~ "xterm\\|rxvt"
+  echo 'xterm|rxvt'
+  " Insert
+  let &t_SI  = "\<Esc>]12;gray\x7"
+  let &t_SI .= "\<Esc>[3 q"
+  " Normal
+  let &t_EI  = "\<Esc>]12;green\x7"
+  let &t_EI .= "\<Esc>[2 q"
+  autocmd VimLeave * silent !echo -ne "\033]112\007"
+elseif &term =~ "screen-it\\|tmux\\|gnome-terminal"
+  echo 'screen-it|tmux|gnome-terminal'
+  " Insert
+  let &t_SI  = "\<Esc>Ptmux;\<Esc>\<Esc>]12;gray\x7\<Esc>\\"
+  let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
+  " Normal
+  let &t_EI  = "\<Esc>Ptmux;\<Esc>\<Esc>]12;blue\x7\<Esc>\\"
+  let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
+  autocmd VimLeave * silent !printf "\033Ptmux;\033\033]12;grey\007\033\\"
+endif
