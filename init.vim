@@ -120,6 +120,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'evanmiller/nginx-vim-syntax', { 'for': 'nginx' }
+Plug 'posva/vim-vue', { 'for': 'vue' }
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -270,7 +271,7 @@ augroup vimrcEx
 
   autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
 
-  autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
+  autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown setlocal spell textwidth=80 set ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
 
   " Indent p tags
   "autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
