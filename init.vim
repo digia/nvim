@@ -96,7 +96,8 @@ Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
 "Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
-Plug 'mustache/vim-mustache-handlebars', { 'for': ['html', 'mustache', 'handlebar', 'html.handlebars'] }
+" Plug 'mustache/vim-mustache-handlebars', { 'for': ['html', 'mustache', 'handlebar', 'html.handlebars'] }
+Plug 'mustache/vim-mustache-handlebars'
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'moll/vim-node', { 'for': 'javascript' }
 "Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
@@ -268,10 +269,8 @@ augroup vimrcEx
   "Autoindent with two spaces, always expand tabs
   autocmd! BufRead,BufNewFile,FileType ruby,haml,eruby,yaml,html,sass,scss,cucumber,blade,javascript,html.handlebars set ai sw=2 sts=2 et
   autocmd! BufRead,BufNewFile,FileType python,php set sw=4 sts=4 et
-
   autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
-
-  autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown setlocal spell textwidth=80 set ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
+  autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell textwidth=80 ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
 
   " Indent p tags
   "autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
@@ -347,7 +346,7 @@ map <C-b> :CtrlPBuffer<CR>
 map <C-t> :CtrlPTag<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'r'
-let g:ctrl_user_command = 'ag %s -i --nocolor --nogroup --hidden 
+let g:ctrl_user_command = 'ag %s -i --nocolor --nogroup --hidden
   \ --ignore .git
   \ --ignore .svn
   \ --ignore .hg
