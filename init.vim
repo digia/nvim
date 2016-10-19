@@ -270,10 +270,6 @@ augroup vimrcEx
   autocmd! BufRead,BufNewFile,FileType ruby,haml,eruby,yaml,html,sass,scss,cucumber,blade,javascript,html.handlebars set ai sw=2 sts=2 et
   autocmd! BufRead,BufNewFile,FileType python,php set sw=4 sts=4 et
   autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
-<<<<<<< HEAD
-
-=======
->>>>>>> 26b1ea5c399e010853ed8eec91c1b5481dc03cdf
   autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell textwidth=80 ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
 
   " Indent p tags
