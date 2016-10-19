@@ -178,7 +178,7 @@ set cmdheight=2
 set wildmenu
 set wildmode=list:longest
 set wildchar=<TAB>
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/node_modules/**,*/bower_components/**
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/node_modules/**,*/bower_components/**,**/venv/**,*.pyc
 
 set clipboard=unnamed
 set autoread
@@ -408,6 +408,7 @@ nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<
 " nmap <leader>tp :w\|:call VimuxRunCommand('clear; echo ' . bufname("%") . '; ./venv/bin/nosetests --config test.cfg --nocapture ' . bufname('%'))<cr>
 nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/py.test " . bufname("%"))<cr>
 nmap <leader>th :w\|:call VimuxRunCommand("clear; phpunit " . bufname("%"))<cr>
+nmap <leader>sr :w\|:call VimuxRunCommand("clear; ~/bin/run-script " . bufname("%"))<cr>
 nmap <leader>st :w\|:Silent echo "phpunit" > test-commands<cr>
 nmap <leader>s :w\|:Silent echo "vendor/bin/phpspec run %" > test-commands<cr>
 nmap <leader>ss :w\|:Silent echo "vendor/bin/phpspec run" > test-commands<cr>
