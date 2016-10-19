@@ -96,7 +96,8 @@ Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
 "Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
-Plug 'mustache/vim-mustache-handlebars', { 'for': ['html', 'mustache', 'handlebar', 'html.handlebars'] }
+" Plug 'mustache/vim-mustache-handlebars', { 'for': ['html', 'mustache', 'handlebar', 'html.handlebars'] }
+Plug 'mustache/vim-mustache-handlebars'
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'moll/vim-node', { 'for': 'javascript' }
 "Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
@@ -177,7 +178,7 @@ set cmdheight=2
 set wildmenu
 set wildmode=list:longest
 set wildchar=<TAB>
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/vendor/*,*/node_modules/*,*/bower_components/*,*/venv/*
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/node_modules/**,*/bower_components/**,**/venv/**,*.pyc
 
 set clipboard=unnamed
 set autoread
@@ -268,9 +269,11 @@ augroup vimrcEx
   "Autoindent with two spaces, always expand tabs
   autocmd! BufRead,BufNewFile,FileType ruby,haml,eruby,yaml,html,sass,scss,cucumber,blade,javascript,html.handlebars set ai sw=2 sts=2 et
   autocmd! BufRead,BufNewFile,FileType python,php set sw=4 sts=4 et
-
   autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
+<<<<<<< HEAD
 
+=======
+>>>>>>> 26b1ea5c399e010853ed8eec91c1b5481dc03cdf
   autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell textwidth=80 ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
 
   " Indent p tags
@@ -347,7 +350,7 @@ map <C-b> :CtrlPBuffer<CR>
 map <C-t> :CtrlPTag<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'r'
-let g:ctrl_user_command = 'ag %s -i --nocolor --nogroup --hidden 
+let g:ctrl_user_command = 'ag %s -i --nocolor --nogroup --hidden
   \ --ignore .git
   \ --ignore .svn
   \ --ignore .hg
@@ -409,6 +412,7 @@ nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<
 " nmap <leader>tp :w\|:call VimuxRunCommand('clear; echo ' . bufname("%") . '; ./venv/bin/nosetests --config test.cfg --nocapture ' . bufname('%'))<cr>
 nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/py.test " . bufname("%"))<cr>
 nmap <leader>th :w\|:call VimuxRunCommand("clear; phpunit " . bufname("%"))<cr>
+nmap <leader>sr :w\|:call VimuxRunCommand("clear; ~/bin/run-script " . bufname("%"))<cr>
 nmap <leader>st :w\|:Silent echo "phpunit" > test-commands<cr>
 nmap <leader>s :w\|:Silent echo "vendor/bin/phpspec run %" > test-commands<cr>
 nmap <leader>ss :w\|:Silent echo "vendor/bin/phpspec run" > test-commands<cr>
