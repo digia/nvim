@@ -177,7 +177,7 @@ set cmdheight=2
 set wildmenu
 set wildmode=list:longest
 set wildchar=<TAB>
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/vendor/*,*/node_modules/*,*/bower_components/*
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/vendor/*,*/node_modules/*,*/bower_components/*,*/venv/*
 
 set clipboard=unnamed
 set autoread
