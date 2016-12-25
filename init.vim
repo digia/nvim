@@ -93,6 +93,7 @@ Plug 'Valloric/YouCompleteMe', { 'for': 'python' }
 " Language specific
 Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'nvie/vim-flake8', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
 "Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
@@ -252,6 +253,7 @@ colorscheme solarized
 " STATUS LINE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set statusline=%<%f\ %m%r%w\ %{DerekFugitiveStatusLine()}\ [%{&ft}]\ %*\ %=\ B:%n\ %*\ L:%l/%L[%P]\ %*\ C:%v\ %*\ [%b][0x%B]
+set laststatus=2
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
@@ -478,7 +480,7 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 " http://vim.wikia.com/wiki/Configuring_the_cursor
 " Tmux details: http://reza.jelveh.me/2011/09/18/zsh-tmux-vi-mode-cursor
 if &term =~ "xterm\\|rxvt"
-  echo 'xterm|rxvt'
+  " echo 'xterm|rxvt'
   " Insert
   let &t_SI  = "\<Esc>]12;gray\x7"
   let &t_SI .= "\<Esc>[3 q"
