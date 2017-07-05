@@ -83,26 +83,33 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'MarcWeber/vim-addon-local-vimrc'
 Plug 'vim-scripts/bufkill.vim'
 Plug 'airblade/vim-gitgutter'
+
+Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 
+Plug 'ervandew/supertab'
 Plug 'Yggdroot/indentLine'
-Plug 'Shougo/neocomplete.vim'
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' } " Better foldering in python
-Plug 'Valloric/YouCompleteMe', { 'for': 'python' }
+" Plug 'Shougo/neocomplete.vim'
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'Valloric/YouCompleteMe'
 
 " Language specific
+" Plug 'tmhedberg/SimpylFold', { 'for': 'python' } " Better foldering in python
 Plug 'hdima/python-syntax', { 'for': 'python' }
-Plug 'nvie/vim-flake8', { 'for': 'python' }
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" Plug 'nvie/vim-flake8', { 'for': 'python' }
+Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
+" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'vheon/JediHTTP', { 'for': 'python' }
+
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
 "Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
-" Plug 'mustache/vim-mustache-handlebars', { 'for': ['html', 'mustache', 'handlebar', 'html.handlebars'] }
+Plug 'mustache/vim-mustache-handlebars', { 'for': ['html', 'mustache', 'handlebar', 'html.handlebars'] }
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'moll/vim-node', { 'for': 'javascript' }
 "Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-"Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+Plug 'jelera/vim-javascript-syntax'
 "Plug 'othree/yajs.vim', { 'for': 'javascript', 'tag': '1.6' }
 Plug 'isRuslan/vim-es6', { 'for': 'javascript' }
 "Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' } // Needs keybindings
@@ -177,7 +184,7 @@ set cmdheight=2
 
 " Path/file expansion in colon-mode.
 set wildmenu
-set wildmode=list:longest
+set wildmode=longest,list:longest
 set wildchar=<TAB>
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/node_modules/**,*/bower_components/**,**/venv/**,*.pyc
 
@@ -227,6 +234,8 @@ nmap <leader>sl :set list!<cr> " Toggle list showing
 highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
 match ExtraWhitespace /\s\+$\|\t/
 
+set tags=tags
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Style
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -269,10 +278,11 @@ augroup vimrcEx
     \ endif
 
   "Autoindent with two spaces, always expand tabs
-  autocmd! BufRead,BufNewFile,FileType ruby,haml,eruby,yaml,html,sass,scss,cucumber,blade,javascript,html.handlebars set ai sw=2 sts=2 et
-  autocmd! BufRead,BufNewFile,FileType python,php set sw=4 sts=4 et
-  autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
   autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell textwidth=80 ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
+  autocmd! BufRead,BufNewFile,FileType php set sw=4 sts=4 et
+  autocmd! BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix filetype=python
+  autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
+  autocmd! BufNewFile,BufRead,FileType html,css,sass,scss,blade,cucumber,yaml,html.handlebars,javascript,pug set tabstop=2 softtabstop=2 shiftwidth=2 fileformat=unix
 
   " Indent p tags
   "autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
@@ -367,6 +377,9 @@ let NERDTreeIgnore=['\.git$','\.hg&', '\.pyc$']
 nnoremap <F2> :NERDTreeToggle<CR>
 nnoremap <F3> :NERDTreeFind<CR>
 
+" Tagbar
+nnoremap <F4> :TagbarToggle<CR>
+
 " Fugitive
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -409,6 +422,7 @@ nmap <leader>tj :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NOD
 nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<cr>
 " nmap <leader>tp :w\|:call VimuxRunCommand('clear; echo ' . bufname("%") . '; ./venv/bin/nosetests --config test.cfg --nocapture ' . bufname('%'))<cr>
 nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/py.test " . bufname("%"))<cr>
+nmap <leader>td :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./manage.py test " . bufname("%"))<cr>
 nmap <leader>th :w\|:call VimuxRunCommand("clear; phpunit " . bufname("%"))<cr>
 nmap <leader>sr :w\|:call VimuxRunCommand("clear; ~/bin/run-script " . bufname("%"))<cr>
 nmap <leader>st :w\|:Silent echo "phpunit" > test-commands<cr>
@@ -435,12 +449,14 @@ let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_fenced_languages = ['csharp=cs', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'nginx=nginx']
 
 " 'Valloric/YouCompleteMe'
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
 let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
 let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
-let g:ycm_complete_in_comments = 1 " Completion in comments
-let g:ycm_complete_in_strings = 1 " Completion in string
+let g:ycm_complete_in_comments = 0 " Completion in comments
+let g:ycm_complete_in_strings = 0 " Completion in string
 map <leader>gt :YcmCompleter GoToDefinitionElseDeclaration<cr>
 
 " Python with virtualenv support
@@ -454,6 +470,9 @@ map <leader>gt :YcmCompleter GoToDefinitionElseDeclaration<cr>
 "   # execfile(activate_this, dict(__file__=activate_this))
 "   exec(compile(open(activate_this, "rb").read(), activate_this, 'exec'), globals, locals)
 " EOF
+
+" 'davidhalter/jedi-vim'
+
 
 " Cursor styles
 " Use a blinking upright bar cursor in Insert mode, a blinking block in normal
@@ -489,12 +508,15 @@ if &term =~ "xterm\\|rxvt"
   let &t_EI .= "\<Esc>[2 q"
   autocmd VimLeave * silent !echo -ne "\033]112\007"
 elseif &term =~ "screen-it\\|tmux\\|gnome-terminal"
-  echo 'screen-it|tmux|gnome-terminal'
+  " echo 'screen-it|tmux|gnome-terminal'
   " Insert
   let &t_SI  = "\<Esc>Ptmux;\<Esc>\<Esc>]12;gray\x7\<Esc>\\"
   let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
   " Normal
-  let &t_EI  = "\<Esc>Ptmux;\<Esc>\<Esc>]12;blue\x7\<Esc>\\"
+  let &t_EI  = "\<Esc>Ptmux;\<Esc>\<Esc>]12;gray\x7\<Esc>\\"
   let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
-  autocmd VimLeave * silent !printf "\033Ptmux;\033\033]12;grey\007\033\\"
+  autocmd VimLeave * silent !printf "\033Ptmux;\033\033]12;gray\007\033\\"
 endif
+
+set completeopt-=preview
+
