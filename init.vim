@@ -282,7 +282,7 @@ augroup vimrcEx
   autocmd! BufRead,BufNewFile,FileType php set sw=4 sts=4 et
   autocmd! BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix filetype=python
   autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
-  autocmd! BufNewFile,BufRead,FileType html,css,sass,scss,blade,cucumber,yaml,html.handlebars,javascript,pug set tabstop=2 softtabstop=2 shiftwidth=2 fileformat=unix
+  autocmd! BufNewFile,BufRead,FileType html,css,sass,scss,blade,cucumber,yaml,html.handlebars,javascript,pug,htmldjango set tabstop=2 softtabstop=2 shiftwidth=2 fileformat=unix
 
   " Indent p tags
   "autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
@@ -518,5 +518,4 @@ elseif &term =~ "screen-it\\|tmux\\|gnome-terminal"
   autocmd VimLeave * silent !printf "\033Ptmux;\033\033]12;gray\007\033\\"
 endif
 
-set completeopt-=preview
-
+set term=screen-256color
