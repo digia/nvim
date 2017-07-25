@@ -103,9 +103,8 @@ Plug 'vheon/JediHTTP', { 'for': 'python' }
 
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-"Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
+Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['html', 'mustache', 'handlebar', 'html.handlebars'] }
-Plug 'mustache/vim-mustache-handlebars'
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'moll/vim-node', { 'for': 'javascript' }
 "Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
@@ -114,10 +113,10 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'isRuslan/vim-es6', { 'for': 'javascript' }
 "Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' } // Needs keybindings
 Plug 'elzr/vim-json', { 'for': 'json' }
-Plug 'othree/html5-syntax.vim', { 'for': 'html' }
-Plug 'othree/html5.vim', { 'for': 'html' }
-Plug 'mattn/emmet-vim', { 'for': 'html' }
-Plug 'gregsexton/MatchTag', { 'for': 'html' }
+Plug 'othree/html5-syntax.vim', { 'for': ['html', 'blade'] }
+Plug 'othree/html5.vim', { 'for': ['html', 'blade'] }
+Plug 'mattn/emmet-vim'
+Plug 'gregsexton/MatchTag', { 'for': ['html', 'blade'] }
 Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] }
 Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
@@ -180,7 +179,7 @@ set autoindent
 set smartindent
 
 set cursorline
-set cmdheight=2
+"set cmdheight=2
 
 " Path/file expansion in colon-mode.
 set wildmenu
