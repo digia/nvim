@@ -138,7 +138,7 @@ set showcmd             " Show (partial) command in status line.
 " Was causing lag in JS acceptance tests, really annoying when typing
 "set showmatch           " Show matching brackets.
 set showmode            " Show current mode.
-set showtabline=2
+set showtabline=1
 set ruler               " Show the line and column numbers of the cursor.
 set number              " Show the line numbers on the left side.
 set formatoptions+=o    " Continue comment marker in new lines.
@@ -152,7 +152,6 @@ set shiftwidth=2        " Indentation amount for < and > commands.
 
 set noerrorbells visualbell        " No beeps.
 set modeline            " Enable modeline.
-set esckeys             " Cursor keys in insert mode.
 set linespace=0         " Set line-spacing to minimum.
 set nojoinspaces        " Prevents inserting two spaces after punctuation on a join (J)
 
@@ -243,7 +242,7 @@ if &t_Co == 8 && $TERM !~# '^linux'
   set t_Co=256
 endif
 
-set guifont=Ubuntu\ Mono:h15
+set guifont=Roboto\ Mono:h15
 set encoding=utf-8
 set guioptions-=T
 set guioptions-=r                                         " turn off GUI right scrollbar
@@ -260,7 +259,8 @@ colorscheme solarized
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set statusline=%<%f\ %m%r%w\ %{DerekFugitiveStatusLine()}\ [%{&ft}]\ %*\ %=\ B:%n\ %*\ L:%l/%L[%P]\ %*\ C:%v\ %*\ [%b][0x%B]
+" set statusline=%<%f\ %m%r%w\ %{DerekFugitiveStatusLine()}\ [%{&ft}]\ %*\ %=\ B:%n\ %*\ L:%l/%L[%P]\ %*\ C:%v\ %*\ [%b][0x%B]
+set statusline=%<%f\ %m%r%w\ [%{&ft}]\ %*\ %=\ B:%n\ %*\ L:%l/%L[%P]\ %*\ C:%v\ %*\ [%b][0x%B]
 set laststatus=2
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -304,17 +304,21 @@ nnoremap k gk
 " Exit insert mode
 inoremap kj <esc>
 
-" Go back to previous buffer
-nmap <c-e> :e#<cr>
-
-" Clear search
-nmap <silent> ,/ :nohlsearch<cr>
-
 " Path to current files directory
 cnoremap %% <c-R>=expand('%:h').'/'<cr>
 
-" Edit file, starting in current directory
-map <leader>e :e %%
+" Edit, starting in current directory
+" map <leader>e :e %%
+map <leader>n :e %%
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+" Move to the previous buffer
+"nmap <c-e> :e#<cr>
+nmap <leader>h :bprevious<CR>
+
+" Clear search
+nmap <silent> ,/ :nohlsearch<cr>
 
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
@@ -347,7 +351,7 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Point neovim to python
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python3_host_prog = '/usr/bin/python'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Mappings
@@ -517,4 +521,4 @@ elseif &term =~ "screen-it\\|tmux\\|gnome-terminal"
   autocmd VimLeave * silent !printf "\033Ptmux;\033\033]12;gray\007\033\\"
 endif
 
-set term=screen-256color
+" set term=screen-256color
