@@ -481,12 +481,11 @@ map <leader>gt :YcmCompleter GoToDefinitionElseDeclaration<cr>
 " Use a blinking upright bar cursor in Insert mode, a blinking block in normal
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 " " insert mode - line
-" let &t_SI .= "\<Esc>[5 q"
+"let &t_SI .= "\<Esc>[5 q"
 " "replace mode - underline
-" let &t_SR .= "\<Esc>[4 q"
+"let &t_SR .= "\<Esc>[4 q"
 " "common - block
-" let &t_EI .= "\<Esc>[3 q"
-
+"let &t_EI .= "\<Esc>[3 q"
 
 " if exists('$TMUX')
 "     let &t_SI = "\<Esc>Ptmux;\<Esc>\e[5 q\<Esc>\\"
@@ -521,4 +520,5 @@ elseif &term =~ "screen-it\\|tmux\\|gnome-terminal"
   autocmd VimLeave * silent !printf "\033Ptmux;\033\033]12;gray\007\033\\"
 endif
 
-" set term=screen-256color
+" Fix cursor not working within tmux
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
