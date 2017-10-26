@@ -104,8 +104,8 @@ Plug 'vheon/JediHTTP', { 'for': 'python' }
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
 Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
-Plug 'mustache/vim-mustache-handlebars', { 'for': ['html', 'mustache', 'handlebar', 'html.handlebars'] }
-Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
 Plug 'moll/vim-node', { 'for': 'javascript' }
 "Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'jelera/vim-javascript-syntax'
