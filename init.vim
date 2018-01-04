@@ -74,7 +74,7 @@ Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-dispatch' " [Review when testing]
 "Plug 'tpope/vim-sleuth' " Auto detect indent style
 "Plug 'scrooloose/syntastic'
-Plug 'benekastah/neomake' " Async syntastic
+" Plug 'benekastah/neomake' " Async syntastic
 Plug 'rstacruz/sparkup'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
@@ -91,7 +91,7 @@ Plug 'ervandew/supertab'
 Plug 'Yggdroot/indentLine'
 " Plug 'Shougo/neocomplete.vim'
 Plug 'jmcantrell/vim-virtualenv'
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 
 " Language specific
 " Plug 'tmhedberg/SimpylFold', { 'for': 'python' } " Better foldering in python
@@ -100,6 +100,7 @@ Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
 " Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'vheon/JediHTTP', { 'for': 'python' }
+" Plug 'heavenshell/vim-jsdoc'
 
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
@@ -127,8 +128,23 @@ Plug 'plasticboy/vim-markdown'
 "Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
-Plug 'evanmiller/nginx-vim-syntax', { 'for': 'nginx' }
+" Plug 'evanmiller/nginx-vim-syntax', { 'for': 'nginx' }
 Plug 'posva/vim-vue', { 'for': 'vue' }
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+" Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+
+Plug 'w0rp/ale' " Async linting engine
+Plug 'wellle/tmux-complete.vim'
+" Plug 'fszymanski/deoplete-emoji'
+Plug 'zchee/deoplete-jedi'
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -421,7 +437,8 @@ map <Leader>vi :VimuxInspectRunner<CR>
 map <Leader>vq :VimuxCloseRunner<CR>
 map <Leader>vx :VimuxInterruptRunner<CR>
 
-nmap <leader>tj :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha-grey-patch " . bufname("%"))<cr>
+nmap <leader>tj :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha " . bufname("%"))<cr>
+" nmap <leader>tj :w\|:call VimuxRunCommand(\"clear; echo \" . bufname(\"%\") . \"; NODE_ENV='test' mocha-grey-patch \" . bufname(\"%\"))<cr>
 nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<cr>
 " nmap <leader>tp :w\|:call VimuxRunCommand('clear; echo ' . bufname("%") . '; ./venv/bin/nosetests --config test.cfg --nocapture ' . bufname('%'))<cr>
 nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/py.test " . bufname("%"))<cr>
@@ -452,15 +469,31 @@ let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_fenced_languages = ['csharp=cs', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'nginx=nginx']
 
 " 'Valloric/YouCompleteMe'
-let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
-let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
-let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
-let g:ycm_complete_in_comments = 0 " Completion in comments
-let g:ycm_complete_in_strings = 0 " Completion in string
-map <leader>gt :YcmCompleter GoToDefinitionElseDeclaration<cr>
+" let g:ycm_add_preview_to_completeopt = 1
+" let g:ycm_autoclose_preview_window_after_insertion = 1
+" let g:ycm_autoclose_preview_window_after_completion=1
+" let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+" let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
+" let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
+" let g:ycm_complete_in_comments = 0 " Completion in comments
+" let g:ycm_complete_in_strings = 0 " Completion in string
+" map <leader>gt :YcmCompleter GoToDefinitionElseDeclaration<cr>
+
+" 'heavenshell/vim-jsdoc'
+" https://github.com/heavenshell/vim-jsdoc
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_input_description = 1
+let g:jsdoc_underscore_private = 1
+let g:jsdoc_enable_es6 = 1
+let g:jsdoc_access_descriptions = 1
+nmap <silent> <leader>jd <Plug>(jsdoc)
+
+
+" TESTING
+" https://www.reddit.com/r/node/comments/6jfb68/vim_nodejs_completion/
+" enhance YCM JS completion with tern's smarts
+autocmd FileType javascript setlocal omnifunc=tern#Complete
+set completeopt-=preview
 
 " Python with virtualenv support
 " https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/
@@ -522,3 +555,26 @@ endif
 
 " Fix cursor not working within tmux
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+
+" Shougo/deoplete.nvim
+" https://github.com/Shougo/deoplete.nvim
+"
+" TESTING: 2017-12-1
+"
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#ternjs#docs = 1
+
+" Use tern_for_vim.
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
+
+" ALE
+" https://github.com/w0rp/ale
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
+
+nmap <silent> <leader>lf <Plug>(ale_fix)
+nmap <silent> <leader>lp <Plug>(ale_previous_wrap)
+nmap <silent> <leader>ln <Plug>(ale_next_wrap)
