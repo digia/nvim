@@ -63,6 +63,11 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 
+Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'FelikZ/ctrlp-py-matcher'
+" Plug 'christoomey/vim-tmux-navigator'
+Plug 'altercation/vim-colors-solarized'
+
 Plug 'benmills/vimux'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
@@ -72,64 +77,85 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-dispatch' " [Review when testing]
-"Plug 'tpope/vim-sleuth' " Auto detect indent style
-"Plug 'scrooloose/syntastic'
-" Plug 'benekastah/neomake' " Async syntastic
-Plug 'rstacruz/sparkup'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'altercation/vim-colors-solarized'
 Plug 'MarcWeber/vim-addon-local-vimrc'
 Plug 'vim-scripts/bufkill.vim'
 Plug 'airblade/vim-gitgutter'
+" Plug 'rstacruz/sparkup'
+" Plug 'tpope/vim-sleuth' " Auto detect indent style
+" Plug 'scrooloose/syntastic'
 
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 
 Plug 'ervandew/supertab'
 Plug 'Yggdroot/indentLine'
-" Plug 'Shougo/neocomplete.vim'
 Plug 'jmcantrell/vim-virtualenv'
+" Plug 'benekastah/neomake' " Async syntastic
+" Plug 'Shougo/neocomplete.vim'
 " Plug 'Valloric/YouCompleteMe'
 
 " Language specific
-" Plug 'tmhedberg/SimpylFold', { 'for': 'python' } " Better foldering in python
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' } " Better foldering in python
 Plug 'hdima/python-syntax', { 'for': 'python' }
-" Plug 'nvie/vim-flake8', { 'for': 'python' }
-Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
-" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'vheon/JediHTTP', { 'for': 'python' }
-" Plug 'heavenshell/vim-jsdoc'
+Plug 'nvie/vim-flake8', { 'for': 'python' }
 
-Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
-Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
-Plug 'moll/vim-node', { 'for': 'javascript' }
-"Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'jelera/vim-javascript-syntax'
-"Plug 'othree/yajs.vim', { 'for': 'javascript', 'tag': '1.6' }
+" NOTE(digia): Causes odd breaking
+" series_options['Gillgetter']['Hardware & Misc.'] = get_options_for(options,
+"                                                                  'Hardware &
+"                                                                  Misc.',
+"                                                                  exclude=('Built-in
+"                                                                           Motor
+"                                                                           Mount
+"                                                                           Fuel
+"                                                                           Tank
+"                                                                           with
+"                                                                           Gauge',
+"                                                                           'Ski/Storage
+"                                                                           Locker
+"                                                                           (Triple
+"                                                                           Tube
+"                                                                           Models
+"                                                                           Only)'),
+"                                                                           checklen=12)
+" Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
+
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'vheon/JediHTTP', { 'for': 'python' }
+
+" Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
+" Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+" Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
+
+Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
 Plug 'isRuslan/vim-es6', { 'for': 'javascript' }
-"Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' } // Needs keybindings
-Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'jelera/vim-javascript-syntax'
+Plug 'moll/vim-node', { 'for': 'javascript' }
+Plug 'mustache/vim-mustache-handlebars', { 'for': ['html.handlebars', 'handlebars'] }
+" Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
+
+" Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+" Plug 'othree/yajs.vim', { 'for': 'javascript' }
+" Plug 'elzr/vim-json', { 'for': 'json' }
+
 Plug 'othree/html5-syntax.vim', { 'for': ['html', 'blade'] }
 Plug 'othree/html5.vim', { 'for': ['html', 'blade'] }
 Plug 'mattn/emmet-vim'
 Plug 'gregsexton/MatchTag', { 'for': ['html', 'blade'] }
-Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] }
-Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
+" Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] }
+" Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'
 "Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 " Plug 'evanmiller/nginx-vim-syntax', { 'for': 'nginx' }
 Plug 'posva/vim-vue', { 'for': 'vue' }
+
+Plug 'godlygeek/tabular'
+
+"Plug 'blindFS/vim-taskwarrior'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -138,12 +164,12 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-" Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
+Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 
 Plug 'w0rp/ale' " Async linting engine
 Plug 'wellle/tmux-complete.vim'
-" Plug 'fszymanski/deoplete-emoji'
+Plug 'fszymanski/deoplete-emoji'
 Plug 'zchee/deoplete-jedi'
 
 call plug#end()
@@ -346,6 +372,15 @@ nnoremap <c-h> <c-w>h
 if has('nvim')
   nmap <silent> <bs> :<c-u>TmuxNavigateLeft<cr>
 endif
+
+" let g:tmux_navigator_no_mappings = 1
+
+" nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+" nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+" nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+" nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+" nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
+
 
 " Toggle between normal and relative numbering.
 nnoremap <leader>r :call NumberToggle()<cr>
@@ -565,8 +600,8 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#ternjs#docs = 1
 
 " Use tern_for_vim.
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
+" let g:tern#command = ["tern"]
+" let g:tern#arguments = ["--persistent"]
 
 " ALE
 " https://github.com/w0rp/ale
@@ -578,3 +613,8 @@ let g:ale_fixers = {
 nmap <silent> <leader>lf <Plug>(ale_fix)
 nmap <silent> <leader>lp <Plug>(ale_previous_wrap)
 nmap <silent> <leader>ln <Plug>(ale_next_wrap)
+
+" blindFSvim-taskwarrior
+" https://github.com/blindFS/vim-taskwarrior
+" let g:task_rc_override     = 'rc.defaultwidth=999'
+
