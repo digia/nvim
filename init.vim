@@ -77,7 +77,6 @@ Plug 'tpope/vim-dispatch' " [Review when testing]
 " Plug 'benekastah/neomake' " Async syntastic
 Plug 'rstacruz/sparkup'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'altercation/vim-colors-solarized'
 Plug 'MarcWeber/vim-addon-local-vimrc'
@@ -97,12 +96,12 @@ Plug 'jmcantrell/vim-virtualenv'
 " Plug 'tmhedberg/SimpylFold', { 'for': 'python' } " Better foldering in python
 Plug 'hdima/python-syntax', { 'for': 'python' }
 " Plug 'nvie/vim-flake8', { 'for': 'python' }
+Plug 'FelikZ/ctrlp-py-matcher', { 'for': 'python' }
 Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
 " Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'vheon/JediHTTP', { 'for': 'python' }
 " Plug 'heavenshell/vim-jsdoc'
 
-Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
 Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
 Plug 'mustache/vim-mustache-handlebars'
@@ -117,6 +116,7 @@ Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'othree/html5-syntax.vim', { 'for': ['html', 'blade'] }
 Plug 'othree/html5.vim', { 'for': ['html', 'blade'] }
 Plug 'mattn/emmet-vim'
+Plug 'niftylettuce/vim-jinja', { 'for': ['jinja', 'njk'] }
 Plug 'gregsexton/MatchTag', { 'for': ['html', 'blade'] }
 Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] }
 Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
@@ -128,7 +128,7 @@ Plug 'plasticboy/vim-markdown'
 "Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
-" Plug 'evanmiller/nginx-vim-syntax', { 'for': 'nginx' }
+Plug 'chr4/nginx.vim', { 'for': 'nginx' }
 Plug 'posva/vim-vue', { 'for': 'vue' }
 
 if has('nvim')
@@ -138,6 +138,7 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
 " Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 
@@ -202,7 +203,9 @@ set wildmode=longest,list:longest
 set wildchar=<TAB>
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/node_modules/**,*/bower_components/**,**/venv/**,*.pyc
 
-set clipboard=unnamed
+" NOTE(digia): 2018-04-22 The astrick register can be used for system level
+" copy/paste which can be used within the ui using the middle mouse button.
+" set clipboard=unnamed
 set autoread
 
 set mouse=a
@@ -293,7 +296,7 @@ augroup vimrcEx
     \ endif
 
   "Autoindent with two spaces, always expand tabs
-  autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell textwidth=80 ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
+  autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
   autocmd! BufRead,BufNewFile,FileType php set sw=4 sts=4 et
   autocmd! BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix filetype=python
   autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
@@ -563,6 +566,13 @@ set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 "
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#ternjs#docs = 1
+let g:deoplete#sources#ternjs#filetypes = [
+  \ 'jsx',
+  \ 'javascript.jsx',
+  \ 'vue',
+  \ 'js',
+  \ 'mjs'
+  \ ]
 
 " Use tern_for_vim.
 let g:tern#command = ["tern"]
