@@ -139,7 +139,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-" Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
+Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 
 Plug 'w0rp/ale' " Async linting engine
