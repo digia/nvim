@@ -118,14 +118,12 @@ Plug 'othree/html5.vim', { 'for': ['html', 'blade'] }
 Plug 'mattn/emmet-vim'
 Plug 'niftylettuce/vim-jinja', { 'for': ['jinja', 'njk'] }
 Plug 'gregsexton/MatchTag', { 'for': ['html', 'blade'] }
-Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] }
 Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-"Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'chr4/nginx.vim', { 'for': 'nginx' }
@@ -139,7 +137,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
+" Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 
 Plug 'w0rp/ale' " Async linting engine
@@ -442,6 +440,7 @@ map <Leader>vx :VimuxInterruptRunner<CR>
 
 nmap <leader>tj :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha " . bufname("%"))<cr>
 " nmap <leader>tj :w\|:call VimuxRunCommand(\"clear; echo \" . bufname(\"%\") . \"; NODE_ENV='test' mocha-grey-patch \" . bufname(\"%\"))<cr>
+nmap <leader>tji :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha --inspect-brk " . bufname("%"))<cr>
 nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<cr>
 " nmap <leader>tp :w\|:call VimuxRunCommand('clear; echo ' . bufname("%") . '; ./venv/bin/nosetests --config test.cfg --nocapture ' . bufname('%'))<cr>
 nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/py.test " . bufname("%"))<cr>
@@ -583,6 +582,7 @@ let g:tern#arguments = ["--persistent"]
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
+\   'markdown': ['markdownlint'],
 \}
 
 nmap <silent> <leader>lf <Plug>(ale_fix)
