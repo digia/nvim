@@ -129,6 +129,8 @@ Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'chr4/nginx.vim', { 'for': 'nginx' }
 Plug 'posva/vim-vue', { 'for': 'vue' }
 
+Plug 'rhysd/vim-grammarous', { 'for': ['text', 'markdown', 'html', 'blade', 'json'] }
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
