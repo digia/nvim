@@ -4,6 +4,105 @@ filetype plugin indent on
 let mapleader="\<space>"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call plug#begin()
+
+"Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'Shougo/denite.nvim'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+Plug 'MarcWeber/vim-addon-local-vimrc'
+Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
+Plug 'altercation/vim-colors-solarized'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
+Plug 'benizi/vim-automkdir'
+Plug 'benmills/vimux'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'easymotion/vim-easymotion'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'ervandew/supertab'
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-easymotion.vim'
+Plug 'majutsushi/tagbar'
+Plug 'matze/vim-move'
+Plug 'rstacruz/sparkup'
+Plug 'scrooloose/nerdtree'
+" Plug 'sheerun/vim-polyglot' Conflicting with typescript auto complete
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch' " [Review when testing]
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-scripts/bufkill.vim'
+Plug 'w0rp/ale' " Async linting engine
+Plug 'wellle/tmux-complete.vim'
+
+" Language specific
+Plug 'hdima/python-syntax', { 'for': 'python' }
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
+Plug 'vheon/JediHTTP', { 'for': 'python' }
+Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
+" Plug 'zchee/deoplete-jedi'
+
+Plug 'elixir-lang/vim-elixir'
+
+Plug 'fatih/vim-go', { 'for': 'go' }
+
+Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
+
+Plug 'elzr/vim-json', { 'for': 'json' }
+
+Plug 'gregsexton/MatchTag', { 'for': ['html', 'blade'] }
+Plug 'othree/html5.vim', { 'for': ['html', 'blade'] }
+Plug 'othree/html5-syntax.vim', { 'for': ['html', 'blade'] }
+
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'ap/vim-css-color', { 'for': 'css' }
+
+Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
+Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
+
+Plug 'posva/vim-vue'
+
+"Plug 'mattn/emmet-vim' ?
+
+Plug 'cespare/vim-toml'
+
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'jelera/vim-javascript-syntax'
+" Plug 'othree/yajs.vim' Yello object keys :(
+Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
+Plug 'moll/vim-node', { 'for': 'javascript' }
+Plug 'isRuslan/vim-es6', { 'for': 'javascript' }
+
+
+"Plug 'HerringtonDarkholme/yats.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'mhartington/nvim-typescript', { 'for': 'typescript', 'do': './install.sh' }
+
+" TODO: Formalize tern solution
+"Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
+"Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript', 'do': 'npm install -g tern' }
+
+call plug#end()
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:get_cache_dir(suffix)
@@ -42,114 +141,14 @@ function! OpenChangedFiles()
 endfunction
 command! OpenChangedFiles :call OpenChangedFiles()
 
-function! DerekFugitiveStatusLine()
-  let status = fugitive#statusline()
-  let trimmed = substitute(status, '\[Git(\(.*\))\]', '\1', '')
-  let trimmed = substitute(trimmed, '\(\w\)\w\+\ze/', '\1', '')
-  let trimmed = substitute(trimmed, '/[^_]*\zs_.*', '', '')
-  if len(trimmed) == 0
-    return ""
-  else
-    return '(' . trimmed[0:10] . ')'
-  endif
-endfunction
-
 function! StrTrim(txt)
   return substitute(a:txt, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugins
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin()
-
-Plug 'benmills/vimux'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-ragtag'
-Plug 'tpope/vim-dispatch' " [Review when testing]
-"Plug 'tpope/vim-sleuth' " Auto detect indent style
-"Plug 'scrooloose/syntastic'
-" Plug 'benekastah/neomake' " Async syntastic
-Plug 'rstacruz/sparkup'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'altercation/vim-colors-solarized'
-Plug 'MarcWeber/vim-addon-local-vimrc'
-Plug 'vim-scripts/bufkill.vim'
-Plug 'airblade/vim-gitgutter'
-
-Plug 'majutsushi/tagbar'
-Plug 'scrooloose/nerdtree'
-
-Plug 'ervandew/supertab'
-Plug 'Yggdroot/indentLine'
-" Plug 'Shougo/neocomplete.vim'
-Plug 'jmcantrell/vim-virtualenv'
-" Plug 'Valloric/YouCompleteMe'
-
-" Language specific
-" Plug 'tmhedberg/SimpylFold', { 'for': 'python' } " Better foldering in python
-Plug 'hdima/python-syntax', { 'for': 'python' }
-" Plug 'nvie/vim-flake8', { 'for': 'python' }
-Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
-" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'vheon/JediHTTP', { 'for': 'python' }
-" Plug 'heavenshell/vim-jsdoc'
-
-Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
-Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
-Plug 'moll/vim-node', { 'for': 'javascript' }
-"Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'jelera/vim-javascript-syntax'
-"Plug 'othree/yajs.vim', { 'for': 'javascript', 'tag': '1.6' }
-Plug 'isRuslan/vim-es6', { 'for': 'javascript' }
-"Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' } // Needs keybindings
-Plug 'elzr/vim-json', { 'for': 'json' }
-Plug 'othree/html5-syntax.vim', { 'for': ['html', 'blade'] }
-Plug 'othree/html5.vim', { 'for': ['html', 'blade'] }
-Plug 'mattn/emmet-vim'
-Plug 'gregsexton/MatchTag', { 'for': ['html', 'blade'] }
-Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] }
-Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
-Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
-Plug 'ap/vim-css-color', { 'for': 'css' }
-Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-"Plug 'tpope/vim-markdown', { 'for': 'markdown' }
-Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
-" Plug 'evanmiller/nginx-vim-syntax', { 'for': 'nginx' }
-Plug 'posva/vim-vue', { 'for': 'vue' }
-
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-" Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-
-Plug 'w0rp/ale' " Async linting engine
-Plug 'wellle/tmux-complete.vim'
-" Plug 'fszymanski/deoplete-emoji'
-Plug 'zchee/deoplete-jedi'
-
-call plug#end()
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+scriptencoding utf8
 set showcmd             " Show (partial) command in status line.
 " Was causing lag in JS acceptance tests, really annoying when typing
 "set showmatch           " Show matching brackets.
@@ -166,7 +165,7 @@ set expandtab           " Insert spaces when TAB is pressed.
 set tabstop=2           " Render TABs using this many spaces.
 set shiftwidth=2        " Indentation amount for < and > commands.
 
-set noerrorbells visualbell        " No beeps.
+set noerrorbells " No beeps.
 set modeline            " Enable modeline.
 set linespace=0         " Set line-spacing to minimum.
 set nojoinspaces        " Prevents inserting two spaces after punctuation on a join (J)
@@ -187,14 +186,18 @@ set nostartofline       " Do not jump to first character with page commands.
 set hidden
 set history=10000
 set backup
-set backupdir=/tmp,/var/tmp,~/tmp
-set directory=/tmp,/var/tmp,~/tmp
+set backupdir=/tmp,~/tmp
+set directory=/tmp,~/tmp
+set undofile
+set undodir=/tmp,~/tmp
+
+set exrc " enable per-directory .vimrc files
+set secure " disable unsafe commands in local .vimrc files
 
 set autoindent
 set smartindent
 
 set cursorline
-"set cmdheight=2
 
 " Path/file expansion in colon-mode.
 set wildmenu
@@ -202,7 +205,8 @@ set wildmode=longest,list:longest
 set wildchar=<TAB>
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/node_modules/**,*/bower_components/**,**/venv/**,*.pyc
 
-set clipboard=unnamed
+" send to system clipboard: https://coderwall.com/p/g-d8rg
+set clipboard+=unnamed
 set autoread
 
 set mouse=a
@@ -210,12 +214,17 @@ set mousehide
 
 set ambiwidth=double
 
-set hlsearch            " Highlight search results.
-set ignorecase          " Make searching case insensitive
-set smartcase           " ... unless the query has capital letters.
-set incsearch           " Incremental search.
-set gdefault            " Use 'g' flag by default with :s/foo/bar/.
-set magic               " Use 'magic' patterns (extended regular expressions).
+set completeopt-=preview
+set noshowmode " disable extraneous messages
+
+set hlsearch " Highlight search results.
+set ignorecase " Make searching case insensitive
+set smartcase " ... unless the query has capital letters.
+set infercase " :help infercase
+set incsearch " Incremental search.
+set diffopt=filler,vertical
+set gdefault " Use 'g' flag by default with :s/foo/bar/.
+set magic " Use 'magic' patterns (extended regular expressions).
 
 set foldmethod=syntax
 set foldlevel=99
@@ -229,26 +238,18 @@ if maparg('<C-L>', 'n') ==# ''
   nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 endif
 
-" Tell Vim which characters to show for expanded TABs,
-" trailing whitespace, and end-of-lines. VERY useful!
-"if &listchars ==# 'eol:$'
-  "set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-"endif
-
-"set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
-set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮
 highlight SpecialKey ctermbg=none " make the highlighting of tabs less annoying
+set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮
 set invlist " toggle invisible characters
 set showbreak=↪
 
-nmap <leader>si :set invlist!<cr> " Toggle invisible characters
-nmap <leader>sl :set list!<cr> " Toggle list showing
+set inccommand=split
+
+set tags=tags
 
 " Also highlight all tabs and trailing whitespace characters.
 highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
 match ExtraWhitespace /\s\+$\|\t/
-
-set tags=tags
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Style
@@ -261,8 +262,8 @@ endif
 set guifont=Roboto\ Mono:h15
 set encoding=utf-8
 set guioptions-=T
-set guioptions-=r                                         " turn off GUI right scrollbar
-set guioptions-=L                                         " turn off GUI left scrollbar
+set guioptions-=r " turn off GUI right scrollbar
+set guioptions-=L " turn off GUI left scrollbar
 
 " Column colors
 "let &colorcolumn=join(range(81,999),",") " Join columns 81+ for warning color markers. 
@@ -272,11 +273,54 @@ let &colorcolumn="80" " Only show col 80
 set background=dark
 colorscheme solarized
 
+set nomodeline
+
+hi clear IncSearch
+hi link IncSearch StatusLine
+hi clear Search
+hi link Search StatusLine
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set statusline=%<%f\ %m%r%w\ %{DerekFugitiveStatusLine()}\ [%{&ft}]\ %*\ %=\ B:%n\ %*\ L:%l/%L[%P]\ %*\ C:%v\ %*\ [%b][0x%B]
-set statusline=%<%f\ %m%r%w\ [%{&ft}]\ %*\ %=\ B:%n\ %*\ L:%l/%L[%P]\ %*\ C:%v\ %*\ [%b][0x%B]
+function! LinterStatus() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+
+  " return l:counts.total == 0 ? '' : printf(' %d🔺 %d❌', all_non_errors, all_errors)
+  return  printf(' %d🔺 %d❌', all_non_errors, all_errors)
+endfunction
+" set statusline=""
+" set statusline+=%<%f
+" set statusline+=\ %m%r%w\ [%{&ft}]\ %*\ %=\ B:%n\ %*\ L:%l/%L[%P]\ %*\ C:%v\ %*\ [%b][0x%B]
+
+hi StatusLine guifg=#7FC1CA guibg=#556873
+hi StatusLineNC guifg=#3C4C55 guibg=#556873
+hi StatusLineError guifg=#DF8C8C guibg=#556873
+
+set statusline=""
+" set statusline+=\ "
+" filename:col:line/total lines
+set statusline+=%<%f:%l:%v
+set statusline+=\ "
+" help/modified/readonly
+set statusline+=%h%m%r
+set statusline+=\ "
+set statusline+=[%{&ft}]
+" alignment group
+set statusline+=%=
+" lsp status
+set statusline+=%{LanguageClient_statusLine()}
+" start error highlight group
+" set statusline+=%#StatusLineError#
+" errors from w0rp/ale
+set statusline+=%{LinterStatus()}
+" reset highlight group
+" set statusline+=%#StatusLine#
+set statusline+=\ "
+
 set laststatus=2
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -317,6 +361,21 @@ augroup END
 nnoremap j gj
 nnoremap k gk
 
+nmap <leader>si :set invlist!<cr> " Toggle invisible characters
+nmap <leader>sl :set list!<cr> " Toggle list showing
+
+" search visual selection
+vnoremap // y/<C-R>"<CR>
+
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --no-heading\ -S
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
+
+" Save cursor pos, splits, etc.
+autocmd FileWritePre *.* silent! mkview
+autocmd FileReadPre *.* silent! loadview
+
 " Exit insert mode
 inoremap kj <esc>
 
@@ -324,14 +383,7 @@ inoremap kj <esc>
 cnoremap %% <c-R>=expand('%:h').'/'<cr>
 
 " Edit, starting in current directory
-" map <leader>e :e %%
 map <leader>n :e %%
-
-" Move to the next buffer
-nmap <leader>l :bnext<CR>
-" Move to the previous buffer
-"nmap <c-e> :e#<cr>
-nmap <leader>h :bprevious<CR>
 
 " Clear search
 nmap <silent> ,/ :nohlsearch<cr>
@@ -348,43 +400,116 @@ if has('nvim')
 endif
 
 " Toggle between normal and relative numbering.
-nnoremap <leader>r :call NumberToggle()<cr>
+" nnoremap <leader>r :call NumberToggle()<cr>
 
 " Reselect visual block after indent
 vnoremap < <gv
 vnoremap > >gv
 
 " Make the directory of the file in the buffer
-nmap <silent> ,md :!mkdir -p %:p:h<CR>
+nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
 
+" Use vim-move instead
 " Move lines up and down
 " http://vim.wikia.com/wiki/Moving_lines_up_or_down_in_a_file
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+" nnoremap <A-j> :m .+1<CR>==
+" nnoremap <A-k> :m .-2<CR>==
+" inoremap <A-j> <Esc>:m .+1<CR>==gi
+" inoremap <A-k> <Esc>:m .-2<CR>==gi
+" vnoremap <A-j> :m '>+1<CR>gv=gv
+" vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" Paste toggle
+set pastetoggle=<Insert>
 
 " Point neovim to python
 let g:python3_host_prog = '/usr/bin/python'
 
+" Cursor styles
+" Use a blinking upright bar cursor in Insert mode, a blinking block in normal
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
+
+" Changing cursor shape per mode; https://gist.github.com/andyfowler/1195581#gistcomment-993604
+" 1 or 0 -> blinking block
+" 2 -> solid block
+" 3 -> blinking underscore
+" 4 -> solid underscore
+if exists('$TMUX')
+    " tmux will only forward escape sequences to the terminal if surrounded by a DCS sequence
+    let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[5 q\<Esc>\\"
+    let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
+    autocmd VimLeave * silent !echo -ne "\033Ptmux;\033\033[0 q\033\\"
+else
+    let &t_SI .= "\<Esc>[5 q"
+    let &t_EI .= "\<Esc>[2 q"
+    autocmd VimLeave * silent !echo -ne "\033[0 q"
+endif
+
+" Fix cursor not working within tmux
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CTRLP
-map <C-b> :CtrlPBuffer<CR>
-map <C-t> :CtrlPTag<CR>
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'r'
-let g:ctrl_user_command = 'ag %s -i --nocolor --nogroup --hidden
-  \ --ignore .git
-  \ --ignore .svn
-  \ --ignore .hg
-  \ --ignore .DS_Store
-  \ --ignore "**/*.pyc"
-  \ -g ""'
-"let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
+" Shougo/Denite: https://github.com/Shougo/denite.nvim
+"
+" Denite is a dark powered plugin for Neovim/Vim to unite all interfaces. It
+" can replace many features or plugins with its interface. It is like a fuzzy
+" finder, but is more generic. You can extend the interface and create the
+" sources.
+"
+" Reset 50% winheight on window resize
+augroup deniteresize
+  autocmd!
+  autocmd VimResized,VimEnter * call denite#custom#option('default', 'winheight', winheight(0) / 2)
+augroup end
+
+call denite#custom#option('default', { 'prompt': '❯' })
+
+"call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
+call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+" ripgrep
+call denite#custom#var('grep', 'command', ['rg'])
+call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--smart-case'])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+
+" ag
+"call denite#custom#source('grep', 'matchers', ['matcher_regexp'])
+"call denite#custom#var('grep', 'command', ['ag'])
+"call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep']) ? smartcase ?
+
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
+call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>', 'noremap')
+call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>', 'noremap')
+"call denite#custom#map('normal', '<Esc>', '<NOP>', 'noremap') ? Do nothing when escape is pressed in normal mode
+call denite#custom#map('normal', '<C-v>', '<denite:do_action:vsplit>', 'noremap')
+call denite#custom#map('normal', 'dw', '<denite:delete_word_after_caret>', 'noremap')
+
+call denite#custom#map('normal', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('normal', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+
+nnoremap <C-p> :<C-u>DeniteProjectDir file_rec/git<CR>
+nnoremap <C-o> :<C-u>DeniteProjectDir file_rec<CR>
+nnoremap <C-b> :<C-u>Denite buffer -mode=normal<CR>
+" nnoremap <leader><Space>s :<C-u>DeniteBufferDir buffer<CR> ?
+nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
+"nnoremap <leader>/ :DeniteProjectDir -buffer-name=grep -default-action=quickfix grep:::!<CR> ? quickfix ?
+nnoremap <leader>/ :<C-u>DeniteProjectDir grep:. -mode=normal<CR>
+nnoremap <leader><Space>/ :<C-u>DeniteBufferDir grep:. -mode=normal<CR>
+nnoremap <leader>p :<C-u>DeniteBufferDir file_rec/git<CR>
+nnoremap <leader>r :<C-u>Denite -resume -cursor-pos=+1<CR>
+"nnoremap <leader>lr :<C-u>Denite references -mode=normal<CR> ?
+
+hi link deniteMatchedChar Special
 
 " NerdTree
 let NERDTreeShowHidden=1
@@ -399,35 +524,26 @@ nnoremap <F3> :NERDTreeFind<CR>
 " Tagbar
 nnoremap <F4> :TagbarToggle<CR>
 
+" testing
+" https://www.reddit.com/r/node/comments/6jfb68/vim_nodejs_completion/
+" enhance ycm js completion with tern's smarts
+" autocmd filetype javascript setlocal omnifunc=tern#complete
+
 " Fugitive
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR>
 nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>gl :Glog<CR>
-nnoremap <silent> <leader>gp :Git push<CR>
-nnoremap <silent> <leader>gw :Gwrite<CR>
-nnoremap <silent> <leader>gr :Gremove<CR>
-nnoremap <silent> <leader>gm :Gmove<CR>
-nnoremap <silent> <leader>gm :Gedit<CR>
+
+" airblade/vim-gitgutter
+if exists('&signcolumn')  " Vim 7.4.2201
+  set signcolumn=yes
+else
+  let g:gitgutter_sign_column_always = 1
+endif
 
 " python-syntax
 let python_highlight_all = 1
-
-" Syntastic
-let g:syntastic_mode_map = {
-    \ 'mode': 'passive',
-    \ 'active_filetypes': [],
-    \ 'passive_filetypes': ['sass'] }
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_html_tidy_exec = 'tidy5'
-let g:syntastic_javascript_checkers = ['eslint']
-map <leader>sc :SyntasticCheck<cr>
 
 " Vimux
 map <leader>vp :VimuxPromptCommand<cr>
@@ -437,144 +553,112 @@ map <Leader>vi :VimuxInspectRunner<CR>
 map <Leader>vq :VimuxCloseRunner<CR>
 map <Leader>vx :VimuxInterruptRunner<CR>
 
-nmap <leader>tj :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha " . bufname("%"))<cr>
+" nmap <leader>tj :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha " . bufname("%"))<cr>
 " nmap <leader>tj :w\|:call VimuxRunCommand(\"clear; echo \" . bufname(\"%\") . \"; NODE_ENV='test' mocha-grey-patch \" . bufname(\"%\"))<cr>
-nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<cr>
+" nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<cr>
 " nmap <leader>tp :w\|:call VimuxRunCommand('clear; echo ' . bufname("%") . '; ./venv/bin/nosetests --config test.cfg --nocapture ' . bufname('%'))<cr>
-nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/py.test " . bufname("%"))<cr>
-nmap <leader>td :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./manage.py test " . bufname("%"))<cr>
-nmap <leader>th :w\|:call VimuxRunCommand("clear; phpunit " . bufname("%"))<cr>
-nmap <leader>sr :w\|:call VimuxRunCommand("clear; ~/bin/run-script " . bufname("%"))<cr>
-nmap <leader>st :w\|:Silent echo "phpunit" > test-commands<cr>
-nmap <leader>s :w\|:Silent echo "vendor/bin/phpspec run %" > test-commands<cr>
-nmap <leader>ss :w\|:Silent echo "vendor/bin/phpspec run" > test-commands<cr>
+" nmap <leader>tp :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./venv/bin/py.test " . bufname("%"))<cr>
+" nmap <leader>td :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; ./manage.py test " . bufname("%"))<cr>
+" nmap <leader>th :w\|:call VimuxRunCommand("clear; phpunit " . bufname("%"))<cr>
+" nmap <leader>sr :w\|:call VimuxRunCommand("clear; ~/bin/run-script " . bufname("%"))<cr>
+" nmap <leader>st :w\|:Silent echo "phpunit" > test-commands<cr>
+" nmap <leader>s :w\|:Silent echo "vendor/bin/phpspec run %" > test-commands<cr>
+" nmap <leader>ss :w\|:Silent echo "vendor/bin/phpspec run" > test-commands<cr>
 
 " elzr/vim-json
 let g:vim_json_syntax_conceal = 0 " Don't hide quotes in json files
 
-" airblade/vim-gitgutter
-nmap <leader>sg :GitGutterToggle<cr>
-nmap <leader>sgh :GitGutterLineHighlightsToggle<cr>
-
 " 'Yggdroot/indentLine'
 let g:indentLine_color_term = 0
 let g:indentLine_faster = 1
-
-" 'heavenshell/vim-jsdoc'
-" FIXME(digia): Set keybindings
 
 " 'plasticboy/vim-markdown
 " https://github.com/plasticboy/vim-markdown
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_fenced_languages = ['csharp=cs', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'nginx=nginx']
 
-" 'Valloric/YouCompleteMe'
-" let g:ycm_add_preview_to_completeopt = 1
-" let g:ycm_autoclose_preview_window_after_insertion = 1
-" let g:ycm_autoclose_preview_window_after_completion=1
-" let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
-" let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
-" let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
-" let g:ycm_complete_in_comments = 0 " Completion in comments
-" let g:ycm_complete_in_strings = 0 " Completion in string
-" map <leader>gt :YcmCompleter GoToDefinitionElseDeclaration<cr>
-
-" 'heavenshell/vim-jsdoc'
-" https://github.com/heavenshell/vim-jsdoc
-let g:jsdoc_allow_input_prompt = 1
-let g:jsdoc_input_description = 1
-let g:jsdoc_underscore_private = 1
-let g:jsdoc_enable_es6 = 1
-let g:jsdoc_access_descriptions = 1
-nmap <silent> <leader>jd <Plug>(jsdoc)
-
-
-" TESTING
-" https://www.reddit.com/r/node/comments/6jfb68/vim_nodejs_completion/
-" enhance YCM JS completion with tern's smarts
-autocmd FileType javascript setlocal omnifunc=tern#Complete
-set completeopt-=preview
-
-" Python with virtualenv support
-" https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/
-" python3 << EOF
-" import os
-" import sys
-" if 'VIRTUAL_ENV' in os.environ:
-"   project_base_dir = os.environ['VIRTUAL_ENV']
-"   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"   # execfile(activate_this, dict(__file__=activate_this))
-"   exec(compile(open(activate_this, "rb").read(), activate_this, 'exec'), globals, locals)
-" EOF
-
-" 'davidhalter/jedi-vim'
-
-
-" Cursor styles
-" Use a blinking upright bar cursor in Insert mode, a blinking block in normal
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
-" " insert mode - line
-"let &t_SI .= "\<Esc>[5 q"
-" "replace mode - underline
-"let &t_SR .= "\<Esc>[4 q"
-" "common - block
-"let &t_EI .= "\<Esc>[3 q"
-
-" if exists('$TMUX')
-"     let &t_SI = "\<Esc>Ptmux;\<Esc>\e[5 q\<Esc>\\"
-"     let &t_EI = "\<Esc>Ptmux;\<Esc>\e[2 q\<Esc>\\"
-" else
-"     let &t_SI = "\e[5 q"
-"     let &t_EI = "\e[2 q"
-" endif
-
-" let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-" let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-
-" http://vim.wikia.com/wiki/Configuring_the_cursor
-" Tmux details: http://reza.jelveh.me/2011/09/18/zsh-tmux-vi-mode-cursor
-if &term =~ "xterm\\|rxvt"
-  " echo 'xterm|rxvt'
-  " Insert
-  let &t_SI  = "\<Esc>]12;gray\x7"
-  let &t_SI .= "\<Esc>[3 q"
-  " Normal
-  let &t_EI  = "\<Esc>]12;green\x7"
-  let &t_EI .= "\<Esc>[2 q"
-  autocmd VimLeave * silent !echo -ne "\033]112\007"
-elseif &term =~ "screen-it\\|tmux\\|gnome-terminal"
-  " echo 'screen-it|tmux|gnome-terminal'
-  " Insert
-  let &t_SI  = "\<Esc>Ptmux;\<Esc>\<Esc>]12;gray\x7\<Esc>\\"
-  let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[3 q\<Esc>\\"
-  " Normal
-  let &t_EI  = "\<Esc>Ptmux;\<Esc>\<Esc>]12;gray\x7\<Esc>\\"
-  let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
-  autocmd VimLeave * silent !printf "\033Ptmux;\033\033]12;gray\007\033\\"
-endif
-
-" Fix cursor not working within tmux
-set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+" editorconfig/editorconfig-vim
+let g:EditorConfig_core_mode = 'external_command'
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " Shougo/deoplete.nvim
 " https://github.com/Shougo/deoplete.nvim
-"
-" TESTING: 2017-12-1
-"
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#auto_complete_start_length = 1
+" let g:deoplete#auto_complete_delay = 50
 let g:deoplete#sources#ternjs#docs = 1
 
 " Use tern_for_vim.
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
+" let g:tern#command = ["tern"]
+" let g:tern#arguments = ["--persistent"]
 
 " ALE
 " https://github.com/w0rp/ale
 let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_enter = 1
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
+\ 'javascript': ['eslint'],
+\ 'typescript': ['tsserver']
 \}
+
+" let g:ale_sign_error = '>>' Default
+let g:ale_sign_error = '❌'
+" let g:ale_sign_warning = '--' Default
+let g:ale_sign_warning = '🔺'
+
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
 nmap <silent> <leader>lf <Plug>(ale_fix)
 nmap <silent> <leader>lp <Plug>(ale_previous_wrap)
 nmap <silent> <leader>ln <Plug>(ale_next_wrap)
+
+" let g:tsuquyomi_completion_detail = 1
+" autocmd FileType typescript nmap <buffer> <leader>d : <C-u>echo tsuquyomi#hint()<Cr>
+
+" HerringtonDarkholme/yats.vim: https://github.com/HerringtonDarkholme/yats.vim
+"
+" Syntax for TypeScript
+let g:yats_host_keyword = 1
+
+" mhartington/nvim-typescript: https://github.com/mhartington/nvim-typescript
+" nvim language service plugin for typescript
+let g:nvim_typescript#type_info_on_hold = 0
+let g:nvim_typescript#javascript_support = 1
+let g:nvim_typescript#diagnostics_enable = 0 " ALE handles linting errors
+" let g:nvim_typescript#max_completion_detail = 100
+nnoremap <buffer> <silent> <leader>tt :TSType<CR>
+nnoremap <buffer> <silent> <leader>td :TSDoc<CR>
+nnoremap <buffer> <silent> <leader>tdd :TSTypeDef<CR>
+nnoremap <buffer> <silent> <leader>tdp :TSDefPreview<CR>
+nnoremap <buffer> <silent> <leader>tr :TSRefs<CR>
+nnoremap <buffer> <silent> <leader>ti :TSImport<CR>
+
+" easymotion/vim-easymotion
+map <leader>e <Plug>(easymotion-prefix)
+
+let g:EasyMotion_do_shade = 0
+
+hi EasyMotionTarget ctermfg=1 cterm=bold,underline
+hi link EasyMotionTarget2First EasyMotionTarget
+hi EasyMotionTarget2Second ctermfg=1 cterm=underline
+
+" incsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
+" incsearch-easymotion
+map / <Plug>(incsearch-easymotion-/)
+map ? <Plug>(incsearch-easymotion-?)
+map g/ <Plug>(incsearch-easymotion-stay)
+
+" javascript functions
+autocmd! BufNewFile,BufRead,FileType javascript,typescript nmap <leader>rt :call VimuxRunCommand("clear; echo " . bufname("%") . "; npm run test " . bufname("%"))<cr>
