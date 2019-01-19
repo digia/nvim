@@ -58,6 +58,8 @@ Plug 'vheon/JediHTTP', { 'for': 'python' }
 Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
 " Plug 'zchee/deoplete-jedi'
 
+Plug 'chr4/nginx.vim'
+
 Plug 'elixir-lang/vim-elixir'
 
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -93,7 +95,7 @@ Plug 'isRuslan/vim-es6', { 'for': 'javascript' }
 
 "Plug 'HerringtonDarkholme/yats.vim'
 Plug 'leafgarland/typescript-vim'
-Plug 'mhartington/nvim-typescript', { 'for': 'typescript', 'do': './install.sh' }
+Plug 'mhartington/nvim-typescript'
 
 " TODO: Formalize tern solution
 "Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
@@ -509,7 +511,9 @@ nnoremap <leader>p :<C-u>DeniteBufferDir file_rec/git<CR>
 nnoremap <leader>r :<C-u>Denite -resume -cursor-pos=+1<CR>
 "nnoremap <leader>lr :<C-u>Denite references -mode=normal<CR> ?
 
-hi link deniteMatchedChar Special
+call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
+call denite#custom#option('_', 'highlight_matched_range', 'None')
+call denite#custom#option('_', 'highlight_matched_char', 'CursorLine')
 
 " NerdTree
 let NERDTreeShowHidden=1
@@ -599,9 +603,14 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 1
 let g:ale_fixers = {
-\ 'javascript': ['eslint'],
-\ 'typescript': ['tsserver']
-\}
+  \ 'javascript': ['eslint'],
+  \ 'typescript': ['tslint']
+  \}
+
+" https://github.com/w0rp/ale/blob/master/doc/ale-typescript.txt
+let g:ale_linters_ignore = {
+  \ 'typescript': ['tslint', 'eslint']
+  \}
 
 " let g:ale_sign_error = '>>' Default
 let g:ale_sign_error = '❌'
