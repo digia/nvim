@@ -380,6 +380,8 @@ autocmd FileReadPre *.* silent! loadview
 
 " Exit insert mode
 " inoremap kj <esc> ctrl-c should be more than sufficient with caplock being CTRL
+inoremap <C-c> <Esc>
+"inoremap <C-]> <C-c>
 
 " Path to current files directory
 cnoremap %% <c-R>=expand('%:h').'/'<cr>
