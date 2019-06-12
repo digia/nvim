@@ -207,7 +207,7 @@ set wildmode=longest,list:longest
 set wildchar=<TAB>
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/node_modules/**,*/bower_components/**,**/venv/**,*.pyc
 
-" send to system clipboard: https://coderwall.com/p/g-d8rg
+" See thought Zp4ylImW3 for VIM clipboard explanation
 set clipboard+=unnamed
 set autoread
 
