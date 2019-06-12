@@ -379,7 +379,7 @@ autocmd FileWritePre *.* silent! mkview
 autocmd FileReadPre *.* silent! loadview
 
 " Exit insert mode
-inoremap kj <esc>
+" inoremap kj <esc> ctrl-c should be more than sufficient with caplock being CTRL
 
 " Path to current files directory
 cnoremap %% <c-R>=expand('%:h').'/'<cr>
