@@ -10,7 +10,11 @@ call plug#begin()
 
 "Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'Shougo/denite.nvim'
+"Plug 'Shougo/denite.nvim'
+
+"Plug '/usr/local/opt/fzf'
+Plug '/usr/bin/fzf'
+Plug 'junegunn/fzf.vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -463,59 +467,122 @@ set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 " sources.
 "
 " Reset 50% winheight on window resize
-augroup deniteresize
-  autocmd!
-  autocmd VimResized,VimEnter * call denite#custom#option('default', 'winheight', winheight(0) / 2)
-augroup end
+"augroup deniteresize
+  "autocmd!
+  "autocmd VimResized,VimEnter * call denite#custom#option('default', 'winheight', winheight(0) / 2)
+"augroup end
 
-call denite#custom#option('default', { 'prompt': '❯' })
+"call denite#custom#option('default', { 'prompt': '❯' })
 
 "call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
-call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+"call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
+"call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
+"call denite#custom#var('file_rec/git', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+"call denite#custom#alias('source', 'file_rec/git', 'file/rec')
 
 " ripgrep
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--smart-case'])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+"call denite#custom#var('grep', 'command', ['rg'])
+"call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--smart-case'])
+"call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 
 " ag
 "call denite#custom#source('grep', 'matchers', ['matcher_regexp'])
 "call denite#custom#var('grep', 'command', ['ag'])
 "call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep']) ? smartcase ?
 
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', [])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
+"call denite#custom#var('grep', 'recursive_opts', [])
+"call denite#custom#var('grep', 'pattern_opt', [])
+"call denite#custom#var('grep', 'separator', ['--'])
+"call denite#custom#var('grep', 'final_opts', [])
 
-call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>', 'noremap')
-call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>', 'noremap')
+"call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>', 'noremap')
+"call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>', 'noremap')
 "call denite#custom#map('normal', '<Esc>', '<NOP>', 'noremap') ? Do nothing when escape is pressed in normal mode
-call denite#custom#map('normal', '<C-v>', '<denite:do_action:vsplit>', 'noremap')
-call denite#custom#map('normal', 'dw', '<denite:delete_word_after_caret>', 'noremap')
+"call denite#custom#map('normal', '<C-v>', '<denite:do_action:vsplit>', 'noremap')
+"call denite#custom#map('normal', 'dw', '<denite:delete_word_after_caret>', 'noremap')
 
-call denite#custom#map('normal', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('normal', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+"call denite#custom#map('normal', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+"call denite#custom#map('normal', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+"call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+"call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
 
-nnoremap <C-p> :<C-u>DeniteProjectDir file_rec/git<CR>
-nnoremap <C-o> :<C-u>DeniteProjectDir file_rec<CR>
-nnoremap <C-b> :<C-u>Denite buffer -mode=normal<CR>
+"nnoremap <C-p> :<C-u>DeniteProjectDir file_rec/git<CR>
+"nnoremap <C-o> :<C-u>DeniteProjectDir file_rec<CR>
+"nnoremap <C-b> :<C-u>Denite buffer -mode=normal<CR>
 " nnoremap <leader><Space>s :<C-u>DeniteBufferDir buffer<CR> ?
-nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
+"nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
+"nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. <CR>
 "nnoremap <leader>/ :DeniteProjectDir -buffer-name=grep -default-action=quickfix grep:::!<CR> ? quickfix ?
-nnoremap <leader>/ :<C-u>DeniteProjectDir grep:. -mode=normal<CR>
-nnoremap <leader><Space>/ :<C-u>DeniteBufferDir grep:. -mode=normal<CR>
-nnoremap <leader>p :<C-u>DeniteBufferDir file_rec/git<CR>
-nnoremap <leader>r :<C-u>Denite -resume -cursor-pos=+1<CR>
+"nnoremap <leader>/ :<C-u>DeniteProjectDir grep:. -mode=normal<CR>
+"nnoremap <leader>/ :<C-u>DeniteProjectDir grep:. <CR>
+"nnoremap <leader><Space>/ :<C-u>DeniteBufferDir grep:. -mode=normal<CR>
+"nnoremap <leader><Space>/ :<C-u>DeniteBufferDir grep:. <CR>
+"nnoremap <leader>p :<C-u>DeniteBufferDir file_rec/git<CR>
+"nnoremap <leader>r :<C-u>Denite -resume -cursor-pos=+1<CR>
 "nnoremap <leader>lr :<C-u>Denite references -mode=normal<CR> ?
 
-call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
-call denite#custom#option('_', 'highlight_matched_range', 'None')
-call denite#custom#option('_', 'highlight_matched_char', 'CursorLine')
+"call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
+"call denite#custom#option('_', 'highlight_matched_range', 'None')
+"call denite#custom#option('_', 'highlight_matched_char', 'CursorLine')
+
+
+" FZF
+"
+" https://github.com/junegunn/fzf.vim
+"
+" References:
+" * https://www.reddit.com/r/neovim/comments/3oeko4/post_your_fzfvim_configurations/
+" * https://github.com/zenbro/dotfiles/blob/master/.nvimrc
+" * https://github.com/euclio/vimrc/blob/master/plugins.vim
+
+"let g:fzf_nvim_statusline = 0
+let g:fzf_action = {
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit'
+  \ }
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+
+nnoremap <silent> <C-p> :FZF<CR>
+nnoremap <silent> <leader>p :GFiles<CR>
+nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>h :History<CR>
+
+" gl as in git log for the project
+nnoremap <silent> <leader>gl :Commits<CR>
+" gh as in git history for the current buffer
+nnoremap <silent> <leader>gh :BCommits<CR>
+
+imap <C-x><C-f> <plug>(fzf-complete-file-ag)
+imap <C-x><C-l> <plug>(fzf-complete-line)
+" Need a dictionary for this to work propery /usr/share/dict/words
+"imap <C-x><C-w> <plug>(fzf-complete-word)
+
+augroup fzf
+  autocmd!
+  autocmd! FileType fzf
+
+  " Tweaks visuals of fzf split
+  autocmd FileType fzf set laststatus=0 noshowmode noruler
+    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+augroup END
+
 
 " NerdTree
 let NERDTreeShowHidden=1
