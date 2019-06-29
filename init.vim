@@ -536,6 +536,12 @@ set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 " * https://github.com/euclio/vimrc/blob/master/plugins.vim
 
 "let g:fzf_nvim_statusline = 0
+
+" command! -bang -nargs=? -complete=dir Files
+"   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=? -complete=dir ProjectFiles
+  \ call fzf#vim#files(<q-args>, {'source': 'rg --files --hidden --glob "!.git/*"'}, <bang>0)
+
 let g:fzf_action = {
   \ 'ctrl-s': 'split',
   \ 'ctrl-v': 'vsplit'
@@ -557,8 +563,10 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 
-nnoremap <silent> <C-p> :FZF<CR>
+"nnoremap <silent> <C-p> :FZF<CR>
+nnoremap <silent> <C-p> :ProjectFiles<CR>
 nnoremap <silent> <leader>p :GFiles<CR>
+nnoremap <silent> <C-o> :FZF<CR>
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
 
 nnoremap <silent> <leader>b :Buffers<CR>
