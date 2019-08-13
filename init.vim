@@ -151,6 +151,21 @@ function! StrTrim(txt)
   return substitute(a:txt, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 endfunction
 
+" Replace unicode punctuation with ASCII
+" https://github.com/machuga/dotfiles/blob/master/init.vim
+function! ReplaceUnicodePunctuationCharacters()
+    let typo = {}
+    let typo["“"] = '"'
+    let typo["”"] = '"'
+    let typo["‘"] = "'"
+    let typo["’"] = "'"
+    let typo["–"] = '--'
+    let typo["—"] = '---'
+    let typo["…"] = '...'
+    :exe ":%s/".join(keys(typo), '\|').'/\=typo[submatch(0)]/ge'
+endfunction
+command! ReplaceUnicodePunctuationCharacters :call ReplaceUnicodePunctuationCharacters()
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
