@@ -36,7 +36,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ervandew/supertab'
 Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-easymotion.vim'
+"Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'
 Plug 'rstacruz/sparkup'
@@ -54,8 +54,12 @@ Plug 'vim-scripts/bufkill.vim'
 Plug 'w0rp/ale' " Async linting engine
 Plug 'wellle/tmux-complete.vim'
 
+"Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-markdown'
+Plug 'reedes/vim-pencil' " Assist with using VIM as a writing tool
+
 " Language specific
-Plug 'hdima/python-syntax', { 'for': 'python' }
+"Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'vheon/JediHTTP', { 'for': 'python' }
@@ -69,9 +73,9 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'fatih/vim-go', { 'for': 'go' }
 
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
+"Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
 
-Plug 'elzr/vim-json', { 'for': 'json' }
+"Plug 'elzr/vim-json', { 'for': 'json' }
 
 Plug 'gregsexton/MatchTag', { 'for': ['html', 'blade'] }
 Plug 'othree/html5.vim', { 'for': ['html', 'blade'] }
@@ -80,30 +84,32 @@ Plug 'othree/html5-syntax.vim', { 'for': ['html', 'blade'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
 
-Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
-Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
+"Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
+"Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
 
-Plug 'posva/vim-vue'
+"Plug 'posva/vim-vue'
 
 "Plug 'mattn/emmet-vim' ?
 
-Plug 'cespare/vim-toml'
+"Plug 'cespare/vim-toml'
 
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'jelera/vim-javascript-syntax'
-" Plug 'othree/yajs.vim' Yello object keys :(
-Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
-Plug 'moll/vim-node', { 'for': 'javascript' }
-Plug 'isRuslan/vim-es6', { 'for': 'javascript' }
-
+"Plug 'mustache/vim-mustache-handlebars'
+"Plug 'jelera/vim-javascript-syntax'
+"Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
+Plug 'moll/vim-node'
+Plug 'isRuslan/vim-es6'
 
 "Plug 'HerringtonDarkholme/yats.vim'
-Plug 'leafgarland/typescript-vim'
+"Plug 'leafgarland/typescript-vim'
 Plug 'mhartington/nvim-typescript'
 
 " TODO: Formalize tern solution
 "Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
 "Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript', 'do': 'npm install -g tern' }
+
+Plug 'sheerun/vim-polyglot'
+
+Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 
@@ -338,6 +344,7 @@ set statusline+=%{LanguageClient_statusLine()}
 " set statusline+=%#StatusLineError#
 " errors from w0rp/ale
 set statusline+=%{LinterStatus()}
+"set statusline+=\ \ POWER\ MODE!!!\ Combo\:\ 9001
 " reset highlight group
 " set statusline+=%#StatusLine#
 set statusline+=\ "
@@ -358,9 +365,11 @@ augroup vimrcEx
     \ endif
 
   "Autoindent with two spaces, always expand tabs
-  autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell textwidth=80 ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
+  "autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell textwidth=80 ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
+  "autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
+  autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell ai formatoptions=a2tq linebreak filetype=markdown conceallevel=0
   autocmd! BufRead,BufNewFile,FileType php set sw=4 sts=4 et
-  autocmd! BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix filetype=python
+  autocmd! BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=80 expandtab autoindent fileformat=unix filetype=python
   autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
   autocmd! BufNewFile,BufRead,FileType html,css,sass,scss,blade,cucumber,yaml,html.handlebars,javascript,pug,htmldjango set tabstop=2 softtabstop=2 shiftwidth=2 fileformat=unix
 
@@ -632,11 +641,8 @@ nnoremap <silent> <leader>gc :Gcommit<CR>
 nnoremap <silent> <leader>gb :Gblame<CR>
 
 " airblade/vim-gitgutter
-if exists('&signcolumn')  " Vim 7.4.2201
-  set signcolumn=yes
-else
-  let g:gitgutter_sign_column_always = 1
-endif
+set signcolumn=yes
+autocmd FileType tagbar,nerdtree setlocal signcolumn=no
 
 " python-syntax
 let python_highlight_all = 1
@@ -664,14 +670,20 @@ map <Leader>vx :VimuxInterruptRunner<CR>
 " elzr/vim-json
 let g:vim_json_syntax_conceal = 0 " Don't hide quotes in json files
 
-" 'Yggdroot/indentLine'
+" Yggdroot/indentLine
 let g:indentLine_color_term = 0
 let g:indentLine_faster = 1
 
-" 'plasticboy/vim-markdown
+" plasticboy/vim-markdown
 " https://github.com/plasticboy/vim-markdown
-let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_fenced_languages = ['csharp=cs', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'nginx=nginx']
+let g:vim_markdown_frontmatter=1 " Use yaml syntax at the start of markdown
+let g:vim_markdown_auto_insert_bullets = 0 " Don't press my buttons
+let g:vim_markdown_new_list_item_indent = 0 " Don't press my buttons
+
+" tpope/vim-markdown
+" https://github.com/tpope/vim-markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript']
 
 " editorconfig/editorconfig-vim
 let g:EditorConfig_core_mode = 'external_command'
@@ -694,16 +706,23 @@ let g:deoplete#sources#ternjs#docs = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 1
+
 let g:ale_fixers = {
   \ 'javascript': ['eslint'],
-  \ 'typescript': ['tslint']
+  \ 'typescript': ['eslint', 'tsserver']
   \}
+
+let g:ale_linters = {
+\  'javascript': ['eslint'],
+\  'typescript': ['eslint', 'tsserver'],
+\}
 
 " https://github.com/w0rp/ale/blob/master/doc/ale-typescript.txt
 let g:ale_linters_ignore = {
-  \ 'typescript': ['tslint', 'eslint']
+  \ 'typescript': ['tslint']
   \}
 
+let g:ale_sign_column_always = 1
 " let g:ale_sign_error = '>>' Default
 let g:ale_sign_error = '❌'
 " let g:ale_sign_warning = '--' Default
@@ -711,7 +730,8 @@ let g:ale_sign_warning = '🔺'
 
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_echo_msg_format = '[%linter%] %s'
 
 nmap <silent> <leader>lf <Plug>(ale_fix)
 nmap <silent> <leader>lp <Plug>(ale_previous_wrap)
@@ -731,6 +751,39 @@ let g:nvim_typescript#type_info_on_hold = 0
 let g:nvim_typescript#javascript_support = 1
 let g:nvim_typescript#diagnostics_enable = 0 " ALE handles linting errors
 " let g:nvim_typescript#max_completion_detail = 100
+
+" HACK(digia): Overrides ALE, even with diagnostics_enabled set to 0
+let g:nvim_typescript#default_signs = [
+  \  {
+  \  'TSerror': {
+  \   'texthl': '',
+  \   'signText': '',
+  \   'signTexthl': 'NeomakeErrorSign'
+  \  }
+  \},
+  \{
+  \  'TSwarning': {
+  \   'texthl': '',
+  \   'signText': '',
+  \   'signTexthl': 'NeomakeWarningSign'
+  \  }
+  \},
+  \{
+  \  'TSinformation': {
+  \   'texthl': '',
+  \   'signText': '',
+  \   'signTexthl': 'NeomakeInfoSign'
+  \   }
+  \},
+  \{
+  \  'TShint': {
+  \   'texthl': 'SpellBad',
+  \   'signText': '?',
+  \   'signTexthl': 'NeomakeInfoSign'
+  \   }
+  \}
+  \]
+
 nnoremap <buffer> <silent> <leader>tt :TSType<CR>
 nnoremap <buffer> <silent> <leader>td :TSDoc<CR>
 nnoremap <buffer> <silent> <leader>tdd :TSTypeDef<CR>
@@ -757,9 +810,26 @@ map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
 " incsearch-easymotion
-map / <Plug>(incsearch-easymotion-/)
-map ? <Plug>(incsearch-easymotion-?)
-map g/ <Plug>(incsearch-easymotion-stay)
+"map / <Plug>(incsearch-easymotion-/)
+"map ? <Plug>(incsearch-easymotion-?)
+"map g/ <Plug>(incsearch-easymotion-stay)
+
+" junegunn/vim-easy-align -- align text, specifically markdown tables
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" reedes/vim-pencil
+let g:pencil#wrapModeDefault = 'soft'
+let g:pencil#conceallevel = 0 " Don't conceal things
+
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+augroup END
 
 " javascript functions
-autocmd! BufNewFile,BufRead,FileType javascript,typescript nmap <leader>rt :call VimuxRunCommand("clear; echo " . bufname("%") . "; npm run test " . bufname("%"))<cr>
+autocmd! BufNewFile,BufRead,FileType javascript,typescript nmap <leader>rt :call VimuxRunCommand("clear; echo " . bufname("%") . "; npm run --silent test " . bufname("%"))<cr>
+
