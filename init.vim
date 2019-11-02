@@ -96,12 +96,18 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 "Plug 'mustache/vim-mustache-handlebars'
 "Plug 'jelera/vim-javascript-syntax'
 "Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
+
 Plug 'moll/vim-node'
 Plug 'isRuslan/vim-es6'
 
 "Plug 'HerringtonDarkholme/yats.vim'
 "Plug 'leafgarland/typescript-vim'
 Plug 'mhartington/nvim-typescript'
+
+"Plug 'pangloss/vim-javascript'
+"Plug 'mxw/vim-jsx'
+
+Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
 
 " TODO: Formalize tern solution
 "Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
