@@ -373,7 +373,7 @@ augroup vimrcEx
   "Autoindent with two spaces, always expand tabs
   "autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell textwidth=80 ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
   "autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
-  autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell ai formatoptions=a2tq linebreak filetype=markdown conceallevel=0
+  "autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell ai formatoptions=a2tq linebreak filetype=markdown conceallevel=0
   autocmd! BufRead,BufNewFile,FileType php set sw=4 sts=4 et
   autocmd! BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=80 expandtab autoindent fileformat=unix filetype=python
   autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
@@ -827,14 +827,16 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " reedes/vim-pencil
-let g:pencil#wrapModeDefault = 'soft'
-let g:pencil#conceallevel = 0 " Don't conceal things
+"
+" NOTE(digia): Keep breaking git commit messages using Fugitive
+"
+" let g:pencil#wrapModeDefault = 'soft'
+" let g:pencil#conceallevel = 0 " Don't conceal things
 
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
-  autocmd FileType text         call pencil#init()
-augroup END
+" augroup pencil
+"   autocmd!
+"   autocmd FileType markdown,mkd call pencil#init()
+" augroup END
 
 " javascript functions
 autocmd! BufNewFile,BufRead,FileType javascript,typescript nmap <leader>rt :call VimuxRunCommand("clear; echo " . bufname("%") . "; npm run --silent test " . bufname("%"))<cr>
