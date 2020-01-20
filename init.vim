@@ -117,8 +117,9 @@ Plug 'sheerun/vim-polyglot'
 
 Plug 'junegunn/vim-easy-align'
 
-call plug#end()
+Plug 'AndrewRadev/splitjoin.vim'
 
+call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Functions
@@ -840,4 +841,7 @@ nmap ga <Plug>(EasyAlign)
 
 " javascript functions
 autocmd! BufNewFile,BufRead,FileType javascript,typescript nmap <leader>rt :call VimuxRunCommand("clear; echo " . bufname("%") . "; npm run --silent test " . bufname("%"))<cr>
+
+" php functions
+autocmd! BufNewFile,BufRead,FileType php setlocal commentstring=//\ %s
 
