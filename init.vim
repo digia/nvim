@@ -36,13 +36,23 @@ Plug 'easymotion/vim-easymotion'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ervandew/supertab'
 Plug 'haya14busa/incsearch.vim'
-"Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'
 Plug 'rstacruz/sparkup'
 Plug 'scrooloose/nerdtree'
-" Plug 'sheerun/vim-polyglot' Conflicting with typescript auto complete
-Plug 'tpope/vim-commentary'
+
+" NOTE(2020-01-20): Testing nerdcommenter instead of vim-commentary due to
+" FatBoyXPC suggestion in #laravel-offtopic
+"
+" NOTE(2020-01-20): Testing caw.vim instead of vim-commentary due to
+" dshoreman suggestion in #laravel-offtopic
+
+" https://github.com/preservim/nerdcommenter
+Plug 'preservim/nerdcommenter'
+" https://github.com/tyru/caw.vim
+"Plug 'tyru/caw.vim'
+"Plug 'tpope/vim-commentary'
+
 Plug 'tpope/vim-dispatch' " [Review when testing]
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -100,18 +110,14 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'moll/vim-node'
 Plug 'isRuslan/vim-es6'
 
-"Plug 'HerringtonDarkholme/yats.vim'
-"Plug 'leafgarland/typescript-vim'
-Plug 'mhartington/nvim-typescript'
+Plug 'leafgarland/typescript-vim'
+Plug 'HerringtonDarkholme/yats.vim'
 
-"Plug 'pangloss/vim-javascript'
-"Plug 'mxw/vim-jsx'
+" NOTE(2020-01-21): Trying coc.nvim instead of nvim-typescript
+"Plug 'mhartington/nvim-typescript'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
-
-" TODO: Formalize tern solution
-"Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
-"Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript', 'do': 'npm install -g tern' }
 
 Plug 'sheerun/vim-polyglot'
 
@@ -674,12 +680,15 @@ map <Leader>vx :VimuxInterruptRunner<CR>
 " nmap <leader>s :w\|:Silent echo "vendor/bin/phpspec run %" > test-commands<cr>
 " nmap <leader>ss :w\|:Silent echo "vendor/bin/phpspec run" > test-commands<cr>
 
+
 " elzr/vim-json
 let g:vim_json_syntax_conceal = 0 " Don't hide quotes in json files
+
 
 " Yggdroot/indentLine
 let g:indentLine_color_term = 0
 let g:indentLine_faster = 1
+
 
 " plasticboy/vim-markdown
 " https://github.com/plasticboy/vim-markdown
@@ -838,6 +847,70 @@ nmap ga <Plug>(EasyAlign)
 "   autocmd!
 "   autocmd FileType markdown,mkd call pencil#init()
 " augroup END
+
+
+" preservim/nerdcommenter
+"
+" https://github.com/preservim/nerdcommenter#default-mappings
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Do not create the default mappings since they're <leader> prefixed
+let g:NERDCreateDefaultMappings = 0
+
+" map gcc <plug>NERDCommenterComment
+map gcc <plug>NERDCommenterToggle
+map gcn <plug>NERDCommenterNested
+map gci <plug>NERDCommenterInvert
+map gcy <plug>NERDCommenterYank
+map gc$ <plug>NERDCommenterToEOL
+map gcA <plug>NERDCommenterAppend
+map gcu <plug>NERDCommenterUncomment
+map gcm <plug>NERDCommenterMinimal
+map gcs <plug>NERDCommenterSexy
+
+
+" neoclide/coc.nvim
+"
+" https://github.com/neoclide/coc.nvim
+"
+" TODO:
+" * Sign column appears to go 3 columns wide?
+" * Review g hotkeys
+" * Collision with ctrl-p when in type previewer
+" * "Popup" window colors
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 
 " javascript functions
 autocmd! BufNewFile,BufRead,FileType javascript,typescript nmap <leader>rt :call VimuxRunCommand("clear; echo " . bufname("%") . "; npm run --silent test " . bufname("%"))<cr>
