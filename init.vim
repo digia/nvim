@@ -723,14 +723,20 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 1
 
+" coc.vim handles the fixers for typescript
+" let g:ale_fixers = {'javascript': ['eslint'], 'typescript': ['eslint', 'tsserver']}
+
 let g:ale_fixers = {
   \ 'javascript': ['eslint'],
-  \ 'typescript': ['eslint', 'tsserver']
+  \ 'typescript': ['eslint']
   \}
+
+" coc.vim handles linting for typescript
+" let g:ale_linters = {'javascript': ['eslint'],  'typescript': ['eslint', 'tsserver']}
 
 let g:ale_linters = {
 \  'javascript': ['eslint'],
-\  'typescript': ['eslint', 'tsserver'],
+\  'typescript': ['eslint'],
 \}
 
 " https://github.com/w0rp/ale/blob/master/doc/ale-typescript.txt
@@ -739,19 +745,19 @@ let g:ale_linters_ignore = {
   \}
 
 let g:ale_sign_column_always = 1
-" let g:ale_sign_error = '>>' Default
-let g:ale_sign_error = '❌'
-" let g:ale_sign_warning = '--' Default
-let g:ale_sign_warning = '🔺'
+" let g:ale_sign_error = '>>' " Default
+"let g:ale_sign_error = '❌'
+" let g:ale_sign_warning = '--' " Default
+"let g:ale_sign_warning = '🔺'
 
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 "let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_echo_msg_format = '[%linter%] %s'
 
-nmap <silent> <leader>lf <Plug>(ale_fix)
-nmap <silent> <leader>lp <Plug>(ale_previous_wrap)
-nmap <silent> <leader>ln <Plug>(ale_next_wrap)
+nmap <silent> <leader>af <Plug>(ale_fix)
+nmap <silent> <leader>ap <Plug>(ale_previous_wrap)
+nmap <silent> <leader>an <Plug>(ale_next_wrap)
 
 " let g:tsuquyomi_completion_detail = 1
 " autocmd FileType typescript nmap <buffer> <leader>d : <C-u>echo tsuquyomi#hint()<Cr>
