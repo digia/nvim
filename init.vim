@@ -8,26 +8,26 @@ let mapleader="\<space>"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 
-"Plug 'ctrlpvim/ctrlp.vim'
-"Plug 'FelikZ/ctrlp-py-matcher'
-"Plug 'Shougo/denite.nvim'
-
-"Plug '/usr/local/opt/fzf'
-Plug '/usr/bin/fzf'
+Plug '/usr/local/opt/fzf'
+"Plug '/usr/bin/fzf'
 Plug 'junegunn/fzf.vim'
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+" if has('nvim')
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+  " Plug 'Shougo/deoplete.nvim'
+  " Plug 'roxma/nvim-yarp'
+  " Plug 'roxma/vim-hug-neovim-rpc'
+" endif
 
 Plug 'MarcWeber/vim-addon-local-vimrc'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
-Plug 'altercation/vim-colors-solarized'
+
+" NOTE(2020-05-15): Testing out better 24 bit color support with vim-solarized8
+" Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
+
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
 Plug 'benizi/vim-automkdir'
 Plug 'benmills/vimux'
@@ -40,6 +40,10 @@ Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'
 Plug 'rstacruz/sparkup'
 Plug 'scrooloose/nerdtree'
+
+" NOTE(2020-05-15): Support for checking if files changed on focus events
+" https://github.com/tmux-plugins/vim-tmux-focus-events
+Plug 'tmux-plugins/vim-tmux-focus-events'
 
 " NOTE(2020-01-20): Testing nerdcommenter instead of vim-commentary due to
 " FatBoyXPC suggestion in #laravel-offtopic
@@ -61,20 +65,19 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/bufkill.vim'
-Plug 'w0rp/ale' " Async linting engine
+Plug 'dense-analysis/ale' " Async linting engine
 Plug 'wellle/tmux-complete.vim'
 
-"Plug 'plasticboy/vim-markdown'
-Plug 'tpope/vim-markdown'
-Plug 'reedes/vim-pencil' " Assist with using VIM as a writing tool
+Plug 'Shougo/echodoc.vim'
+
+"Plug 'tpope/vim-markdown'
+"Plug 'reedes/vim-pencil' " Assist with using VIM as a writing tool
 
 " Language specific
-"Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
 Plug 'vheon/JediHTTP', { 'for': 'python' }
 Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
-" Plug 'zchee/deoplete-jedi'
 
 Plug 'chr4/nginx.vim'
 
@@ -83,9 +86,6 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'fatih/vim-go', { 'for': 'go' }
 
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-"Plug 'xsbeats/vim-blade', { 'for': ['php', 'blade'] }
-
-"Plug 'elzr/vim-json', { 'for': 'json' }
 
 Plug 'gregsexton/MatchTag', { 'for': ['html', 'blade'] }
 Plug 'othree/html5.vim', { 'for': ['html', 'blade'] }
@@ -93,19 +93,6 @@ Plug 'othree/html5-syntax.vim', { 'for': ['html', 'blade'] }
 
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'ap/vim-css-color', { 'for': 'css' }
-
-"Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
-"Plug 'groenewege/vim-less', { 'for': ['less', 'scss', 'sass'] }
-
-"Plug 'posva/vim-vue'
-
-"Plug 'mattn/emmet-vim' ?
-
-"Plug 'cespare/vim-toml'
-
-"Plug 'mustache/vim-mustache-handlebars'
-"Plug 'jelera/vim-javascript-syntax'
-"Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
 
 Plug 'moll/vim-node'
 Plug 'isRuslan/vim-es6'
@@ -238,10 +225,12 @@ set autoindent
 set smartindent
 
 set cursorline
+set pumheight=15
 
 " Path/file expansion in colon-mode.
 set wildmenu
-set wildmode=longest,list:longest
+"set wildmode=longest,list:longest
+set wildmode=list:longest,full
 set wildchar=<TAB>
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/node_modules/**,*/bower_components/**,**/venv/**,*.pyc
 
@@ -254,11 +243,11 @@ set mousehide
 
 set ambiwidth=double
 
-set completeopt-=preview
 set noshowmode " disable extraneous messages
 
 set hlsearch " Highlight search results.
 set ignorecase " Make searching case insensitive
+set wildignorecase
 set smartcase " ... unless the query has capital letters.
 set infercase " :help infercase
 set incsearch " Incremental search.
@@ -299,6 +288,10 @@ if &t_Co == 8 && $TERM !~# '^linux'
   set t_Co=256
 endif
 
+if (has("termguicolors"))
+  set termguicolors
+endif
+
 set guifont=Roboto\ Mono:h15
 set encoding=utf-8
 set guioptions-=T
@@ -310,8 +303,14 @@ set guioptions-=L " turn off GUI left scrollbar
 "let &colorcolumn="80,".join(range(120,999),",") " Join columns 120+ for danger color markers.
 let &colorcolumn="80" " Only show col 80
 
+" NOTE(digia): Suggested https://github.com/lifepillar/vim-solarized8#troubleshooting
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+let g:solarized_statusline="normal"
+
 set background=dark
-colorscheme solarized
+colorscheme solarized8_flat
 
 set nomodeline
 
@@ -330,15 +329,16 @@ function! LinterStatus() abort
   let l:all_non_errors = l:counts.total - l:all_errors
 
   " return l:counts.total == 0 ? '' : printf(' %d🔺 %d❌', all_non_errors, all_errors)
-  return  printf(' %d🔺 %d❌', all_non_errors, all_errors)
+  " return  printf(' %d🔺 %d❌', all_non_errors, all_errors)
+  return  printf(' W:%d E:%d', all_non_errors, all_errors)
 endfunction
 " set statusline=""
 " set statusline+=%<%f
 " set statusline+=\ %m%r%w\ [%{&ft}]\ %*\ %=\ B:%n\ %*\ L:%l/%L[%P]\ %*\ C:%v\ %*\ [%b][0x%B]
 
-hi StatusLine guifg=#7FC1CA guibg=#556873
-hi StatusLineNC guifg=#3C4C55 guibg=#556873
-hi StatusLineError guifg=#DF8C8C guibg=#556873
+" hi StatusLine guifg=#7FC1CA guibg=#556873
+" hi StatusLineNC guifg=#3C4C55 guibg=#556873
+" hi StatusLineError guifg=#DF8C8C guibg=#556873
 
 set statusline=""
 " set statusline+=\ "
@@ -468,7 +468,7 @@ nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
 set pastetoggle=<Insert>
 
 " Point neovim to python
-let g:python3_host_prog = '/usr/bin/python'
+"let g:python3_host_prog = '/usr/bin/python'
 
 " Cursor styles
 " Use a blinking upright bar cursor in Insert mode, a blinking block in normal
@@ -492,6 +492,17 @@ endif
 
 " Fix cursor not working within tmux
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+
+" Triger `autoread` when files changes on disk
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+        \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+
+" Notification after file change
+" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Mappings
@@ -577,7 +588,18 @@ set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 " command! -bang -nargs=? -complete=dir Files
 "   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=? -complete=dir ProjectFiles
-  \ call fzf#vim#files(<q-args>, {'source': 'rg --files --hidden --glob "!.git/*"'}, <bang>0)
+      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'source': 'rg --files --hidden --follow --glob "!.git/*"', 'options': ['--info=inline']}), <bang>0)
+
+" https://github.com/junegunn/fzf.vim#example-advanced-ripgrep-integration
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 let g:fzf_action = {
   \ 'ctrl-s': 'split',
@@ -603,8 +625,8 @@ let g:fzf_colors =
 "nnoremap <silent> <C-p> :FZF<CR>
 nnoremap <silent> <C-p> :ProjectFiles<CR>
 nnoremap <silent> <leader>p :GFiles<CR>
-nnoremap <silent> <C-o> :FZF<CR>
-nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+nnoremap <silent> <leader>o :FZF<CR>
+nnoremap <silent> <leader>/ :execute 'RG ' . input('RG/')<CR>
 
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>h :History<CR>
@@ -697,25 +719,64 @@ let g:vim_markdown_frontmatter=1 " Use yaml syntax at the start of markdown
 let g:vim_markdown_auto_insert_bullets = 0 " Don't press my buttons
 let g:vim_markdown_new_list_item_indent = 0 " Don't press my buttons
 
+
 " tpope/vim-markdown
 " https://github.com/tpope/vim-markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript']
+
 
 " editorconfig/editorconfig-vim
 let g:EditorConfig_core_mode = 'external_command'
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
+
 " Shougo/deoplete.nvim
 " https://github.com/Shougo/deoplete.nvim
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#auto_complete_start_length = 1
-" let g:deoplete#auto_complete_delay = 50
-let g:deoplete#sources#ternjs#docs = 1
+" let g:deoplete#enable_at_startup = 1
 
-" Use tern_for_vim.
-" let g:tern#command = ["tern"]
-" let g:tern#arguments = ["--persistent"]
+" Old way of calling options
+"let g:deoplete#enable_smart_case = 1
+"let g:deoplete#auto_complete_start_length = 1
+"let g:deoplete#auto_complete_delay = 50
+
+" New way of calling options
+" call deoplete#custom#option({
+ " \ 'auto_complete_delay': 0,
+ " \ 'smart_case': v:true,
+ " \})
+
+" NOTE(digia): Testing this, I believe it should remove annoyances when
+" editing HTML and CSS files, though haven't proven that yet.
+" call deoplete#custom#option('omni_patterns', {
+ " \ 'html': '',
+ " \ 'css': '',
+ " \ 'scss': ''
+ " \})
+
+
+" Autocomplete supporting configurations
+" Note(digia): Fixes the autoinsert annoyance, taken from
+" https://github.com/mhartington/dotfiles/blob/master/config/nvim/init.vim
+"set completeopt+=menuone,noinsert
+"set completeopt-=preview
+"autocmd CompleteDone * pclose
+
+" https://github.com/chemzqm/vimrc/blob/master/general.vim
+set complete+=k
+set complete-=t
+set completeopt=menu,preview
+
+" :help deoplete-options enable_buffer_path
+" let g:deoplete#file#enable_buffer_path=1
+" call deoplete#custom#var('file', 'enable_buffer_path', '1')
+
+" let g:deoplete#sources#ternjs#docs = 1
+
+
+" Shougo/echodoc.vim
+let g:echodoc_enable_at_startup=1
+let g:echodoc#type="virtual"
+
 
 " ALE
 " https://github.com/w0rp/ale
