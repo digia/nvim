@@ -353,13 +353,17 @@ set statusline+=[%{&ft}]
 set statusline+=%=
 " lsp status
 set statusline+=%{LanguageClient_statusLine()}
-" start error highlight group
-" set statusline+=%#StatusLineError#
-" errors from w0rp/ale
+
+" NOTE(digia): 2020-08-13 Trying out having coc status in statusline
+set statusline+=%{coc#status()}
+set statusline+=\ "
+
 set statusline+=%{LinterStatus()}
+
 "set statusline+=\ \ POWER\ MODE!!!\ Combo\:\ 9001
 " reset highlight group
 " set statusline+=%#StatusLine#
+
 set statusline+=\ "
 
 set laststatus=2
