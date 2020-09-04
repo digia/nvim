@@ -103,8 +103,6 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'amadeus/vim-mjml'
 
-" NOTE(2020-01-21): Trying coc.nvim instead of nvim-typescript
-"Plug 'mhartington/nvim-typescript'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
@@ -186,6 +184,7 @@ set showmode            " Show current mode.
 set showtabline=1
 set ruler               " Show the line and column numbers of the cursor.
 set number              " Show the line numbers on the left side.
+set rnu
 set formatoptions+=o    " Continue comment marker in new lines.
 set textwidth=0         " Hard-wrap long lines as you type them.
 
@@ -258,6 +257,9 @@ set diffopt=filler,vertical
 set gdefault " Use 'g' flag by default with :s/foo/bar/.
 set magic " Use 'magic' patterns (extended regular expressions).
 
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
 set foldmethod=syntax
 set foldlevel=99
 " set nofoldenable
@@ -310,6 +312,7 @@ let &colorcolumn="80" " Only show col 80
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
+" Not sure this is doing anything; see hi StatusLine
 let g:solarized_statusline="normal"
 
 set background=dark
@@ -340,6 +343,8 @@ endfunction
 " set statusline+=\ %m%r%w\ [%{&ft}]\ %*\ %=\ B:%n\ %*\ L:%l/%L[%P]\ %*\ C:%v\ %*\ [%b][0x%B]
 
 " hi StatusLine guifg=#7FC1CA guibg=#556873
+hi StatusLine guifg=#839496 guibg=#073642
+hi StatusLineNC guifg=#596f71 guibg=#073642
 " hi StatusLineNC guifg=#3C4C55 guibg=#556873
 " hi StatusLineError guifg=#DF8C8C guibg=#556873
 
@@ -358,7 +363,8 @@ set statusline+=%=
 set statusline+=%{LanguageClient_statusLine()}
 
 " NOTE(digia): 2020-08-13 Trying out having coc status in statusline
-set statusline+=%{coc#status()}
+"set statusline+=%{coc#status()}
+set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}
 set statusline+=\ "
 
 set statusline+=%{LinterStatus()}
@@ -445,6 +451,9 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 nnoremap <c-h> <c-w>h
 
+nnoremap <leader>+ :vertical resize +5<CR>
+nnoremap <leader>- :vertical resize -5<CR>
+
 " Hack becuase the proper way nnoremap <c-h> <c-w>h does not currently work in
 " neovim
 if has('nvim')
@@ -500,7 +509,7 @@ endif
 " Fix cursor not working within tmux
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 
-" Triger `autoread` when files changes on disk
+" Trigger `autoread` when files changes on disk
 " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
 " https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
@@ -514,86 +523,19 @@ autocmd FileChangedShellPost *
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Shougo/Denite: https://github.com/Shougo/denite.nvim
-"
-" Denite is a dark powered plugin for Neovim/Vim to unite all interfaces. It
-" can replace many features or plugins with its interface. It is like a fuzzy
-" finder, but is more generic. You can extend the interface and create the
-" sources.
-"
-" Reset 50% winheight on window resize
-"augroup deniteresize
-  "autocmd!
-  "autocmd VimResized,VimEnter * call denite#custom#option('default', 'winheight', winheight(0) / 2)
-"augroup end
-
-"call denite#custom#option('default', { 'prompt': '❯' })
-
-"call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
-"call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
-"call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
-"call denite#custom#var('file_rec/git', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-"call denite#custom#alias('source', 'file_rec/git', 'file/rec')
-
-" ripgrep
-"call denite#custom#var('grep', 'command', ['rg'])
-"call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--smart-case'])
-"call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-
-" ag
-"call denite#custom#source('grep', 'matchers', ['matcher_regexp'])
-"call denite#custom#var('grep', 'command', ['ag'])
-"call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep']) ? smartcase ?
-
-"call denite#custom#var('grep', 'recursive_opts', [])
-"call denite#custom#var('grep', 'pattern_opt', [])
-"call denite#custom#var('grep', 'separator', ['--'])
-"call denite#custom#var('grep', 'final_opts', [])
-
-"call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>', 'noremap')
-"call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>', 'noremap')
-"call denite#custom#map('normal', '<Esc>', '<NOP>', 'noremap') ? Do nothing when escape is pressed in normal mode
-"call denite#custom#map('normal', '<C-v>', '<denite:do_action:vsplit>', 'noremap')
-"call denite#custom#map('normal', 'dw', '<denite:delete_word_after_caret>', 'noremap')
-
-"call denite#custom#map('normal', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-"call denite#custom#map('normal', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-"call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-"call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-
-"nnoremap <C-p> :<C-u>DeniteProjectDir file_rec/git<CR>
-"nnoremap <C-o> :<C-u>DeniteProjectDir file_rec<CR>
-"nnoremap <C-b> :<C-u>Denite buffer -mode=normal<CR>
-" nnoremap <leader><Space>s :<C-u>DeniteBufferDir buffer<CR> ?
-"nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
-"nnoremap <leader>8 :<C-u>DeniteCursorWord grep:. <CR>
-"nnoremap <leader>/ :DeniteProjectDir -buffer-name=grep -default-action=quickfix grep:::!<CR> ? quickfix ?
-"nnoremap <leader>/ :<C-u>DeniteProjectDir grep:. -mode=normal<CR>
-"nnoremap <leader>/ :<C-u>DeniteProjectDir grep:. <CR>
-"nnoremap <leader><Space>/ :<C-u>DeniteBufferDir grep:. -mode=normal<CR>
-"nnoremap <leader><Space>/ :<C-u>DeniteBufferDir grep:. <CR>
-"nnoremap <leader>p :<C-u>DeniteBufferDir file_rec/git<CR>
-"nnoremap <leader>r :<C-u>Denite -resume -cursor-pos=+1<CR>
-"nnoremap <leader>lr :<C-u>Denite references -mode=normal<CR> ?
-
-"call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
-"call denite#custom#option('_', 'highlight_matched_range', 'None')
-"call denite#custom#option('_', 'highlight_matched_char', 'CursorLine')
-
 
 " FZF
-"
 " https://github.com/junegunn/fzf.vim
 "
 " References:
 " * https://www.reddit.com/r/neovim/comments/3oeko4/post_your_fzfvim_configurations/
 " * https://github.com/zenbro/dotfiles/blob/master/.nvimrc
 " * https://github.com/euclio/vimrc/blob/master/plugins.vim
+" * https://github.com/erkrnt/awesome-streamerrc/blob/master/ThePrimeagen/init.vim
 
 "let g:fzf_nvim_statusline = 0
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 
-" command! -bang -nargs=? -complete=dir Files
-"   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=? -complete=dir ProjectFiles
       \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'source': 'rg --files --hidden --follow --glob "!.git/*"', 'options': ['--info=inline']}), <bang>0)
 
@@ -633,7 +575,7 @@ nnoremap <silent> <C-p> :ProjectFiles<CR>
 " All files within git index or working branch
 nnoremap <silent> <leader>p :GFiles<CR>
 " All files within CWD
-nnoremap <silent> <C-o> :FZF<CR>
+nnoremap <silent> <leader>o :FZF<CR>
 nnoremap <silent> <leader>/ :execute 'RG ' . input('RG/')<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>h :History<CR>
@@ -706,15 +648,12 @@ map <Leader>vx :VimuxInterruptRunner<CR>
 " nmap <leader>s :w\|:Silent echo "vendor/bin/phpspec run %" > test-commands<cr>
 " nmap <leader>ss :w\|:Silent echo "vendor/bin/phpspec run" > test-commands<cr>
 
-
 " elzr/vim-json
 let g:vim_json_syntax_conceal = 0 " Don't hide quotes in json files
-
 
 " Yggdroot/indentLine
 let g:indentLine_color_term = 0
 let g:indentLine_faster = 1
-
 
 " plasticboy/vim-markdown
 " https://github.com/plasticboy/vim-markdown
@@ -723,64 +662,22 @@ let g:vim_markdown_frontmatter=1 " Use yaml syntax at the start of markdown
 let g:vim_markdown_auto_insert_bullets = 0 " Don't press my buttons
 let g:vim_markdown_new_list_item_indent = 0 " Don't press my buttons
 
-
 " tpope/vim-markdown
 " https://github.com/tpope/vim-markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript']
 
-
 " editorconfig/editorconfig-vim
 let g:EditorConfig_core_mode = 'external_command'
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-
-
-" Shougo/deoplete.nvim
-" https://github.com/Shougo/deoplete.nvim
-" let g:deoplete#enable_at_startup = 1
-
-" Old way of calling options
-"let g:deoplete#enable_smart_case = 1
-"let g:deoplete#auto_complete_start_length = 1
-"let g:deoplete#auto_complete_delay = 50
-
-" New way of calling options
-" call deoplete#custom#option({
- " \ 'auto_complete_delay': 0,
- " \ 'smart_case': v:true,
- " \})
-
-" NOTE(digia): Testing this, I believe it should remove annoyances when
-" editing HTML and CSS files, though haven't proven that yet.
-" call deoplete#custom#option('omni_patterns', {
- " \ 'html': '',
- " \ 'css': '',
- " \ 'scss': ''
- " \})
-
-
-" Autocomplete supporting configurations
-" Note(digia): Fixes the autoinsert annoyance, taken from
-" https://github.com/mhartington/dotfiles/blob/master/config/nvim/init.vim
-"set completeopt+=menuone,noinsert
-"set completeopt-=preview
-"autocmd CompleteDone * pclose
 
 " https://github.com/chemzqm/vimrc/blob/master/general.vim
 set complete+=k
 set complete-=t
 set completeopt=menu,preview
 
-" :help deoplete-options enable_buffer_path
-" let g:deoplete#file#enable_buffer_path=1
-" call deoplete#custom#var('file', 'enable_buffer_path', '1')
-
-" let g:deoplete#sources#ternjs#docs = 1
-
-
 " Shougo/echodoc.vim
 let g:echodoc_enable_at_startup=1
 let g:echodoc#type="virtual"
-
 
 " ALE
 " https://github.com/w0rp/ale
@@ -788,16 +685,10 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 1
 
-" coc.vim handles the fixers for typescript
-" let g:ale_fixers = {'javascript': ['eslint'], 'typescript': ['eslint', 'tsserver']}
-
 let g:ale_fixers = {
   \ 'javascript': ['eslint'],
   \ 'typescript': ['eslint']
   \}
-
-" coc.vim handles linting for typescript
-" let g:ale_linters = {'javascript': ['eslint'],  'typescript': ['eslint', 'tsserver']}
 
 let g:ale_linters = {
 \  'javascript': ['eslint'],
@@ -817,75 +708,22 @@ let g:ale_sign_column_always = 1
 
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
-"let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_echo_msg_format = '[%linter%] %s'
 
 nmap <silent> <leader>af <Plug>(ale_fix)
 nmap <silent> <leader>ap <Plug>(ale_previous_wrap)
 nmap <silent> <leader>an <Plug>(ale_next_wrap)
 
-" let g:tsuquyomi_completion_detail = 1
-" autocmd FileType typescript nmap <buffer> <leader>d : <C-u>echo tsuquyomi#hint()<Cr>
-
 " HerringtonDarkholme/yats.vim: https://github.com/HerringtonDarkholme/yats.vim
-"
 " Syntax for TypeScript
 let g:yats_host_keyword = 1
 
-" mhartington/nvim-typescript: https://github.com/mhartington/nvim-typescript
-" nvim language service plugin for typescript
-let g:nvim_typescript#type_info_on_hold = 0
-let g:nvim_typescript#javascript_support = 1
-let g:nvim_typescript#diagnostics_enable = 0 " ALE handles linting errors
-" let g:nvim_typescript#max_completion_detail = 100
-
-" HACK(digia): Overrides ALE, even with diagnostics_enabled set to 0
-let g:nvim_typescript#default_signs = [
-  \  {
-  \  'TSerror': {
-  \   'texthl': '',
-  \   'signText': '',
-  \   'signTexthl': 'NeomakeErrorSign'
-  \  }
-  \},
-  \{
-  \  'TSwarning': {
-  \   'texthl': '',
-  \   'signText': '',
-  \   'signTexthl': 'NeomakeWarningSign'
-  \  }
-  \},
-  \{
-  \  'TSinformation': {
-  \   'texthl': '',
-  \   'signText': '',
-  \   'signTexthl': 'NeomakeInfoSign'
-  \   }
-  \},
-  \{
-  \  'TShint': {
-  \   'texthl': 'SpellBad',
-  \   'signText': '?',
-  \   'signTexthl': 'NeomakeInfoSign'
-  \   }
-  \}
-  \]
-
-nnoremap <buffer> <silent> <leader>tt :TSType<CR>
-nnoremap <buffer> <silent> <leader>td :TSDoc<CR>
-nnoremap <buffer> <silent> <leader>tdd :TSTypeDef<CR>
-nnoremap <buffer> <silent> <leader>tdp :TSDefPreview<CR>
-nnoremap <buffer> <silent> <leader>tr :TSRefs<CR>
-nnoremap <buffer> <silent> <leader>ti :TSImport<CR>
-
 " easymotion/vim-easymotion
 map <leader>e <Plug>(easymotion-prefix)
-
-let g:EasyMotion_do_shade = 0
-
-hi EasyMotionTarget ctermfg=1 cterm=bold,underline
-hi link EasyMotionTarget2First EasyMotionTarget
-hi EasyMotionTarget2Second ctermfg=1 cterm=underline
+" let g:EasyMotion_do_shade = 0
+" hi EasyMotionTarget ctermfg=1 cterm=bold,underline
+" hi link EasyMotionTarget2First EasyMotionTarget
+" hi EasyMotionTarget2Second ctermfg=1 cterm=underline
 
 " incsearch
 let g:incsearch#auto_nohlsearch = 1
@@ -896,32 +734,13 @@ map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
-" incsearch-easymotion
-"map / <Plug>(incsearch-easymotion-/)
-"map ? <Plug>(incsearch-easymotion-?)
-"map g/ <Plug>(incsearch-easymotion-stay)
-
 " junegunn/vim-easy-align -- align text, specifically markdown tables
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" reedes/vim-pencil
-"
-" NOTE(digia): Keep breaking git commit messages using Fugitive
-"
-" let g:pencil#wrapModeDefault = 'soft'
-" let g:pencil#conceallevel = 0 " Don't conceal things
-
-" augroup pencil
-"   autocmd!
-"   autocmd FileType markdown,mkd call pencil#init()
-" augroup END
-
-
 " preservim/nerdcommenter
-"
 " https://github.com/preservim/nerdcommenter#default-mappings
 
 " Add spaces after comment delimiters by default
@@ -944,7 +763,6 @@ map gcu <plug>NERDCommenterUncomment
 map gcm <plug>NERDCommenterMinimal
 map gcs <plug>NERDCommenterSexy
 
-
 " neoclide/coc.nvim
 "
 " https://github.com/neoclide/coc.nvim
@@ -961,12 +779,26 @@ set updatetime=300
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+" Symbol renaming
+nmap <leader>rn <Plug>(coc-rename)
+" Formatting selected code
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+" Apply AutoFix to problem on the current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+" Remap keys for applying codeAction to the current buffer
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -981,7 +813,6 @@ endfunction
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
-
 
 " javascript functions
 autocmd! BufNewFile,BufRead,FileType javascript,typescript nmap <leader>rt :call VimuxRunCommand("clear; echo " . bufname("%") . "; npm run --silent test " . bufname("%"))<cr>
