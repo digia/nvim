@@ -100,6 +100,9 @@ Plug 'isRuslan/vim-es6'
 Plug 'leafgarland/typescript-vim'
 Plug 'HerringtonDarkholme/yats.vim'
 
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'amadeus/vim-mjml'
+
 " NOTE(2020-01-21): Trying coc.nvim instead of nvim-typescript
 "Plug 'mhartington/nvim-typescript'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -625,18 +628,15 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-
-"nnoremap <silent> <C-p> :FZF<CR>
+" All files within the project following .gitignore rules
 nnoremap <silent> <C-p> :ProjectFiles<CR>
+" All files within git index or working branch
 nnoremap <silent> <leader>p :GFiles<CR>
-nnoremap <silent> <leader>o :FZF<CR>
+" All files within CWD
+nnoremap <silent> <C-o> :FZF<CR>
 nnoremap <silent> <leader>/ :execute 'RG ' . input('RG/')<CR>
-
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>h :History<CR>
-
-" gl as in git log for the project
-nnoremap <silent> <leader>gl :Commits<CR>
 " gh as in git history for the current buffer
 nnoremap <silent> <leader>gh :BCommits<CR>
 
