@@ -8,17 +8,13 @@ let mapleader="\<space>"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 
+"Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+
 Plug '/usr/local/opt/fzf'
 "Plug '/usr/bin/fzf'
 Plug 'junegunn/fzf.vim'
-
-" if has('nvim')
-  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" else
-  " Plug 'Shougo/deoplete.nvim'
-  " Plug 'roxma/nvim-yarp'
-  " Plug 'roxma/vim-hug-neovim-rpc'
-" endif
 
 Plug 'MarcWeber/vim-addon-local-vimrc'
 Plug 'Yggdroot/indentLine'
@@ -28,17 +24,13 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'altercation/vim-colors-solarized'
 Plug 'lifepillar/vim-solarized8'
 
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
 Plug 'benizi/vim-automkdir'
-Plug 'benmills/vimux'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'easymotion/vim-easymotion'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ervandew/supertab'
 Plug 'haya14busa/incsearch.vim'
 Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'
-Plug 'rstacruz/sparkup'
 Plug 'scrooloose/nerdtree'
 
 " NOTE(2020-05-15): Support for checking if files changed on focus events
@@ -53,67 +45,89 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 
 " https://github.com/preservim/nerdcommenter
 Plug 'preservim/nerdcommenter'
-" https://github.com/tyru/caw.vim
-"Plug 'tyru/caw.vim'
-"Plug 'tpope/vim-commentary'
 
-Plug 'tpope/vim-dispatch' " [Review when testing]
-Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/bufkill.vim'
 Plug 'dense-analysis/ale' " Async linting engine
 Plug 'wellle/tmux-complete.vim'
 
-Plug 'Shougo/echodoc.vim'
-
-"Plug 'tpope/vim-markdown'
-"Plug 'reedes/vim-pencil' " Assist with using VIM as a writing tool
-
-" Language specific
-Plug 'jmcantrell/vim-virtualenv'
-Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
-Plug 'vheon/JediHTTP', { 'for': 'python' }
-Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
-
-Plug 'chr4/nginx.vim'
-
-Plug 'elixir-lang/vim-elixir'
-
-Plug 'fatih/vim-go', { 'for': 'go' }
-
-Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
-
-Plug 'gregsexton/MatchTag', { 'for': ['html', 'blade'] }
-Plug 'othree/html5.vim', { 'for': ['html', 'blade'] }
-Plug 'othree/html5-syntax.vim', { 'for': ['html', 'blade'] }
-
-Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
-Plug 'ap/vim-css-color', { 'for': 'css' }
-
-Plug 'moll/vim-node'
-Plug 'isRuslan/vim-es6'
-
-Plug 'leafgarland/typescript-vim'
-Plug 'HerringtonDarkholme/yats.vim'
-
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'amadeus/vim-mjml'
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
-
-Plug 'sheerun/vim-polyglot'
-
 Plug 'junegunn/vim-easy-align'
 
 Plug 'AndrewRadev/splitjoin.vim'
 
+" Language specific
+" Plug 'jmcantrell/vim-virtualenv'
+Plug 'mitsuhiko/vim-jinja', { 'for': 'jinja' }
+" Plug 'vheon/JediHTTP', { 'for': 'python' }
+" Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
+Plug 'chr4/nginx.vim'
+Plug 'elixir-lang/vim-elixir'
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+Plug 'gregsexton/MatchTag', { 'for': ['html', 'blade'] }
+Plug 'othree/html5.vim', { 'for': ['html', 'blade'] }
+Plug 'othree/html5-syntax.vim', { 'for': ['html', 'blade'] }
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'ap/vim-css-color', { 'for': 'css' }
+Plug 'moll/vim-node'
+Plug 'isRuslan/vim-es6'
+Plug 'leafgarland/typescript-vim'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'amadeus/vim-mjml'
+Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] }
+Plug 'sheerun/vim-polyglot'
+
 call plug#end()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Style
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Allow color schemes to do bright colors without forcing bold.
+if &t_Co == 8 && $TERM !~# '^linux'
+  set t_Co=256
+endif
+
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+set guifont=Roboto\ Mono:h15
+set encoding=utf-8
+set guioptions-=T
+set guioptions-=r " turn off GUI right scrollbar
+set guioptions-=L " turn off GUI left scrollbar
+
+" Column colors
+let &colorcolumn="80,".join(range(120,999),",") " Join columns 120+ for danger color markers.
+"let &colorcolumn="80" " Only show col 80
+
+" NOTE(digia): Suggested https://github.com/lifepillar/vim-solarized8#troubleshooting
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+" Not sure this is doing anything; see hi StatusLine
+let g:solarized_statusline="normal"
+
+set background=dark
+colorscheme solarized8_flat
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" LSP
+"
+" NOTE: This needs to happen after setting up styles, not sure why...
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua require'nvim_lsp'.tsserver.setup{ on_attach=require'completion'.on_attach }
+lua require'nvim_lsp'.pyls.setup{ on_attach=require'completion'.on_attach }
+lua require'nvim_lsp'.html.setup{ on_attach=require'completion'.on_attach }
+lua require'nvim_lsp'.cssls.setup{ on_attach=require'completion'.on_attach }
+lua require'nvim_lsp'.bashls.setup{ on_attach=require'completion'.on_attach }
+" lua require'nvim_lsp'.gopls.setup{ on_attach=require'completion'.on_attach }
+
+" autocmd BufEnter * lua require'completion'.on_attach() " Attach with all buffers
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Functions
@@ -173,14 +187,24 @@ function! ReplaceUnicodePunctuationCharacters()
 endfunction
 command! ReplaceUnicodePunctuationCharacters :call ReplaceUnicodePunctuationCharacters()
 
+" Check for documentation within the man files with a fallback to LSP
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    :lua vim.lsp.buf.hover()
+  endif
+endfunction
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 scriptencoding utf8
 set showcmd             " Show (partial) command in status line.
+
 " Was causing lag in JS acceptance tests, really annoying when typing
-"set showmatch           " Show matching brackets.
-set showmode            " Show current mode.
+set showmatch           " Show matching brackets.
+
 set showtabline=1
 set ruler               " Show the line and column numbers of the cursor.
 set number              " Show the line numbers on the left side.
@@ -229,12 +253,17 @@ set smartindent
 set cursorline
 set pumheight=15
 
-" Path/file expansion in colon-mode.
-set wildmenu
+set wildmenu " Path/file expansion in colon-mode.
 "set wildmode=longest,list:longest
 set wildmode=list:longest,full
 set wildchar=<TAB>
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,*/.idea/*,*/tmp/*,*/node_modules/**,*/bower_components/**,**/venv/**,*.pyc
+
+" https://github.com/chemzqm/vimrc/blob/master/general.vim
+set complete+=k " Scan with the dictionary
+set complete-=t " Don't scan tags
+set completeopt=menuone,noinsert,noselect
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 " See thought Zp4ylImW3 for VIM clipboard explanation
 set clipboard+=unnamed
@@ -260,6 +289,9 @@ set magic " Use 'magic' patterns (extended regular expressions).
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=50
+
 set foldmethod=syntax
 set foldlevel=99
 " set nofoldenable
@@ -280,43 +312,6 @@ set showbreak=↪
 set inccommand=split
 
 set tags=tags
-
-" Also highlight all tabs and trailing whitespace characters.
-highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-match ExtraWhitespace /\s\+$\|\t/
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Style
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Allow color schemes to do bright colors without forcing bold.
-if &t_Co == 8 && $TERM !~# '^linux'
-  set t_Co=256
-endif
-
-if (has("termguicolors"))
-  set termguicolors
-endif
-
-set guifont=Roboto\ Mono:h15
-set encoding=utf-8
-set guioptions-=T
-set guioptions-=r " turn off GUI right scrollbar
-set guioptions-=L " turn off GUI left scrollbar
-
-" Column colors
-"let &colorcolumn=join(range(81,999),",") " Join columns 81+ for warning color markers. 
-"let &colorcolumn="80,".join(range(120,999),",") " Join columns 120+ for danger color markers.
-let &colorcolumn="80" " Only show col 80
-
-" NOTE(digia): Suggested https://github.com/lifepillar/vim-solarized8#troubleshooting
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-
-" Not sure this is doing anything; see hi StatusLine
-let g:solarized_statusline="normal"
-
-set background=dark
-colorscheme solarized8_flat
 
 set nomodeline
 
@@ -360,11 +355,11 @@ set statusline+=[%{&ft}]
 " alignment group
 set statusline+=%=
 " lsp status
-set statusline+=%{LanguageClient_statusLine()}
+"set statusline+=%{LanguageClient_statusLine()}
 
 " NOTE(digia): 2020-08-13 Trying out having coc status in statusline
 "set statusline+=%{coc#status()}
-set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}
 set statusline+=\ "
 
 set statusline+=%{LinterStatus()}
@@ -390,20 +385,10 @@ augroup vimrcEx
     \   exe "normal g`\"" |
     \ endif
 
-  "Autoindent with two spaces, always expand tabs
-  "autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell textwidth=80 ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
-  "autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell ai formatoptions=tcroqn2 comments=n:&gt; filetype=markdown
-  "autocmd! BufRead,BufNewFile *.md,*.mkd,*.markdown set spell ai formatoptions=a2tq linebreak filetype=markdown conceallevel=0
   autocmd! BufRead,BufNewFile,FileType php set sw=4 sts=4 et
   autocmd! BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=80 expandtab autoindent fileformat=unix filetype=python
   autocmd! BufRead,BufNewFile *.sass,*.scss setfiletype sass
   autocmd! BufNewFile,BufRead,FileType html,css,sass,scss,blade,cucumber,yaml,html.handlebars,javascript,pug,htmldjango set tabstop=2 softtabstop=2 shiftwidth=2 fileformat=unix
-
-  " Indent p tags
-  "autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
-
-  " Don't syntax highlight markdown because it's often wrong
-  " autocmd! FileType mkd setlocal syn=off
 
   " Leave the return key alone when in command line windows, since it's used
   " to run commands there.
@@ -460,9 +445,6 @@ if has('nvim')
   nmap <silent> <bs> :<c-u>TmuxNavigateLeft<cr>
 endif
 
-" Toggle between normal and relative numbering.
-" nnoremap <leader>r :call NumberToggle()<cr>
-
 " Reselect visual block after indent
 vnoremap < <gv
 vnoremap > >gv
@@ -470,21 +452,8 @@ vnoremap > >gv
 " Make the directory of the file in the buffer
 nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
 
-" Use vim-move instead
-" Move lines up and down
-" http://vim.wikia.com/wiki/Moving_lines_up_or_down_in_a_file
-" nnoremap <A-j> :m .+1<CR>==
-" nnoremap <A-k> :m .-2<CR>==
-" inoremap <A-j> <Esc>:m .+1<CR>==gi
-" inoremap <A-k> <Esc>:m .-2<CR>==gi
-" vnoremap <A-j> :m '>+1<CR>gv=gv
-" vnoremap <A-k> :m '<-2<CR>gv=gv
-
 " Paste toggle
 set pastetoggle=<Insert>
-
-" Point neovim to python
-"let g:python3_host_prog = '/usr/bin/python'
 
 " Cursor styles
 " Use a blinking upright bar cursor in Insert mode, a blinking block in normal
@@ -523,6 +492,17 @@ autocmd FileChangedShellPost *
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <silent> gd :lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gi :lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gr :lua vim.lsp.buf.references()<CR>
+nnoremap <silent> grr :lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> gh :lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> ga :lua vim.lsp.buf.code_action()<CR>
+" nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 " FZF
 " https://github.com/junegunn/fzf.vim
@@ -628,14 +608,6 @@ autocmd FileType tagbar,nerdtree setlocal signcolumn=no
 " python-syntax
 let python_highlight_all = 1
 
-" Vimux
-map <leader>vp :VimuxPromptCommand<cr>
-map <Leader>vz :VimuxZoomRunner<CR>
-map <Leader>vl :VimuxRunLastCommand<CR>
-map <Leader>vi :VimuxInspectRunner<CR>
-map <Leader>vq :VimuxCloseRunner<CR>
-map <Leader>vx :VimuxInterruptRunner<CR>
-
 " nmap <leader>tj :w\|:call VimuxRunCommand("clear; echo " . bufname("%") . "; NODE_ENV='test' mocha " . bufname("%"))<cr>
 " nmap <leader>tj :w\|:call VimuxRunCommand(\"clear; echo \" . bufname(\"%\") . \"; NODE_ENV='test' mocha-grey-patch \" . bufname(\"%\"))<cr>
 " nmap <leader>ap :w\|:call VimuxRunCommand("clear; python -m unittest discover")<cr>
@@ -655,29 +627,13 @@ let g:vim_json_syntax_conceal = 0 " Don't hide quotes in json files
 let g:indentLine_color_term = 0
 let g:indentLine_faster = 1
 
-" plasticboy/vim-markdown
-" https://github.com/plasticboy/vim-markdown
-let g:vim_markdown_fenced_languages = ['csharp=cs', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'nginx=nginx']
-let g:vim_markdown_frontmatter=1 " Use yaml syntax at the start of markdown
-let g:vim_markdown_auto_insert_bullets = 0 " Don't press my buttons
-let g:vim_markdown_new_list_item_indent = 0 " Don't press my buttons
-
-" tpope/vim-markdown
-" https://github.com/tpope/vim-markdown
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript']
-
 " editorconfig/editorconfig-vim
 let g:EditorConfig_core_mode = 'external_command'
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-" https://github.com/chemzqm/vimrc/blob/master/general.vim
-set complete+=k
-set complete-=t
-set completeopt=menu,preview
-
 " Shougo/echodoc.vim
 let g:echodoc_enable_at_startup=1
-let g:echodoc#type="virtual"
+"let g:echodoc#type="virtual"
 
 " ALE
 " https://github.com/w0rp/ale
@@ -763,56 +719,6 @@ map gcu <plug>NERDCommenterUncomment
 map gcm <plug>NERDCommenterMinimal
 map gcs <plug>NERDCommenterSexy
 
-" neoclide/coc.nvim
-"
-" https://github.com/neoclide/coc.nvim
-"
-" TODO:
-" * Sign column appears to go 3 columns wide?
-" * Review g hotkeys
-" * Collision with ctrl-p when in type previewer
-" * "Popup" window colors
-
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-" Symbol renaming
-nmap <leader>rn <Plug>(coc-rename)
-" Formatting selected code
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-" Apply AutoFix to problem on the current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-" Remap keys for applying codeAction to the current buffer
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " javascript functions
 autocmd! BufNewFile,BufRead,FileType javascript,typescript nmap <leader>rt :call VimuxRunCommand("clear; echo " . bufname("%") . "; npm run --silent test " . bufname("%"))<cr>
