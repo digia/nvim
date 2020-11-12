@@ -519,14 +519,12 @@ let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 command! -bang -nargs=? -complete=dir ProjectFiles
       \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'source': 'rg --files --hidden --follow --glob "!.git/*"', 'options': ['--info=inline']}), <bang>0)
 
-" https://github.com/junegunn/fzf.vim#example-advanced-ripgrep-integration
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
+" Clear highlight
+if has('win32')
+  nmap <C-/> :nohl<CR>
+else
+  nmap <C-_> :nohl<CR>
+endif
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
