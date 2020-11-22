@@ -31,12 +31,17 @@ return require('packer').startup {
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
 
-    use 'nvim-lua/popup.nvim'
-    use 'nvim-lua/plenary.nvim'
+    use 'nvim-lua/popup.nvim' -- tjdevries "An implementation of the Popup API from vim in Neovim."
+    use 'nvim-lua/plenary.nvim' -- tjdevries "All the lua functions I don't want to write twice."
+
+    -- Find, Filter, Preview, Pick
     use {
       'nvim-telescope/telescope.nvim',
       requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     }
+
+    -- use {'junegunn/fzf', run = './install --all' }     -- Fuzzy Searcher
+    -- use {'junegunn/fzf.vim'}
 
     -- Advanced tmux and vim synergy
     use 'tmux-plugins/vim-tmux-focus-events'
