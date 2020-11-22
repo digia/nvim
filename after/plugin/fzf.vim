@@ -19,17 +19,5 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>h :History<CR>
 nnoremap <silent> <leader>gh :BCommits<CR>
-
-" NOTE: Trying out telescope instead
-" command! -bang -nargs=? -complete=dir ProjectFiles
-      " \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'source': 'rg --files --hidden --follow --glob "!.git/*"', 'options': ['--info=inline']}), <bang>0)
-" command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
-" nnoremap <silent> <leader>/ :execute 'RG ' . input('RG/')<CR>
-" nnoremap <silent> <C-p> :ProjectFiles<CR> " All files within the project following .gitignore rules
-" nnoremap <silent> <leader>p :GFiles<CR> " All files within git index or working branch
-" nnoremap <silent> <leader>o :FZF<CR> " All files within CWD
-
-
