@@ -25,6 +25,7 @@ local on_attach = function(client)
   -- nnoremap <silent> ga :lua vim.lsp.buf.code_action()<CR>
   --  nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
 
+  vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 end
 
 --[[
