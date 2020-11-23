@@ -209,9 +209,9 @@ vnoremap <leader>p "_dp
 
 " Clear highlight
 if has('win32')
-  nmap <C-/> :nohl<CR>
+  nmap <silent> <C-/> :nohl<CR>
 else
-  nmap <C-_> :nohl<CR>
+  nmap <silent> <C-_> :nohl<CR>
 endif
 
 " For moving quickly up and down, goes to the first line above/below that
