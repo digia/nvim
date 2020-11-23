@@ -40,6 +40,8 @@ return require('packer').startup {
       requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     }
 
+    use 'nvim-lua/completion-nvim'
+
     -- use {'junegunn/fzf', run = './install --all' }     -- Fuzzy Searcher
     -- use {'junegunn/fzf.vim'}
 
