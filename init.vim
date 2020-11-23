@@ -109,7 +109,6 @@ call plug#begin()
 
 " General plugins
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
 Plug '/usr/local/opt/fzf' "Plug '/usr/bin/fzf'
 Plug 'junegunn/fzf.vim'
 
@@ -163,7 +162,14 @@ lua require('init')
 " Variables
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader="\<space>"
+
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+" Completion settings
+" Use <Tab> and <S-Tab> to navigate through popup menu
+" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" imap <tab> <Plug>(completion_smart_tab)
+" imap <s-tab> <Plug>(completion_smart_s_tab)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Functions

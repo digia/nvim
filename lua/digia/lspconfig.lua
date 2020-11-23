@@ -1,3 +1,4 @@
+local completion = require('completion')
 local lspconfig = require('lspconfig')
 
 local mapper = function(mode, key, result)
@@ -6,7 +7,8 @@ local mapper = function(mode, key, result)
 end
 
 local on_attach = function(client)
-  -- completion.on_attach(client)
+  completion.on_attach(client)
+
   -- mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
   mapper('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>')
   mapper('n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
@@ -14,7 +16,6 @@ local on_attach = function(client)
   mapper('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
   mapper('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
   -- mapper('n', '<space>cr', '<cmd>lua MyLspRename()<CR>')
-
 
   -- nnoremap <silent> gd :lua vim.lsp.buf.definition()<CR>
   -- nnoremap <silent> gi :lua vim.lsp.buf.implementation()<CR>
