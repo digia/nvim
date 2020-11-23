@@ -64,14 +64,16 @@ return require('packer').startup {
     -- Better comment support
     use 'preservim/nerdcommenter'
 
-    -- Language specific plugins
-    use 'sheerun/vim-polyglot'
-
     -- TODO(digia): provide comments/context for the plugins
     use 'tpope/vim-dispatch'
     use 'tpope/vim-fugitive'
     use 'tpope/vim-repeat'
     use 'tpope/vim-unimpaired'
 
+    -- Language specific plugins
+    use 'sheerun/vim-polyglot'
+
+    -- Lua
+    use 'euclidianAce/BetterLua.vim'
   end
 }

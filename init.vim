@@ -196,6 +196,8 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 nnoremap <c-h> <c-w>h
 
+" Make windows to be basically the same size
+nnoremap <leader>= <C-w>=
 nnoremap <leader>+ :vertical resize +5<CR>
 nnoremap <leader>- :vertical resize -5<CR>
 
@@ -211,3 +213,11 @@ if has('win32')
 else
   nmap <C-_> :nohl<CR>
 endif
+
+" For moving quickly up and down, goes to the first line above/below that
+" isn't whitespace -- http://vi.stackexchange.com/a/213
+nnoremap gj :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
+nnoremap gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
+
+" Run the last command
+nnoremap <leader><leader>c :<up>
