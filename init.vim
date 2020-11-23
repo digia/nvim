@@ -164,6 +164,7 @@ lua require('init')
 let mapleader="\<space>"
 
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+let g:completion_trigger_keyword_length = 2
 " Completion settings
 " Use <Tab> and <S-Tab> to navigate through popup menu
 " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
