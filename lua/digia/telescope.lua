@@ -16,7 +16,16 @@ end
 local M = {}
 
 function M.find_all_files()
-  local find_command = { "rg", "--smart-case", "--files", "--hidden", "--follow" }
+  local find_command = {
+    "rg",
+    "--smart-case",
+    "--files",
+    "--hidden",
+    "--follow",
+    "--no-ignore",
+    "-g", "!*/.git/*",
+  }
+
   require('telescope.builtin').find_files {
     prompt_title = 'Find All Files',
     find_command = find_command
@@ -40,9 +49,7 @@ function M.find_project_files()
       "--files",
       "--hidden",
       "--follow",
-      "-g", "!*/.git/*",
-      "-g", "!*/node_modules/*",
-      "-g", "!*/venv/*"
+      "--ignore",
     }
 
     builtin.find_files {
