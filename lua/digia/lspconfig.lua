@@ -63,6 +63,10 @@ lspconfig.dockerls.setup {
   on_attach = on_attach
 }
 
+lspconfig.jdtls.setup {
+  on_attach = on_attach
+}
+
 -- lspconfig.intelephense.setup{}
 -- lspconfig.vimls.setup{}
 -- lspconfig.gopls.setup{}
