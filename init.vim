@@ -240,8 +240,9 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 " Text movement
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
-nnoremap <C-j> :m .+1<CR>==
-nnoremap <C-k> :m .-2<CR>==
+" TODO(digia): Doesn't work with window navigation
+" nnoremap <C-j> :m .+1<CR>==
+" nnoremap <C-k> :m .-2<CR>==
 " TODO(digia): Fix insert variation to go back into insert mode, currently
 " leaves once the line movement is performed
 inoremap <C-j> <esc>:m .+1<CR>==
