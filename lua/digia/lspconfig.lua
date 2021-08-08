@@ -38,7 +38,7 @@ lspconfig.tsserver.setup {
   on_attach = on_attach
 }
 
-lspconfig.pyls_ms.setup {
+lspconfig.pyright.setup {
   enable = true,
   on_attach = on_attach
 }
