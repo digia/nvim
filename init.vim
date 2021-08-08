@@ -208,6 +208,45 @@ nnoremap <leader>= <C-w>=
 nnoremap <leader>+ :vertical resize +5<CR>
 nnoremap <leader>- :vertical resize -5<CR>
 
+" Use Y yank from cursor to end of line, as you'd expect
+nnoremap Y y$
+
+" Keep things centered when manipulating lines
+"  * Remap n, to n -> zz -> zv
+"  * Next, center, expand any folds
+nnoremap n nzzzv
+nnoremap N Nzzzv
+"  * Create mark of z, perform J, go back to z marking line and column
+nnoremap J mzJ`z
+
+" Undo break points, no longer losing a whole insert but instead using break
+" points which match stop characters.
+inoremap , ,<C-g>u
+inoremap . .<C-g>u
+inoremap ! !<C-g>u
+inoremap ? ?<C-g>u
+" NOTE(digia): Testing if these stop characters are worth having 2021-08-08
+inoremap ; ;<C-g>u
+inoremap : :<C-g>u
+" inoremap ( (<C-g>u
+inoremap ) )<C-g>u
+" inoremap [ [<C-g>u
+inoremap ] ]<C-g>u
+
+" Add movement to jumplist when greater than N lines
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+
+" Text movement
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+" TODO(digia): Fix insert variation to go back into insert mode, currently
+" leaves once the line movement is performed
+inoremap <C-j> <esc>:m .+1<CR>==
+inoremap <C-k> <esc>:m .-2<CR>==
+
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
