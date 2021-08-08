@@ -35,9 +35,10 @@ return require('packer').startup {
     use 'nvim-lua/plenary.nvim' -- tjdevries "All the lua functions I don't want to write twice."
 
     -- Find, Filter, Preview, Pick
+    use 'nvim-telescope/telescope-fzy-native.nvim'
     use {
       'nvim-telescope/telescope.nvim',
-      requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+      requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}}
     }
 
     use 'nvim-lua/completion-nvim'
