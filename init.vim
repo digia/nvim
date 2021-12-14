@@ -7,7 +7,7 @@ syntax enable
 set guicursor=
 
 set number
-set relativenumber
+" set relativenumber
 
 set autoindent
 set cindent
@@ -221,17 +221,17 @@ nnoremap J mzJ`z
 
 " Undo break points, no longer losing a whole insert but instead using break
 " points which match stop characters.
-inoremap , ,<C-g>u
-inoremap . .<C-g>u
+" inoremap , ,<C-g>u
+" inoremap . .<C-g>u
 inoremap ! !<C-g>u
 inoremap ? ?<C-g>u
 " NOTE(digia): Testing if these stop characters are worth having 2021-08-08
-inoremap ; ;<C-g>u
-inoremap : :<C-g>u
+" inoremap ; ;<C-g>u
+" inoremap : :<C-g>u
 " inoremap ( (<C-g>u
-inoremap ) )<C-g>u
+" inoremap ) )<C-g>u
 " inoremap [ [<C-g>u
-inoremap ] ]<C-g>u
+" inoremap ] ]<C-g>u
 
 " Add movement to jumplist when greater than N lines
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
