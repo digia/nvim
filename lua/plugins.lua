@@ -31,6 +31,9 @@ return require('packer').startup {
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
 
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+    use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
+
     use 'nvim-lua/popup.nvim' -- tjdevries "An implementation of the Popup API from vim in Neovim."
     use 'nvim-lua/plenary.nvim' -- tjdevries "All the lua functions I don't want to write twice."
 
@@ -48,6 +51,12 @@ return require('packer').startup {
 
     -- Advanced tmux and vim synergy
     use 'tmux-plugins/vim-tmux-focus-events'
+
+    -- Breadcrumbs code scope
+    use {
+        'SmiteshP/nvim-gps',
+        requires = 'nvim-treesitter/nvim-treesitter'
+    }
 
     -- Killing buffers without loosing split
     use 'qpkorr/vim-bufkill'

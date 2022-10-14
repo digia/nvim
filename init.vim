@@ -108,7 +108,6 @@ set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 call plug#begin()
 
 " General plugins
-Plug 'neovim/nvim-lspconfig'
 Plug '/usr/local/opt/fzf' "Plug '/usr/bin/fzf'
 Plug 'junegunn/fzf.vim'
 
@@ -139,12 +138,20 @@ let &colorcolumn="80,".join(range(120,999),",") " Join columns 120+ for danger c
 colorscheme solarized8_flat
 set background=dark
 
+" vimscript
+func! NvimGps() abort
+	return luaeval("require('nvim-gps').is_available()") ?
+		\ luaeval("require('nvim-gps').get_location()") : ''
+endf
+
 set statusline=""
 set statusline+=%<%f:%l:%v " filename:col:line/total lines
 set statusline+=\ "
 set statusline+=%h%m%r " help/modified/readonly
 set statusline+=\ "
 set statusline+=[%{&ft}] " filetype
+" set statusline+=\ "
+" set statusline+=%{NvimGps()}
 set statusline+=%= " alignment group
 set statusline+=\ "
 
