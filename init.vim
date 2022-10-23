@@ -140,12 +140,8 @@ colorscheme solarized8_flat
 set background=dark
 
 " vimscript
-func! NvimGps() abort
-	return luaeval("require('nvim-gps').is_available()") ?
-		\ luaeval("require('nvim-gps').get_location()") : ''
-endf
 
-" lualine (2022-10-23)
+" -- lualine (2022-10-23)
 " set statusline=""
 " set statusline+=%<%f:%l:%v " filename:col:line/total lines
 " set statusline+=\ "

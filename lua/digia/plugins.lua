@@ -29,7 +29,7 @@ end
 return require('packer').startup({
   function(use)
     -- Packer can manage itself as an optional plugin
-    use({'wbthomason/packer.nvim', opt = true})
+    use({ 'wbthomason/packer.nvim', opt = true })
 
     use('neovim/nvim-lspconfig') -- Configurations for Nvim LSP
     use('hrsh7th/cmp-nvim-lsp') -- Native LSP completion source
@@ -40,8 +40,9 @@ return require('packer').startup({
     -- use('simrat39/symbols-outline.nvim') -- Needs configuration
     --
 
-    -- use({ 'SmiteshP/nvim-navic', requires = 'neovim/nvim-lspconfig' })
-    use({ 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } })
+    use({ 'SmiteshP/nvim-navic', requires = 'neovim/nvim-lspconfig' }) -- Breadcrumbs code scope
+    use({ 'kyazdani42/nvim-web-devicons' }) -- Dev icons, primarily used with lualine
+    use({ 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }) -- Status line
 
     use('rafamadriz/friendly-snippets') -- Snippet collection with support for VS Code style snippets
     use('L3MON4D3/LuaSnip') -- Snippet library
@@ -51,7 +52,7 @@ return require('packer').startup({
     use('nvim-lua/popup.nvim') -- tjdevries "An implementation of the Popup API from vim in Neovim."
     use('nvim-lua/plenary.nvim') -- tjdevries "All the lua functions I don't want to write twice."
 
-    use({'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'})
+    use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
 
     -- Find, Filter, Preview, Pick
     use('nvim-telescope/telescope-fzy-native.nvim')
@@ -65,12 +66,6 @@ return require('packer').startup({
 
     -- Advanced tmux and vim synergy
     use('tmux-plugins/vim-tmux-focus-events')
-
-    -- Breadcrumbs code scope
-    use({
-        'SmiteshP/nvim-gps',
-        requires = 'nvim-treesitter/nvim-treesitter'
-    })
 
     -- Killing buffers without loosing split
     use('qpkorr/vim-bufkill')

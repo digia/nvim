@@ -3,6 +3,7 @@ local cmp_nvim_lsp = require('cmp_nvim_lsp')
 local lspconfig = require('lspconfig')
 local luasnip = require('luasnip')
 local luasnip_from_vscode = require('luasnip.loaders.from_vscode')
+local navic = require('nvim-navic')
 
 local Remap = require('digia.remap')
 
@@ -48,7 +49,7 @@ cmp.setup({
 local lsp_capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local function lsp_config(config)
-  local on_attach = function()
+  local on_attach = function(client, bufnr)
     -- Act upon a variable/function
     nnoremap('K', function() vim.lsp.buf.hover() end) -- View the documentation
     nnoremap('<leader>vd', function() vim.lsp.buf.definition() end) -- View variable definition
@@ -60,6 +61,11 @@ local function lsp_config(config)
 
     -- Testing bindings from ThePrimeagen (2022-10-23)
     inoremap('<C-h>', function() vim.lsp.buf.signature_help() end)
+
+    -- Attach navic for code context
+    if client.server_capabilities.documentSymbolProvider then
+      navic.attach(client, bufnr)
+    end
   end
 
   local base_config = {

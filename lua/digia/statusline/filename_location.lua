@@ -90,24 +90,27 @@ M.update_status = function(self)
     data = shorten_path(data, path_separator, estimated_space_available)
   end
 
-  local symbols = {}
+  local symbol_segments = {}
   if self.options.file_status then
     if vim.bo.modified then
-      table.insert(symbols, self.options.symbols.modified)
+      table.insert(symbol_segments, self.options.symbols.modified)
     end
     if vim.bo.modifiable == false or vim.bo.readonly == true then
-      table.insert(symbols, self.options.symbols.readonly)
+      table.insert(symbol_segments, self.options.symbols.readonly)
     end
   end
 
   if self.options.newfile_status and is_new_file() then
-    table.insert(symbols, self.options.symbols.newfile)
+    table.insert(symbol_segments, self.options.symbols.newfile)
   end
+
+  local symbols = (#symbol_segments > 0 and ' ' .. table.concat(symbol_segments, '') or '')
 
   local line = vim.fn.line('.')
   local col = vim.fn.virtcol('.')
+  local position = string.format(':%d:%d', line, col)
 
-  return data .. (#symbols > 0 and ' ' .. table.concat(symbols, '') or '') .. string.format(':%d:%d', line, col)
+  return data .. position .. symbols
 end
 
 return M
