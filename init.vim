@@ -58,7 +58,10 @@ set nobackup
 set undofile
 set termguicolors
 set noshowmode
-set completeopt=menuone,noinsert,noselect
+
+" nvim-cmp 2022-10-23
+" set completeopt=menuone,noinsert,noselect
+set completeopt=menu,menuone,noselect
 
 set noequalalways                     " I don't like my windows changing all the time
 set splitright                        " Prefer windows splitting to the right
@@ -162,8 +165,9 @@ hi StatusLineNC guifg=#596f71 guibg=#073642
 " Lua & Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" NOTE(digia): Plugins are managed within the `lua/plugins` lua module
-lua require('init')
+" Lua plugins are within `lua/digia` and config/tweaks for plugins are within
+" `after/plugin`.
+lua require('digia')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Variables

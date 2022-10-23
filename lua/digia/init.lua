@@ -1,4 +1,4 @@
-require('plugins')
+require('digia.plugins')
 
 -- See tjdevries dotfiles for a reference to RELOAD
 -- https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/lua/init.lua
@@ -19,5 +19,8 @@ P = function(v)
 end
 
 -- NOTE(digia): Using a directory as a namespace to avoid module collisions
-require('digia/lspconfig')
-require('digia/telescope')
+require('digia.remap')
+-- require('digia.lspconfig')
+require('digia.treesitter')
+require('digia.telescope')
+require('digia.gps')
