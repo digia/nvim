@@ -1,4 +1,5 @@
 local lualine = require('lualine')
+local navic = require('nvim-navic')
 
 local filename_location = require('digia.statusline.filename_location')
 
@@ -15,12 +16,20 @@ local sections = {
   lualine_b = {
     {
       'filetype',
+      icons_enabled = true, -- TODO: fix the color of the python icon, the yellow is distracting
+      -- icon_only = true,
+      
     }
   },
 
-  lualine_c = {}, -- Remove the default filename in c
+  lualine_c = {},
 
-  lualine_x = {},
+  lualine_x = {
+    {
+      navic.get_location,
+      cond = navic.is_available,
+    },
+  },
 
   lualine_y = {
     'diagnostics',
