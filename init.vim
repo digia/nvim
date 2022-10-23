@@ -59,9 +59,7 @@ set undofile
 set termguicolors
 set noshowmode
 
-" nvim-cmp 2022-10-23
-" set completeopt=menuone,noinsert,noselect
-set completeopt=menu,menuone,noselect
+set completeopt=menu,menuone,noinsert,noselect
 
 set noequalalways                     " I don't like my windows changing all the time
 set splitright                        " Prefer windows splitting to the right
@@ -174,9 +172,9 @@ lua require('digia')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader="\<space>"
 
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-let g:completion_trigger_keyword_length = 2
 " Completion settings
+" let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+" " let g:completion_trigger_keyword_length = 2
 " Use <Tab> and <S-Tab> to navigate through popup menu
 " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
