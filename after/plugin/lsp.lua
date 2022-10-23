@@ -24,8 +24,9 @@ cmp.setup({
 
   mapping = cmp.mapping.preset.insert({
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Confirm completion
-    -- NIT: Exiting insert mode requires 2x ctrl-c when completion window is showing, seems like focus config issue?
-    ['<C-c>'] = cmp.mapping.abort(), -- Close the completion window
+
+    -- NOTE: Not seeing where `abort` is needed with <C-c> acting as escape
+    -- ['<C-c>'] = cmp.mapping.abort(), -- Close the completion window
 
     -- Unable to get "complete" to work, not sure what it actually does
     -- ['<C-Space>'] = cmp.mapping.complete(),
