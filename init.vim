@@ -145,19 +145,20 @@ func! NvimGps() abort
 		\ luaeval("require('nvim-gps').get_location()") : ''
 endf
 
-set statusline=""
-set statusline+=%<%f:%l:%v " filename:col:line/total lines
-set statusline+=\ "
-set statusline+=%h%m%r " help/modified/readonly
-set statusline+=\ "
-set statusline+=[%{&ft}] " filetype
+" lualine (2022-10-23)
+" set statusline=""
+" set statusline+=%<%f:%l:%v " filename:col:line/total lines
 " set statusline+=\ "
-" set statusline+=%{NvimGps()}
-set statusline+=%= " alignment group
-set statusline+=\ "
+" set statusline+=%h%m%r " help/modified/readonly
+" set statusline+=\ "
+" set statusline+=[%{&ft}] " filetype
+    " set statusline+=\ " 
+    " set statusline+=%{NvimGps()}
+" set statusline+=%= " alignment group
+" set statusline+=\ "
 
-hi StatusLine guifg=#839496 guibg=#073642
-hi StatusLineNC guifg=#596f71 guibg=#073642
+" hi StatusLine guifg=#839496 guibg=#073642
+" hi StatusLineNC guifg=#596f71 guibg=#073642
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Lua & Plugins

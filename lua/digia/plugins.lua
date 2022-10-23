@@ -38,6 +38,10 @@ return require('packer').startup({
 
     -- https://github.com/simrat39/symbols-outline.nvim
     -- use('simrat39/symbols-outline.nvim') -- Needs configuration
+    --
+
+    -- use({ 'SmiteshP/nvim-navic', requires = 'neovim/nvim-lspconfig' })
+    use({ 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } })
 
     use('rafamadriz/friendly-snippets') -- Snippet collection with support for VS Code style snippets
     use('L3MON4D3/LuaSnip') -- Snippet library
