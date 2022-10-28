@@ -24,7 +24,8 @@ cmp.setup({
   },
 
   mapping = cmp.mapping.preset.insert({
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Confirm completion
+    -- ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Confirm completion
+    ['<Tab>'] = cmp.mapping.confirm({ select = true }), -- Confirm completion
 
     -- NOTE: Not seeing where `abort` is needed with <C-c> acting as escape
     -- ['<C-c>'] = cmp.mapping.abort(), -- Close the completion window
