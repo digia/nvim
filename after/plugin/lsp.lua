@@ -47,7 +47,7 @@ cmp.setup({
   })
 })
 
-local lsp_capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local lsp_capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local function lsp_config(config)
   local on_attach = function(client, bufnr)
@@ -88,6 +88,7 @@ lspconfig.tsserver.setup(lsp_config())
 lspconfig.pyright.setup(lsp_config({ enabled = true }))
 lspconfig.html.setup(lsp_config())
 lspconfig.cssls.setup(lsp_config())
+lspconfig.tailwindcss.setup(lsp_config())
 lspconfig.bashls.setup(lsp_config())
 lspconfig.jsonls.setup(lsp_config())
 lspconfig.dockerls.setup(lsp_config())
