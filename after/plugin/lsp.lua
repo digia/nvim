@@ -94,6 +94,7 @@ lspconfig.jsonls.setup(lsp_config())
 lspconfig.dockerls.setup(lsp_config())
 lspconfig.jdtls.setup(lsp_config())
 lspconfig.phpactor.setup(lsp_config())
+lspconfig.gopls.setup{lsp_config()}
 lspconfig.lua_ls.setup(lsp_config({
   settings = {
     Lua = {

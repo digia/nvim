@@ -61,6 +61,12 @@ return require('packer').startup({
       requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}}
     })
 
+    -- Github Copilot
+    -- use('github/copilot.vim')
+
+    -- Github Copilot in full Lua
+    use('zbirenbaum/copilot.lua')
+
     -- use {'junegunn/fzf', run = './install --all' }     -- Fuzzy Searcher
     -- use {'junegunn/fzf.vim'}
 
