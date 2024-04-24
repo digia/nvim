@@ -6,6 +6,7 @@
 
 require("copilot").setup({
   panel = {
+    -- enabled = false,
     auto_refresh = false,
     keymap = {
       accept = "<CR>",
@@ -16,6 +17,7 @@ require("copilot").setup({
     },
   },
   suggestion = {
+    -- enabled = false,
     auto_trigger = true,
     keymap = {
       accept = "<M-p>",

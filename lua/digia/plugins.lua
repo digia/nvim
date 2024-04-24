@@ -67,6 +67,14 @@ return require('packer').startup({
     -- Github Copilot in full Lua
     use('zbirenbaum/copilot.lua')
 
+    use({
+      "zbirenbaum/copilot-cmp",
+      after = { "copilot.lua" },
+      config = function ()
+        require("copilot_cmp").setup()
+      end
+    })
+
     -- use {'junegunn/fzf', run = './install --all' }     -- Fuzzy Searcher
     -- use {'junegunn/fzf.vim'}
 
