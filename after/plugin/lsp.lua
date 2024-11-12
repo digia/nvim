@@ -102,7 +102,8 @@ LSP (Language Server Protocol)
 
 NOTE: This needs to happen after setting up styles, not sure why...
 --]]
-lspconfig.tsserver.setup(lsp_config())
+-- lspconfig.tsserver.setup(lsp_config())
+lspconfig.ts_ls.setup(lsp_config())
 lspconfig.pyright.setup(lsp_config({ enabled = true }))
 lspconfig.html.setup(lsp_config())
 lspconfig.cssls.setup(lsp_config())
@@ -110,7 +111,7 @@ lspconfig.tailwindcss.setup(lsp_config())
 lspconfig.bashls.setup(lsp_config())
 lspconfig.jsonls.setup(lsp_config())
 lspconfig.dockerls.setup(lsp_config())
-lspconfig.jdtls.setup(lsp_config())
+-- lspconfig.jdtls.setup(lsp_config())
 lspconfig.phpactor.setup(lsp_config())
 lspconfig.gopls.setup{lsp_config()}
 lspconfig.lua_ls.setup(lsp_config({
