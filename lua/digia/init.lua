@@ -26,7 +26,7 @@ require("lazy").setup({
         { import = "digia.plugin" },
     },
     -- colorscheme that will be used when installing plugins.
-    install = { colorscheme = { "solarized8" } },
+    -- install = { colorscheme = { "solarized8" } },
 
     -- automatically check for plugin updates
     checker = {

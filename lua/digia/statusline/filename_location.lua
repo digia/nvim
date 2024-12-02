@@ -6,16 +6,16 @@
 
 local M = require('lualine.component'):extend()
 
-local modules = require('lualine_require').lazy_require {
+local modules = require('lualine_require').lazy_require({
   utils = 'lualine.utils.utils',
-}
+})
 
 local default_options = {
   symbols = {
     modified = '[+]',
     readonly = '[-]',
     unnamed = '[No Name]',
-    newfile = '[New]',
+    newfile = '[NEW]',
   },
   file_status = true,
   newfile_status = false,
@@ -113,4 +113,3 @@ M.update_status = function(self)
 end
 
 return M
-
