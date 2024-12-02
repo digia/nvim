@@ -2,7 +2,7 @@ return {
     {
         "lifepillar/vim-solarized8",
         branch = "neovim",
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        lazy = false,    -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             vim.cmd.colorscheme("solarized8_flat")
@@ -15,7 +15,7 @@ return {
     -- - Whites are brighter compared to srvana/neosolarized.nvim, though they are easier to scan at times
     {
         "ishan9299/nvim-solarized-lua",
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        lazy = false,    -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             vim.cmd.colorscheme("solarized-flat")
@@ -27,26 +27,26 @@ return {
     -- Tweaks (treesitter highlighting):
     -- - Adds a lot of orange (arguments, (), {}, html, etc.)
     {
-      "svrana/neosolarized.nvim",
-      lazy = false, -- make sure we load this during startup if it is your main colorscheme
-      priority = 1000, -- make sure to load this before all the other start plugins
-      dependencies = {
-        "tjdevries/colorbuddy.nvim",
-      },
-      config = function()
-        require("neosolarized").setup({
-          comment_italics = true,
-          background_set = false,
-        })
-        vim.cmd.colorscheme("neosolarized")
-      end,
-      enabled = false,
+        "svrana/neosolarized.nvim",
+        lazy = false,  -- make sure we load this during startup if it is your main colorscheme
+        priority = 1000, -- make sure to load this before all the other start plugins
+        dependencies = {
+            "tjdevries/colorbuddy.nvim",
+        },
+        config = function()
+            require("neosolarized").setup({
+                comment_italics = true,
+                background_set = false,
+            })
+            vim.cmd.colorscheme("neosolarized")
+        end,
+        enabled = false,
     },
 
-    -- Too much red hue's!
+    -- Too many red hue's!
     {
-      "Tsuzat/NeoSolarized.nvim",
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        "Tsuzat/NeoSolarized.nvim",
+        lazy = false,    -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             vim.cmd.colorscheme("NeoSolarized")
@@ -60,21 +60,22 @@ return {
         opts = {
             delay = function(ctx)
                 -- TODO: Adjust the delay for which-key
-                return ctx.plugin and 0 or 750
+                return ctx.plugin and 0 or 1000
             end,
         },
     },
 
     -- NOTE: Archived, moved onto lukas-reineke/indent-blankline.nvim
     { "Yggdroot/indentLine" }, -- Visual line indention
+
     -- TODO: Configure indent-blankline (https://github.com/lukas-reineke/indent-blankline.nvim)
     -- {
-        -- "lukas-reineke/indent-blankline.nvim",
-        -- event = { "BufReadPre", "BufNewFile" },
-        -- main = "ibl", -- Lua module name is "ibl" not "indent-blankline"
-        -- opts = {
-            -- indent = { char = "┊" },
-        -- },
+    -- "lukas-reineke/indent-blankline.nvim",
+    -- event = { "BufReadPre", "BufNewFile" },
+    -- main = "ibl", -- Lua module name is "ibl" not "indent-blankline"
+    -- opts = {
+    -- indent = { char = "┊" },
+    -- },
     -- },
 
     {
@@ -93,6 +94,9 @@ return {
     {
         "SmiteshP/nvim-navic",
         opts = {
+            -- highlight = true,
+            -- depth_limit = 4,
+
             -- Defaults
             -- depth_limit = 0,
             -- depth_limit_indicator = "..",
@@ -109,8 +113,6 @@ return {
 
         opts = function()
             local filename_location = require("digia.statusline.filename_location")
-            local navic = require("nvim-navic")
-            local noice = require("noice")
 
             local sections = {
                 lualine_a = {
@@ -124,7 +126,7 @@ return {
                 lualine_b = {
                     {
                         "filetype",
-                        icons_enabled = true, -- TODO: fix the color of the python icon, the yellow is distracting
+                        icons_enabled = true,
                         -- icon_only = true,
                     }
                 },
@@ -136,9 +138,9 @@ return {
                         "navic",
                     },
                     -- {
-                        -- noice.api.statusline.mode.get,
-                        -- cond = noice.api.statusline.mode.has,
-                        -- color = { fg = "#ff9e64" },
+                    -- noice.api.statusline.mode.get,
+                    -- cond = noice.api.statusline.mode.has,
+                    -- color = { fg = "#ff9e64" },
                     -- },
                 },
 
@@ -161,7 +163,7 @@ return {
                 lualine_b = {
                     {
                         "filetype",
-                        icons_enabled = true, -- TODO: fix the color of the python icon, the yellow is distracting
+                        icons_enabled = true,
                         -- icon_only = true,
                     }
                 },
@@ -219,37 +221,37 @@ return {
             },
             -- add any options here
             -- routes = {
-                -- {
-                    -- filter = {
-                        -- event = 'msg_show',
-                        -- any = {
-                            -- { find = '%d+L, %d+B' },
-                            -- { find = '; after #%d+' },
-                            -- { find = '; before #%d+' },
-                            -- { find = '%d fewer lines' },
-                            -- { find = '%d more lines' },
-                        -- },
-                    -- },
-                    -- opts = { skip = true },
-              -- }
-                -- {
-                    -- filter = {
-                        -- event = "lsp",
-                        -- kind = "progress",
-                        -- cond = function(message)
-                          -- local client = vim.tbl_get(message.opts, "progress", "client")
-                          -- return client == "lua_ls"
-                        -- end,
-                      -- },
-                    -- opts = { skip = true },
-                -- },
+            -- {
+            -- filter = {
+            -- event = 'msg_show',
+            -- any = {
+            -- { find = '%d+L, %d+B' },
+            -- { find = '; after #%d+' },
+            -- { find = '; before #%d+' },
+            -- { find = '%d fewer lines' },
+            -- { find = '%d more lines' },
+            -- },
+            -- },
+            -- opts = { skip = true },
+            -- }
+            -- {
+            -- filter = {
+            -- event = "lsp",
+            -- kind = "progress",
+            -- cond = function(message)
+            -- local client = vim.tbl_get(message.opts, "progress", "client")
+            -- return client == "lua_ls"
+            -- end,
+            -- },
+            -- opts = { skip = true },
+            -- },
             -- },
 
             views = {
                 cmdline_popup = {
                     -- position = {
-                        -- row = "14%",
-                        -- col = "50%",
+                    -- row = "14%",
+                    -- col = "50%",
                     -- },
                     size = {
                         width = "60%",
@@ -271,33 +273,33 @@ return {
                 },
 
                 -- popupmenu = {
-                    -- relative = "editor",
-                    -- position = {
-                        -- row = "95%",
-                        -- col = "50%",
-                    -- },
-                    -- size = {
-                        -- width = "60%",
-                        -- height = 10,
-                    -- },
-                    -- border = {
-                        -- style = "none",
-                        -- padding = { 0, 0 },
-                    -- },
-                    -- win_options = {
-                        -- winhighlight = {
-                            -- Normal = "Normal",
-                            -- FloatBorder = "DiagnosticInfo",
-                        -- },
-                    -- },
+                -- relative = "editor",
+                -- position = {
+                -- row = "95%",
+                -- col = "50%",
+                -- },
+                -- size = {
+                -- width = "60%",
+                -- height = 10,
+                -- },
+                -- border = {
+                -- style = "none",
+                -- padding = { 0, 0 },
+                -- },
+                -- win_options = {
+                -- winhighlight = {
+                -- Normal = "Normal",
+                -- FloatBorder = "DiagnosticInfo",
+                -- },
+                -- },
                 -- },
             },
 
             presets = {
-                bottom_search = true, -- use a classic bottom cmdline for search
-                command_palette = true, -- position the cmdline and popupmenu together
+                bottom_search = true,         -- use a classic bottom cmdline for search
+                command_palette = true,       -- position the cmdline and popupmenu together
                 long_message_to_split = true, -- long messages will be sent to a split
-                lsp_doc_border = true, -- add a border to hover docs and signature help
+                lsp_doc_border = true,        -- add a border to hover docs and signature help
             },
         },
     },
