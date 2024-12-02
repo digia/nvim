@@ -2,7 +2,6 @@
 -- https://github.com/nvim-lualine/lualine.nvim/blob/master/lua/lualine/components/filename.lua
 -- https://github.com/nvim-lualine/lualine.nvim/blob/master/lua/lualine/components/location.lua
 --
---
 -- NOTE: This is a copy/pasta with a location logic added, I'm sure there is probably a better way to extend...
 
 local M = require('lualine.component'):extend()
@@ -114,3 +113,4 @@ M.update_status = function(self)
 end
 
 return M
+
