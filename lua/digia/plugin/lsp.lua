@@ -13,60 +13,11 @@ return {
   { "sheerun/vim-polyglot" },
 
   {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = false,
-    version = false,     -- set this if you want to always pull the latest change
-
-    opts = {
-      -- add any opts here
-    },
-
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-    dependencies = {
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-
-      --- The below dependencies are optional,
-      "hrsh7th/nvim-cmp",                  -- autocompletion for avante commands and mentions
-      "nvim-tree/nvim-web-devicons",       -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua",            -- for providers='copilot'
-
-      -- {
-      -- -- support for image pasting
-      -- "HakonHarnes/img-clip.nvim",
-      -- event = "VeryLazy",
-
-      -- -- recommended settings
-      -- opts = {
-      -- default = {
-      -- embed_image_as_base64 = false,
-      -- prompt_for_file_name = false,
-      -- drag_and_drop = { insert_mode = true },
-      -- -- required for Windows users
-      -- use_absolute_path = true,
-      -- },
-      -- },
-      -- },
-
-      -- {
-      -- -- Make sure to set this up properly if you have lazy=true
-      -- 'MeanderingProgrammer/render-markdown.nvim',
-      -- opts = {
-      -- file_types = { "markdown", "Avante" },
-      -- },
-      -- ft = { "markdown", "Avante" },
-      -- },
-      -- },
-    },
-  },
-
-  {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      { "antosha417/nvim-lsp-file-operations", config = true },
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
@@ -92,27 +43,29 @@ return {
           Remap.nmap(keys, func, opts)
         end
 
-        local function imap(keys, func, desc)
-          local opts = { buffer = bufnr, desc = lsp_desc(desc) }
-          Remap.inoremap(keys, func, opts)
-        end
+        -- local function imap(keys, func, desc)
+        --   local opts = { buffer = bufnr, desc = lsp_desc(desc) }
+        --   Remap.inoremap(keys, func, opts)
+        -- end
 
-        nmap("gd", vim.lsp.buf.definition)
-        -- Using "v" prefix due to it being a "visual" action -- e.g. it opens a split pane
-        -- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        nmap("K", vim.lsp.buf.hover)
-        nmap("<leader>vws", vim.lsp.buf.workspace_symbol)
+        nmap("gd", vim.lsp.buf.definition) -- gd to stick with Vim's gd (:h gd)
+        nmap("K", vim.lsp.buf.hover)       -- K to stick with Vim's <Shift-k> (:h K)
+
+        -- TODO: Understand why `v` is used as the prefix here...
+        nmap("<leader>vs", vim.lsp.buf.workspace_symbol)
         nmap("<leader>vd", vim.diagnostic.open_float)
-        nmap("<leader>vca", vim.lsp.buf.code_action)
-        nmap("<leader>vrr", vim.lsp.buf.references)
-        nmap("<leader>vrn", vim.lsp.buf.rename)
-        -- nmap("<C-h>", vim.lsp.buf.signature_help) -- Overrides window movement,though is it necessary with `K`?
+        nmap("<leader>vr", vim.lsp.buf.references)
+        nmap("<leader>vh", vim.lsp.buf.signature_help) -- Necessary with `K`?
+
         nmap("[d", vim.diagnostic.goto_next)
         nmap("]d", vim.diagnostic.goto_prev)
-        nmap("<leader>f", vim.lsp.buf.format)
 
-        -- Testing bindings from ThePrimeagen (2022-10-23, 2024-12-01)
-        -- imap("<C-h>", vim.lsp.buf.signature_help) -- (?)
+        -- Actions
+        nmap("<leader>an", vim.lsp.buf.rename)      -- [A]ction re[N]ame
+        nmap("<leader>ac", vim.lsp.buf.code_action) -- [A]ction [C]ode Action
+
+        -- Run Actions (WIP/TESTING)
+        nmap("<leader>rf", vim.lsp.buf.format)      -- [R]un [F]ormat file
 
         -- Attach navic for code context
         if client.server_capabilities.documentSymbolProvider then
@@ -149,7 +102,7 @@ return {
         },
 
         handlers = {
-          function(server_name)           -- default handler (optional)
+          function(server_name) -- default handler (optional)
             lspconfig[server_name].setup(config_base)
           end,
 

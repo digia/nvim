@@ -1,4 +1,4 @@
----@class digia.util.ui
+---@class digia.util.folding
 local M = {}
 
 -- Foldtext for Neovim < 0.10.0 (https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/ui.lu)
@@ -23,3 +23,5 @@ function M.foldexpr()
   end
   return vim.b[buf].ts_folds and vim.treesitter.foldexpr() or "0"
 end
+
+return M

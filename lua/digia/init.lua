@@ -58,6 +58,7 @@ autocmd("BufEnter", {
   end
 })
 
+-- JavaScript, typescript, tsx formatting
 autocmd({ "BufNewFile", "BufRead" }, {
   group = DigiaGroup,
   pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
@@ -66,8 +67,9 @@ autocmd({ "BufNewFile", "BufRead" }, {
     vim.opt.softtabstop = 2
     vim.opt.shiftwidth = 2
   end
-}) -- JavaScript, typescript, tsx formatting
+})
 
+-- HTML, CSS, etc. formatting
 autocmd({ "BufNewFile", "BufRead" }, {
   group = DigiaGroup,
   pattern = { "*.html", "*.css", "*.sass", "*.scss", "*.json", "*.jsonc" }, -- Should probably add all the other possibilities here...
@@ -76,8 +78,9 @@ autocmd({ "BufNewFile", "BufRead" }, {
     vim.opt.softtabstop = 2
     vim.opt.shiftwidth = 2
   end
-}) -- HTML, CSS, etc. formatting
+})
 
+-- Lua formatting
 autocmd({ "BufNewFile", "BufRead" }, {
   group = DigiaGroup,
   pattern = { "*.lua" },
@@ -86,24 +89,4 @@ autocmd({ "BufNewFile", "BufRead" }, {
     vim.opt.softtabstop = 2
     vim.opt.shiftwidth = 2
   end
-}) -- Lua formatting
-
--- autocmd("LspAttach", {
--- group = DigiaGroup,
--- callback = function(e)
--- local opts = { buffer = e.buf }
--- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
--- -- Using "v" prefix due to it being a "visual" action -- e.g. it opens a split pane
--- -- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
--- vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
--- vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
--- vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
--- vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
--- vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
--- vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
--- vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
--- vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
--- vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
--- vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
--- end
--- })
+})
