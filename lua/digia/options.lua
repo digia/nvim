@@ -42,7 +42,7 @@ vim.opt.cursorline = true
 local colorcolumns = {}; for i = 120, 999 do colorcolumns[#colorcolumns + 1] = tostring(i) end;
 vim.opt.colorcolumn = "80," .. table.concat(colorcolumns, ",")
 
-vim.opt.laststatus = 3 -- Suggestion by avante.nvim, previously 2
+vim.opt.laststatus = 2
 
 vim.opt.list = true -- new, show tab characters and trailing whitespace
 vim.opt.listchars = "tab:»\\ ,extends:›,precedes:‹,nbsp:·,trail:·" -- show tab characters and trailing whitespace
