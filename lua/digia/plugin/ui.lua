@@ -2,8 +2,8 @@ return {
   {
     "lifepillar/vim-solarized8",
     branch = "neovim",
-    lazy = false,        -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000,     -- make sure to load this before all the other start plugins
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       vim.cmd.colorscheme("solarized8_flat")
     end,
@@ -15,8 +15,8 @@ return {
   -- - Whites are brighter compared to srvana/neosolarized.nvim, though they are easier to scan at times
   {
     "ishan9299/nvim-solarized-lua",
-    lazy = false,        -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000,     -- make sure to load this before all the other start plugins
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       vim.cmd.colorscheme("solarized-flat")
 
@@ -32,8 +32,8 @@ return {
   -- - Adds a lot of orange (arguments, (), {}, html, etc.)
   {
     "svrana/neosolarized.nvim",
-    lazy = false,        -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000,     -- make sure to load this before all the other start plugins
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
     dependencies = {
       "tjdevries/colorbuddy.nvim",
     },
@@ -53,8 +53,8 @@ return {
   -- Too many red hue's!
   {
     "Tsuzat/NeoSolarized.nvim",
-    lazy = false,        -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000,     -- make sure to load this before all the other start plugins
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       vim.cmd.colorscheme("NeoSolarized")
     end,
@@ -67,13 +67,13 @@ return {
     opts = {
       delay = function(ctx)
         -- TODO: Adjust the delay for which-key
-        return ctx.plugin and 0 or 1000
+        return ctx.plugin and 0 or 1250
       end,
     },
   },
 
   -- TODO: Archived plugin, migrate to lukas-reineke/indent-blankline.nvim
-  { "Yggdroot/indentLine" },   -- Visual line indention
+  { "Yggdroot/indentLine" }, -- Visual line indention
 
   -- TODO: Configure indent-blankline (https://github.com/lukas-reineke/indent-blankline.nvim)
   -- {
@@ -90,8 +90,57 @@ return {
     "rmagatti/goto-preview",
     lazy = true,
     event = "VeryLazy",
-    config = function()
-      require("goto-preview").setup {}
+
+    -- keys = {
+    --   { "<C-h>", "<C-w>w", },
+    --   {
+    --     "P",
+    --     function()
+    --       require("goto-preview").goto_preview_definition({ focus_on_open = false, dismiss_on_move = true })
+    --     end,
+    --     { noremap = true, desc = "Peek Definition" },
+    --   },
+    -- },
+
+    opts = function()
+      -- Dev's configurations: https://github.com/rmagatti/dotfiles/blob/master/nvim/lua/rmagatti/goto-preview.lua
+      local preview_mapping = function(wincmd_direction, bufnr)
+        local function close()
+          vim.cmd("wincmd " .. wincmd_direction)
+          require("goto-preview").close_all_win({ skip_curr_window = true })
+          -- vim.lsp.buf.definition()
+        end
+
+        vim.keymap.set("n", "<C-w>" .. wincmd_direction, close, {
+          noremap = true,
+          silent = true,
+          buffer = bufnr,
+        })
+      end
+
+      -- Mapping to cycle between windows
+      -- vim.keymap.set("n", "<C-h>", "<C-w>w")
+
+      -- "Peek" mapping
+      -- vim.keymap.set(
+      --   "n",
+      --   "L", -- for "look"
+      --   function()
+      --     require("goto-preview").goto_preview_definition { focus_on_open = false, dismiss_on_move = true }
+      --   end,
+      --   { noremap = true }
+      -- )
+
+      return {
+        default_mappings = true,
+        resizing_mappings = true,
+        post_open_hook = function(bufnr)
+          preview_mapping("H", bufnr)
+          preview_mapping("J", bufnr)
+          preview_mapping("K", bufnr)
+          preview_mapping("L", bufnr)
+        end,
+      }
     end,
   },
 
@@ -129,12 +178,26 @@ return {
     opts = function()
       local filename_location = require("digia.statusline.filename_location")
 
+      -- Show the active LSP clients, including the AI assistant (claude, copilot, etc.)
+      local active_lsp_clients = function()
+        local clients = vim.lsp.get_active_clients()
+        if next(clients) == nil then
+          return ""
+        end
+        local client_names = {}
+        for _, client in pairs(clients) do
+          table.insert(client_names, client.name)
+        end
+        return table.concat(client_names, ", ")
+      end
+
       local sections = {
         lualine_a = {
+          -- TODO: Add on_click to open the file directory in either finder or a terminal
           {
             filename_location,
             path = 1,
-            shorting_target = 60,             -- Space to __leave__ within the window
+            shorting_target = 80, -- Space to __leave__ within the window
           }
         },
 
@@ -143,20 +206,17 @@ return {
             "filetype",
             icons_enabled = true,
             -- icon_only = true,
-          }
+          },
+          {
+            active_lsp_clients,
+            -- icon = "",
+          },
         },
 
         lualine_c = {},
 
         lualine_x = {
-          {
-            "navic",
-          },
-          -- {
-          -- noice.api.statusline.mode.get,
-          -- cond = noice.api.statusline.mode.has,
-          -- color = { fg = "#ff9e64" },
-          -- },
+          "navic",
         },
 
         lualine_y = {
@@ -171,7 +231,7 @@ return {
           {
             filename_location,
             path = 1,
-            shorting_target = 60,             -- Space to __leave__ within the window
+            shorting_target = 60, -- Space to __leave__ within the window
           }
         },
 
@@ -180,12 +240,18 @@ return {
             "filetype",
             icons_enabled = true,
             -- icon_only = true,
-          }
+          },
+          {
+            active_lsp_clients,
+            -- icon = "",
+          },
         },
 
         lualine_c = {},
 
-        lualine_x = {},
+        lualine_x = {
+          "navic",
+        },
 
         lualine_y = {
           "diagnostics",
@@ -194,6 +260,12 @@ return {
       }
 
       return {
+        disabled_filetypes = {
+          statusline = {
+            "Avante",
+            "AvanteInput",
+          },
+        },
         sections = sections,
         inactive_sections = inactive_sections,
       }
@@ -233,7 +305,7 @@ return {
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,           -- requires hrsh7th/nvim-cmp
+          ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
         },
       },
       -- add any options here
@@ -313,10 +385,10 @@ return {
       },
 
       presets = {
-        bottom_search = true,                 -- use a classic bottom cmdline for search
-        command_palette = true,               -- position the cmdline and popupmenu together
-        long_message_to_split = true,         -- long messages will be sent to a split
-        lsp_doc_border = true,                -- add a border to hover docs and signature help
+        bottom_search = true,         -- use a classic bottom cmdline for search
+        command_palette = true,       -- position the cmdline and popupmenu together
+        long_message_to_split = true, -- long messages will be sent to a split
+        lsp_doc_border = true,        -- add a border to hover docs and signature help
       },
     },
   },

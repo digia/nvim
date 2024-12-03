@@ -13,7 +13,41 @@ return {
   -- { "tpope/vim-dispatch" },   -- Dispatch async tasks
   { "tpope/vim-surround" },   -- cs'"
 
+  --
   -- Completion
+  --
+
+  -- cmp-dotenv: cmp import and use all environment variables from .env.* and system
+  -- https://github.com/SergioRibera/cmp-dotenv
+  {
+    "SergioRibera/cmp-dotenv",
+    lazy = false,
+    priority = 999,
+
+    -- NOTE: Doesn't configure nivm-cmp, instead it sets sensitive env variables set within the ~/.config/nvim/.env
+    -- file. Within this config because it uses the load utility to parse the environment file.
+    config = function()
+      local dotenv_load = require("cmp-dotenv.load")
+
+      local env_path = vim.fn.expand("~/.config/nvim/.env")
+      local env_file, _ = io.open(env_path, "r")
+      if env_file == nil then
+        local msg = "Unable to load nvim .env file, assistant/completion plugins may not work."
+            .. " Ensure the necessary environment variables are populated within: "
+            .. env_path
+      end
+
+      local env_content = dotenv_load.load_data_from_text(env_file:read("*a"))
+      env_file:close()
+
+      for var_name, v in pairs(env_content) do
+        vim.env[var_name] = v.value
+      end
+    end
+  },
+
+  -- nvim-cmp: A completion plugin for neovim coded in Lua
+  -- https://github.com/hrsh7th/nvim-cmp
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
@@ -30,15 +64,16 @@ return {
         -- Install jsregexp (optional)
         build = "make install_jsregexp",
       },
-      "saadparwaiz1/cmp_luasnip",     -- For autocompletion
-      "rafamadriz/friendly-snippets", -- Useful snippets
+      "saadparwaiz1/cmp_luasnip",           -- For autocompletion
+      "rafamadriz/friendly-snippets",       -- Useful snippets
+      "SergioRibera/cmp-dotenv",            -- Source from .env* files
+      "lukas-reineke/cmp-under-comparator", -- Better completion sorting for languages which use dunder (__)
     },
 
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
 
-      -- GOTCHA:
       -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
       require("luasnip.loaders.from_vscode").lazy_load() -- `luasnip.loaders.from_vscode.lazy_load()` breaks?
 
@@ -57,8 +92,23 @@ return {
           end,
         },
 
+        sorting = {
+          -- Config from `cmp-under-comparator`
+          comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            require("cmp-under-comparator").under,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+          },
+        },
+
         mapping = cmp.mapping.preset.insert({
-          ["<C-Space>"] = cmp.mapping.complete(),
+          -- ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-Tab>"] = cmp.mapping.complete(),
 
           -- ["<Tab>"] = cmp.mapping.confirm({ select = true }), -- Confirm completion, prev
           -- Might of taken this from ThePrimeagen, not sure why else to use <C-y>...
@@ -76,6 +126,7 @@ return {
               fallback()
             end
           end, { "i", "s" }),
+
           ["<C-p>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
@@ -87,13 +138,25 @@ return {
           end, { "i", "s" }),
         }),
 
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" }, -- Snippets
-          { name = "buffer" },  -- Text within the current buffer
-          { name = "path" },    -- File system paths
-        }, {
-        })
+        sources = cmp.config.sources(
+          {
+            { name = "nvim_lsp" },
+            { name = "luasnip" }, -- Snippets
+            { name = "buffer" },  -- Text within the current buffer
+            { name = "path" },    -- File system paths
+
+            -- .env* files
+            {
+              name = "dotenv",
+              option = {
+                path = ".",
+              },
+            },
+          }
+
+        -- Fallback groups when the above sources are exhausted
+        -- {}
+        )
       })
     end
 
@@ -121,6 +184,7 @@ return {
       local cmp = require("cmp")
       cmp.event:on("confirm_done", autopairs_cmp.on_confirm_done())
     end,
+    enabled = false,
   },
 
   -- Copilot
@@ -129,6 +193,7 @@ return {
     cmd = "Copilot",
     event = "InsertEnter",
     lazy = true,
+
     opts = {
       filetypes = {
         sh = function()
@@ -155,10 +220,15 @@ return {
         -- enabled = false,
         auto_trigger = true,
         keymap = {
-          accept = "<M-p>",
-          prev = "<M-[>",
-          next = "<M-]>",
-          dismiss = "<C-]>",
+          -- accept = "<M-p>",
+          accept = "<C-e>", -- [E]xpand the suggestion, similar to <C-e> within the terminal
+          -- prev = "<M-[>",
+          prev = "<C-[>",
+          -- next = "<M-]>",
+          next = "<C-]>",
+          -- Is dismiss necessary? If so, <C-x> is probably the route to go here
+          -- dismiss = "<C-]>",
+          -- dismiss = "<C-x>",
         },
       },
     },
@@ -188,7 +258,7 @@ return {
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       "zbirenbaum/copilot.lua",      -- for providers='copilot'
 
-      --
+      -- Uses markdown preview for responses within the AvanteAsk buffer
       {
         "MeanderingProgrammer/render-markdown.nvim",
         opts = {
