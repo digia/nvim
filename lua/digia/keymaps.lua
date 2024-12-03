@@ -7,8 +7,8 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("n", "<leader><leader>r", ":source $MYVIMRC<CR>")
 
 -- System clipboard with <leader>y
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]], { desc = "Yank to system clipboard (cmd-v)" })
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({"n", "v"}, "<leader>y", '"+y', { desc = "Yank to system clipboard (cmd-v)" })
+vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line(s) to system clipboard (cmd-v)" })
 
 -- Window movement
 vim.keymap.set("n", "<C-h>", "<C-w>h")

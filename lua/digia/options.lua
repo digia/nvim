@@ -26,12 +26,12 @@ vim.opt.smartcase = true
 
 vim.opt.termguicolors = true
 
-vim.opt.scrolloff = 7 -- new, prev 3
-vim.opt.sidescrolloff = 7 -- new, prev 5
+vim.opt.scrolloff = 7         -- new, prev 3
+vim.opt.sidescrolloff = 7     -- new, prev 5
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@") -- new
 
-vim.opt.updatetime = 50 -- Time in milliseconds to wait before triggering the plugin events after a change
+vim.opt.updatetime = 50       -- Time in milliseconds to wait before triggering the plugin events after a change
 
 vim.opt.cursorline = true
 
@@ -39,9 +39,10 @@ vim.opt.cursorline = true
 -- vim.opt.colorcolumn = "80,120"
 -- Or... show colorcolumn at 80 and from 120 to 999
 -- Build a string of all columns from 120 to 999, to later use as a comma separated list for colorcolumn
-local colorcolumns = {}; for i = 120, 999 do colorcolumns[#colorcolumns+1] = tostring(i) end;
+local colorcolumns = {}; for i = 120, 999 do colorcolumns[#colorcolumns + 1] = tostring(i) end;
 vim.opt.colorcolumn = "80," .. table.concat(colorcolumns, ",")
 
+vim.opt.laststatus = 3 -- Suggestion by avante.nvim, previously 2
 
 vim.opt.list = true -- new, show tab characters and trailing whitespace
 vim.opt.listchars = "tab:»\\ ,extends:›,precedes:‹,nbsp:·,trail:·" -- show tab characters and trailing whitespace
@@ -52,14 +53,17 @@ vim.opt.splitright = true -- split windows right of current window
 
 vim.opt.grepprg = "rg --vimgrep"
 
+-- Folding settings
+vim.opt.foldenable = true   -- Enable folding
+vim.opt.foldlevel = 99      -- Start with all folds open
+vim.opt.foldlevelstart = 99 -- Start with all folds open when opening new files
+
 if vim.fn.has("nvim-0.10") == 1 then
   vim.opt.smoothscroll = true
-  vim.opt.foldexpr = "v:lua.require'digia.util'.ui.foldexpr()"
+  vim.opt.foldexpr = "v:lua.require('digia.util.folding').foldexpr()"
   vim.opt.foldmethod = "expr"
   vim.opt.foldtext = ""
 else
   vim.opt.foldmethod = "indent"
-  vim.opt.foldtext = "v:lua.require'digia.util'.ui.foldtext()"
+  vim.opt.foldtext = "v:lua.require('digia.util.folding').foldtext()"
 end
-
-

@@ -19,6 +19,9 @@ return {
     priority = 1000,     -- make sure to load this before all the other start plugins
     config = function()
       vim.cmd.colorscheme("solarized-flat")
+
+      -- For avante.tokenizers and templates to work
+      require("avante_lib").load()
     end,
     -- enabled = false,
   },
@@ -65,7 +68,7 @@ return {
     },
   },
 
-  -- NOTE: Archived, moved onto lukas-reineke/indent-blankline.nvim
+  -- TODO: Archived plugin, migrate to lukas-reineke/indent-blankline.nvim
   { "Yggdroot/indentLine" },   -- Visual line indention
 
   -- TODO: Configure indent-blankline (https://github.com/lukas-reineke/indent-blankline.nvim)
@@ -78,6 +81,7 @@ return {
   -- },
   -- },
 
+  -- TODO: Configure goto-preview (https://github.com/rmagatti/goto-preview)
   {
     "rmagatti/goto-preview",
     lazy = true,
@@ -85,6 +89,13 @@ return {
     config = function()
       require("goto-preview").setup {}
     end,
+  },
+
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    keys = {
+      { "<leader>rm", "<cmd>RenderMarkdown toggle<cr>", desc = "Render Markdown (Toggle)" },
+    },
   },
 
   -- Visually distracting (2024-01-01)
@@ -200,6 +211,8 @@ return {
   -- TODO: Finish setting up (https://github.com/folke/noice.nvim)
   {
     "folke/noice.nvim",
+    enabled = false,
+
     dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
