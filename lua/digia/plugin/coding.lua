@@ -10,7 +10,7 @@ return {
   { "tpope/vim-unimpaired" }, -- [<Space>, ]<Space>, [u, ]u, [f, ]f, [e, ]e
 
   { "tpope/vim-repeat" },     -- Repeat more than native commands
-  { "tpope/vim-dispatch" },   -- Dispatch async tasks
+  -- { "tpope/vim-dispatch" },   -- Dispatch async tasks
   { "tpope/vim-surround" },   -- cs'"
 
   -- Completion
@@ -63,7 +63,8 @@ return {
           -- ["<Tab>"] = cmp.mapping.confirm({ select = true }), -- Confirm completion, prev
           -- Might of taken this from ThePrimeagen, not sure why else to use <C-y>...
           -- ["<C-y>"] = cmp.mapping.confirm({ select = true }), -- Confirm completion, new (?)
-          ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+          -- ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+          ["<Tab>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 
           -- Select next/prev item in completion menu
           ["<C-n>"] = cmp.mapping(function(fallback)
@@ -139,10 +140,11 @@ return {
         end,
       },
       panel = {
-        -- enabled = false,
+        enabled = false,
         auto_refresh = true,
         keymap = {
-          accept = "<CR>",
+          -- accept = "<CR>",
+          accept = "<M-p>",
           jump_prev = "[[",
           jump_next = "]]",
           refresh = "gr",
@@ -216,7 +218,6 @@ return {
     opts = {
       hints = { enabled = false, },
     },
-
   },
 
   -- https://github.com/folke/trouble.nvim
