@@ -61,10 +61,10 @@ return {
         nmap("]d", vim.diagnostic.goto_prev)
 
         -- Actions
-        nmap("<leader>an", vim.lsp.buf.rename)      -- [A]ction re[N]ame
-        nmap("<leader>ac", vim.lsp.buf.code_action) -- [A]ction [C]ode Action
 
         -- Run Actions (WIP/TESTING)
+        nmap("<leader>rn", vim.lsp.buf.rename)      -- [R]un re[N]ame
+        nmap("<leader>rc", vim.lsp.buf.code_action) -- [R]un [C]ode Action
         nmap("<leader>rf", vim.lsp.buf.format)      -- [R]un [F]ormat file
 
         -- Attach navic for code context
