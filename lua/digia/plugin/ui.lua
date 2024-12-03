@@ -23,10 +23,11 @@ return {
       -- For avante.tokenizers and templates to work
       require("avante_lib").load()
     end,
-    -- enabled = false,
+    enabled = false,
   },
 
   -- https://github.com/svrana/neosolarized.nvim
+  -- - Easier on the eyes as the whites are not as bright
   -- Tweaks (treesitter highlighting):
   -- - Adds a lot of orange (arguments, (), {}, html, etc.)
   {
@@ -42,8 +43,11 @@ return {
         background_set = false,
       })
       vim.cmd.colorscheme("neosolarized")
+
+      -- For avante.tokenizers and templates to work
+      require("avante_lib").load()
     end,
-    enabled = false,
+    -- enabled = false,
   },
 
   -- Too many red hue's!
