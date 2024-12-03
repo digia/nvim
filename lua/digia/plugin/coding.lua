@@ -215,9 +215,22 @@ return {
       -- },
     },
 
-    opts = {
-      hints = { enabled = false, },
-    },
+    opts = function()
+      -- Check if hostname ends with .linkedin.biz
+      local provider = "claude"
+      if vim.fn.hostname():match("%.linkedin%.biz$") then
+        provider = "copilot"
+      end
+
+      return {
+        hints = { enabled = false },
+        provider = provider,
+        auto_suggestions_provider = "copilot",
+        behaviour = {
+          -- auto_suggestions = true, -- Experimental stage
+        },
+      }
+    end
   },
 
   -- https://github.com/folke/trouble.nvim
