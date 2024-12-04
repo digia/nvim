@@ -35,6 +35,8 @@ return {
         local msg = "Unable to load nvim .env file, assistant/completion plugins may not work."
             .. " Ensure the necessary environment variables are populated within: "
             .. env_path
+        print(msg)
+        return
       end
 
       local env_content = dotenv_load.load_data_from_text(env_file:read("*a"))
