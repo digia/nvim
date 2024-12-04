@@ -27,6 +27,7 @@ return {
   },
 
   "tjdevries/colorbuddy.nvim",
+
   -- https://github.com/svrana/neosolarized.nvim
   -- - Easier on the eyes as the whites are not as bright
   -- Tweaks (treesitter highlighting):
@@ -45,6 +46,8 @@ return {
       })
       vim.cmd.colorscheme("neosolarized")
 
+      -- TODO: Discover tool to make theme tweaking easier
+      -- TODO: Tweak theme to desire
       -- sol.Group.link("WarningMsg", sol.groups.Comment)
       -- sol.Group.new("WarningMsg", sol.groups.Comment, sol.groups.Comment, sol.groups.Comment)
 
