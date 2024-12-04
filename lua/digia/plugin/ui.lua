@@ -149,38 +149,38 @@ return {
         return not string.match(ft, "^Avante")
       end
 
+      local filename_section = {
+        "filename",
+        path = 1,
+        shorting_target = 80, -- Space to __leave__ within the window
+        cond = not_avante_filetype
+        -- Maybe, add on_click to open the file directory in either finder or a terminal
+        -- on_click = function() end
+      }
+
+      local filetype_section = { "filetype", icons_enabled = false }
+      local lsp_clients_section = { active_lsp_clients, cond = not_avante_filetype }
+      local navic_section = { "navic" }
+      local diagnostics_section = { "diagnostics" }
+
       local sections = {
         lualine_a = {
-          -- TODO: Add on_click to open the file directory in either finder or a terminal
-          {
-            filename_location,
-            path = 1,
-            shorting_target = 80, -- Space to __leave__ within the window
-            cond = not_avante_filetype
-          }
+          filename_section,
         },
 
         lualine_b = {
-          {
-            "filetype",
-            icons_enabled = true,
-            -- icon_only = true,
-          },
-          {
-            active_lsp_clients,
-            -- icon = "",
-            cond = not_avante_filetype
-          },
+          filetype_section,
+          lsp_clients_section,
         },
 
         lualine_c = {},
 
         lualine_x = {
-          "navic",
+          navic_section
         },
 
         lualine_y = {
-          "diagnostics",
+          diagnostics_section,
         },
 
         lualine_z = {},
@@ -188,37 +188,23 @@ return {
 
       local inactive_sections = {
         lualine_a = {
-          {
-            filename_location,
-            path = 1,
-            shorting_target = 60, -- Space to __leave__ within the window
-            cond = not_avante_filetype
-          }
+          filename_section,
         },
 
         lualine_b = {
-          {
-            "filetype",
-            icons_enabled = true,
-            -- icon_only = true,
-          },
-          {
-            active_lsp_clients,
-            -- icon = "",
-            cond = not_avante_filetype
-          },
+          filetype_section,
+          lsp_clients_section,
         },
 
         lualine_c = {},
 
         lualine_x = {
-          "navic",
+          navic_section,
         },
 
         lualine_y = {
-          "diagnostics",
+          diagnostics_section,
         },
-
       }
 
       return {
