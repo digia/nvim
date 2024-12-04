@@ -26,6 +26,7 @@ return {
     enabled = false,
   },
 
+  "tjdevries/colorbuddy.nvim",
   -- https://github.com/svrana/neosolarized.nvim
   -- - Easier on the eyes as the whites are not as bright
   -- Tweaks (treesitter highlighting):
@@ -38,11 +39,22 @@ return {
       "tjdevries/colorbuddy.nvim",
     },
     config = function()
-      require("neosolarized").setup({
+      local sol = require("neosolarized").setup({
         comment_italics = true,
         background_set = false,
       })
       vim.cmd.colorscheme("neosolarized")
+
+      -- sol.Group.link("WarningMsg", sol.groups.Comment)
+      -- sol.Group.new("WarningMsg", sol.groups.Comment, sol.groups.Comment, sol.groups.Comment)
+
+      -- sol.Group.link("DiagnosticHint", sol.groups.Comment)
+      -- sol.Group.new("DiagnosticHint", sol.colors.green)
+      -- sol.Group.new("DiagnosticVirtualTextHint", sol.colors.Comment)
+
+      -- sol.Group.new("@variable.builtin", sol.colors.white)
+      -- sol.Group.new("@variable.parameter.builtin", sol.colors.white)
+      -- sol.Group.new("@lsp.type.parameter", sol.colors.white)
 
       -- For avante.tokenizers and templates to work
       require("avante_lib").load()
@@ -84,65 +96,6 @@ return {
   -- indent = { char = "┊" },
   -- },
   -- },
-
-  -- TODO: Configure goto-preview (https://github.com/rmagatti/goto-preview)
-  {
-    "rmagatti/goto-preview",
-    lazy = true,
-    event = "VeryLazy",
-
-    -- keys = {
-    --   { "<C-h>", "<C-w>w", },
-    --   {
-    --     "P",
-    --     function()
-    --       require("goto-preview").goto_preview_definition({ focus_on_open = false, dismiss_on_move = true })
-    --     end,
-    --     { noremap = true, desc = "Peek Definition" },
-    --   },
-    -- },
-
-    opts = function()
-      -- Dev's configurations: https://github.com/rmagatti/dotfiles/blob/master/nvim/lua/rmagatti/goto-preview.lua
-      local preview_mapping = function(wincmd_direction, bufnr)
-        local function close()
-          vim.cmd("wincmd " .. wincmd_direction)
-          require("goto-preview").close_all_win({ skip_curr_window = true })
-          -- vim.lsp.buf.definition()
-        end
-
-        vim.keymap.set("n", "<C-w>" .. wincmd_direction, close, {
-          noremap = true,
-          silent = true,
-          buffer = bufnr,
-        })
-      end
-
-      -- Mapping to cycle between windows
-      -- vim.keymap.set("n", "<C-h>", "<C-w>w")
-
-      -- "Peek" mapping
-      -- vim.keymap.set(
-      --   "n",
-      --   "L", -- for "look"
-      --   function()
-      --     require("goto-preview").goto_preview_definition { focus_on_open = false, dismiss_on_move = true }
-      --   end,
-      --   { noremap = true }
-      -- )
-
-      return {
-        default_mappings = true,
-        resizing_mappings = true,
-        post_open_hook = function(bufnr)
-          preview_mapping("H", bufnr)
-          preview_mapping("J", bufnr)
-          preview_mapping("K", bufnr)
-          preview_mapping("L", bufnr)
-        end,
-      }
-    end,
-  },
 
   {
     "MeanderingProgrammer/render-markdown.nvim",
