@@ -108,6 +108,7 @@ return {
           },
         },
 
+        -- TODO: Investigate why <C-e> isn't fluid when suggestion & completion are present
         mapping = cmp.mapping.preset.insert({
           -- ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-Tab>"] = cmp.mapping.complete(),
