@@ -15,12 +15,12 @@ local default_options = {
     modified = '[+]',
     readonly = '[-]',
     unnamed = '[No Name]',
-    newfile = '[NEW]',
+    newfile = '[New]',
   },
   file_status = true,
   newfile_status = false,
   path = 0,
-  shorting_target = 40,
+  shorting_target = 60,
 }
 
 local function is_new_file()
