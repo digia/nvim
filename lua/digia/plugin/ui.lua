@@ -144,6 +144,11 @@ return {
         return table.concat(client_names, ", ")
       end
 
+      local not_avante_filetype = function()
+        local ft = vim.bo.filetype
+        return not string.match(ft, "^Avante")
+      end
+
       local sections = {
         lualine_a = {
           -- TODO: Add on_click to open the file directory in either finder or a terminal
@@ -151,6 +156,7 @@ return {
             filename_location,
             path = 1,
             shorting_target = 80, -- Space to __leave__ within the window
+            cond = not_avante_filetype
           }
         },
 
@@ -163,6 +169,7 @@ return {
           {
             active_lsp_clients,
             -- icon = "",
+            cond = not_avante_filetype
           },
         },
 
@@ -185,6 +192,7 @@ return {
             filename_location,
             path = 1,
             shorting_target = 60, -- Space to __leave__ within the window
+            cond = not_avante_filetype
           }
         },
 
@@ -197,6 +205,7 @@ return {
           {
             active_lsp_clients,
             -- icon = "",
+            cond = not_avante_filetype
           },
         },
 
@@ -213,12 +222,6 @@ return {
       }
 
       return {
-        disabled_filetypes = {
-          statusline = {
-            "Avante",
-            "AvanteInput",
-          },
-        },
         sections = sections,
         inactive_sections = inactive_sections,
       }
