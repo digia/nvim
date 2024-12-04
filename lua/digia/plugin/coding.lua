@@ -11,7 +11,17 @@ return {
 
   { "tpope/vim-repeat" },     -- Repeat more than native commands
   -- { "tpope/vim-dispatch" },   -- Dispatch async tasks
-  { "tpope/vim-surround" },   -- cs'"
+  -- { "tpope/vim-surround" },   -- cs'"
+
+  { "echasnovski/mini.ai", version = "*", config = true, }, -- Adds vaf, vif, caf, cif, etc.
+  { "echasnovski/mini.surround", version = "*", config = true, }, -- TEST: Potential replacement for tpop/vim-surround
+  { "echasnovski/mini.bracketed", version = "*", config = true, }, -- Navigate with []
+  -- { "echasnovski/mini.splitjoin", version = "*", config = true, }, -- TEST: Potential replacement for AndrewRadev/splitjoin.vim
+
+  -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
+
+  -- TODO: Investigate if the oil plugin is something that would be useful
+  -- https://github.com/stevearc/oil.nvim
 
   --
   -- Completion
