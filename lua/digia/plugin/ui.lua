@@ -341,12 +341,17 @@ return {
     "folke/todo-comments.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
+    keys = function()
       local todo_comments = require("todo-comments")
       vim.keymap.set("n", "[t", todo_comments.jump_next, { desc = "Next todo comment" })
       vim.keymap.set("n", "]t", todo_comments.jump_prev, { desc = "Previous todo comment" })
-      todo_comments.setup()
     end,
+    opts = {
+      signs = false, -- Don't show signs within the signs column
+      highlight = {
+        keyword = "bg",
+      },
+    }
   },
 
   -- Trouble
