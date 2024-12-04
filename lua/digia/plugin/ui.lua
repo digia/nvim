@@ -87,7 +87,7 @@ return {
     },
   },
 
-  -- TODO: Archived plugin, migrate to lukas-reineke/indent-blankline.nvim
+  -- TODO: Archived plugin, migrate to https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
   { "Yggdroot/indentLine" }, -- Visual line indention
 
   -- TODO: Configure indent-blankline (https://github.com/lukas-reineke/indent-blankline.nvim)
@@ -346,8 +346,8 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = function()
       local todo_comments = require("todo-comments")
-      vim.keymap.set("n", "[t", todo_comments.jump_next, { desc = "Next todo comment" })
-      vim.keymap.set("n", "]t", todo_comments.jump_prev, { desc = "Previous todo comment" })
+      vim.keymap.set("n", "]t", todo_comments.jump_next, { desc = "Next todo comment" })
+      vim.keymap.set("n", "[t", todo_comments.jump_prev, { desc = "Previous todo comment" })
     end,
     opts = {
       signs = false, -- Don't show signs within the signs column
