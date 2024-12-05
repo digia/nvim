@@ -173,10 +173,11 @@ return {
 
         lualine_b = {
           filetype_section,
-          lsp_clients_section,
         },
 
-        lualine_c = {},
+        lualine_c = {
+          -- lsp_clients_section, -- Might be too much unnecessary information on display at all times (2024-12-04)
+        },
 
         lualine_x = {
           navic_section
@@ -196,10 +197,11 @@ return {
 
         lualine_b = {
           filetype_section,
-          lsp_clients_section,
         },
 
-        lualine_c = {},
+        lualine_c = {
+          -- lsp_clients_section, -- Might be too much unnecessary information on display at all times (2024-12-04)
+        },
 
         lualine_x = {
           navic_section,
