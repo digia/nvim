@@ -356,7 +356,8 @@ return {
       highlight = {
         keyword = "bg",
       },
-    }
+    },
+    enabled = false,
   },
 
   -- Trouble
