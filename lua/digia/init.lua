@@ -58,7 +58,7 @@ autocmd("BufEnter", {
   end
 })
 
--- JavaScript, typescript, tsx formatting
+-- JavaScript, typescript, tsx
 autocmd({ "BufNewFile", "BufRead" }, {
   group = DigiaGroup,
   pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
@@ -69,7 +69,7 @@ autocmd({ "BufNewFile", "BufRead" }, {
   end
 })
 
--- HTML, CSS, etc. formatting
+-- HTML, CSS
 autocmd({ "BufNewFile", "BufRead" }, {
   group = DigiaGroup,
   pattern = { "*.html", "*.css", "*.sass", "*.scss", "*.json", "*.jsonc" }, -- Should probably add all the other possibilities here...
@@ -80,7 +80,16 @@ autocmd({ "BufNewFile", "BufRead" }, {
   end
 })
 
--- Lua formatting
+-- Markdown
+autocmd({ "BufNewFile", "BufRead" }, {
+  group = DigiaGroup,
+  pattern = { "*.md", "*.markdown", },
+  callback = function()
+    vim.opt.wrap = true
+  end
+})
+
+-- Lua
 autocmd({ "BufNewFile", "BufRead" }, {
   group = DigiaGroup,
   pattern = { "*.lua" },
