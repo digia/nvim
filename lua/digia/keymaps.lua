@@ -47,3 +47,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- vim.keymap.set("n", "<C-/>", ":nohl<CR>", { silent = true })
 -- WezTerm interprets <C-_> as <C-_>
 vim.keymap.set("n", "<C-_>", ":nohl<CR>", { silent = true })
+
+-- Reselect visual block after indent
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
