@@ -102,9 +102,6 @@ return {
 
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    keys = {
-      { "<leader>rm", "<cmd>RenderMarkdown toggle<cr>", desc = "Render Markdown (Toggle)" },
-    },
   },
 
   -- Visually distracting (2024-01-01)
