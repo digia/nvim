@@ -89,7 +89,8 @@ return {
           "rust_analyzer",
           "gopls",
           "ts_ls",
-          "pyright",
+          -- "pyright",
+          "basedpyright",
           "html",
           "cssls",
           "yamlls",
@@ -109,6 +110,11 @@ return {
           pyright = function()
             local pyright_opts = build_config({ enabled = true, })
             lspconfig.pyright.setup(pyright_opts)
+          end,
+
+          basedpyright = function()
+            local basedpyright_opts = build_config({ enabled = true, })
+            lspconfig.basedpyright.setup(basedpyright_opts)
           end,
 
           ["lua_ls"] = function()
