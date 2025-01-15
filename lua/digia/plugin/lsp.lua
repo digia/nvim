@@ -100,11 +100,19 @@ return {
           "dockerls",
           "phpactor",
           "gopls",
+          "elixirls",
         },
 
         handlers = {
           function(server_name) -- default handler (optional)
             lspconfig[server_name].setup(config_base)
+          end,
+
+          elixirls = function()
+            local elixir_opts = build_config({
+              cmd = { "/Users/digia/.local/share/nvim/mason/bin/elixir-ls" },
+            })
+            lspconfig.elixirls.setup(elixir_opts)
           end,
 
           pyright = function()
