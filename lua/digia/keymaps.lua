@@ -1,6 +1,13 @@
 -- space bar leader key
 vim.g.mapleader = " "
 
+-- Ensure Escape key works in all modes
+vim.keymap.set("i", "<Esc>", "<Esc>", { noremap = true })
+vim.keymap.set("v", "<Esc>", "<Esc>", { noremap = true })
+vim.keymap.set("x", "<Esc>", "<Esc>", { noremap = true })
+vim.keymap.set("s", "<Esc>", "<Esc>", { noremap = true })
+vim.keymap.set("c", "<Esc>", "<Esc>", { noremap = true })
+
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 -- Reload nvim config
