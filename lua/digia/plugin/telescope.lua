@@ -25,6 +25,7 @@ return {
     -- Files
     { "<leader>f/",  "<cmd>Telescope live_grep<cr>",                                desc = "Search Workspace" },
     { "<leader>fp",  "<cmd>Telescope find_files<cr>",                               desc = "Find Files" },
+    { "<leader>fP",  function() require("telescope.builtin").find_files({ find_command = { "rg", "--files", "--color", "never", "--no-ignore", "--hidden", "-g", "!.git" } }) end, desc = "Find All Files (inc. ignored)" },
     { "<leader>fg",  "<cmd>Telescope git_files<cr>",                                desc = "Find Files (git)" },
     { "<leader>fr",  "<cmd>Telescope oldfiles<cr>",                                 desc = "Recent Files" }, -- Previously opened files
 
