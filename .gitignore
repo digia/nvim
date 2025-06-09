@@ -1,4 +1,9 @@
+.env*
+
 .DS_Store
+
 plugged
 plugin/packer_compiled.vim
-.env*
+
+agent/worktree/*
+!agent/worktree/.gitkeep
