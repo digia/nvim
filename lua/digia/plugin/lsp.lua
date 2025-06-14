@@ -89,8 +89,8 @@ return {
           "rust_analyzer",
           "gopls",
           "ts_ls",
-          -- "pyright",
-          "basedpyright",
+          "pyright",
+          -- "basedpyright",
           "html",
           "cssls",
           "yamlls",
@@ -120,10 +120,10 @@ return {
             lspconfig.pyright.setup(pyright_opts)
           end,
 
-          basedpyright = function()
-            local basedpyright_opts = build_config({ enabled = true, })
-            lspconfig.basedpyright.setup(basedpyright_opts)
-          end,
+          -- basedpyright = function()
+          --   local basedpyright_opts = build_config({ enabled = true, })
+          --   lspconfig.basedpyright.setup(basedpyright_opts)
+          -- end,
 
           ["lua_ls"] = function()
             local lua_config = build_config({
@@ -150,6 +150,7 @@ return {
       })
 
       vim.diagnostic.config({
+        virtual_text = true,
         -- update_in_insert = true,
         float = {
           focusable = false,
