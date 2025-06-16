@@ -39,7 +39,7 @@ return {
 
       local function on_attach(client, bufnr)
         local function nmap(keys, func, desc)
-          local opts = { buffer = bufnr, desc = lsp_desc(desc) }
+          local opts = { buffer = bufnr, desc = lsp_desc(desc), noremap = true, silent = true }
           Remap.nmap(keys, func, opts)
         end
 
@@ -47,9 +47,6 @@ return {
         --   local opts = { buffer = bufnr, desc = lsp_desc(desc) }
         --   Remap.inoremap(keys, func, opts)
         -- end
-
-        nmap("gd", vim.lsp.buf.definition) -- gd to stick with Vim's gd (:h gd)
-        nmap("K", vim.lsp.buf.hover)       -- K to stick with Vim's <Shift-k> (:h K)
 
         -- TODO: Understand why `v` is used as the prefix here...
         nmap("<leader>vs", vim.lsp.buf.workspace_symbol)
@@ -59,13 +56,8 @@ return {
 
         nmap("]d", vim.diagnostic.goto_next)
         nmap("[d", vim.diagnostic.goto_prev)
-
-        -- Actions
-
-        -- Run Actions (WIP/TESTING)
-        nmap("<leader>rn", vim.lsp.buf.rename)      -- [R]un re[N]ame
-        nmap("<leader>rc", vim.lsp.buf.code_action) -- [R]un [C]ode Action
-        nmap("<leader>rf", vim.lsp.buf.format)      -- [R]un [F]ormat file
+        nmap("]e", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, "Next Error")
+        nmap("[e", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, "Previous Error")
 
         -- Attach navic for code context
         if client.server_capabilities.documentSymbolProvider then
@@ -129,7 +121,7 @@ return {
             local lua_config = build_config({
               settings = {
                 Lua = {
-                  runtime = { version = "Lua 5.1" },
+                  runtime = { version = "LuaJIT" },
                   diagnostics = {
                     globals = {
                       "bit",
@@ -139,6 +131,10 @@ return {
                       "before_each",
                       "after_each",
                     },
+                  },
+                  workspace = {
+                    library = vim.api.nvim_get_runtime_file("", true),
+                    checkThirdParty = false,
                   },
                   telemetry = { enable = false },
                 }
