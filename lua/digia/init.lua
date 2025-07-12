@@ -1,5 +1,6 @@
 require("digia.options")
 require("digia.keymaps")
+require("digia.quickfix")
 
 --
 -- Bootstrap lazy.nvim plugin manager
@@ -47,7 +48,12 @@ local DigiaGroup = augroup("Digia", {})
 autocmd({ "BufWritePre" }, {
   group = DigiaGroup,
   pattern = "*",
-  command = [[%s/\s\+$//e]],
+  callback = function()
+    -- Save the current view to restore it after the substitution, avoidingn cursor jump
+    local save = vim.fn.winsaveview()
+    vim.cmd([[%s/\s\+$//e]])
+    vim.fn.winrestview(save)
+  end,
 })
 
 autocmd("BufEnter", {
