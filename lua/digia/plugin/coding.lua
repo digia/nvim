@@ -67,6 +67,7 @@ return {
     dependencies = {
       "hrsh7th/cmp-buffer", -- Source for text in buffer
       "hrsh7th/cmp-path",   -- Source for file system paths
+
       -- TODO: Investigate if this is ideal
       "hrsh7th/cmp-cmdline",
       {
@@ -76,6 +77,7 @@ return {
         -- Install jsregexp (optional)
         build = "make install_jsregexp",
       },
+
       "saadparwaiz1/cmp_luasnip",           -- For autocompletion
       "rafamadriz/friendly-snippets",       -- Useful snippets
       "SergioRibera/cmp-dotenv",            -- Source from .env* files

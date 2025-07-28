@@ -93,6 +93,7 @@ return {
           "phpactor",
           "gopls",
           "elixirls",
+          "astro",
         },
 
         handlers = {
@@ -142,6 +143,23 @@ return {
             })
             lspconfig.lua_ls.setup(lua_config)
           end,
+
+          tailwindcss = function()
+            local tailwind_config = build_config({
+              filetypes = {
+                "html",
+                "css",
+                "scss",
+                "javascript",
+                "typescript",
+                "javascriptreact",
+                "typescriptreact",
+                "astro",
+                "mdx",
+              },
+            })
+            lspconfig.tailwindcss.setup(tailwind_config)
+          end,
         }
       })
 
@@ -158,5 +176,23 @@ return {
         },
       })
     end,
+  },
+
+
+  -- folke/lazydev.nvim - Lazy loading for Lua development (e.g. DX for neovim Lua)
+  -- https://github.com/folke/lazydev.nvim
+  {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        {
+          path = "${3rd}/luv/library",
+          words = { "vim%.uv" },
+        },
+      },
+    },
   },
 }
