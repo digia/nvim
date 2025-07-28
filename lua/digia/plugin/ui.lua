@@ -1,32 +1,110 @@
 return {
+
+  --
+  -- Tokyonight
+  --
+  --
+  -- Tokyonight "Storm" Theme
+  -- https://github.com/catppuccin/nvim
   {
-    "lifepillar/vim-solarized8",
-    branch = "neovim",
+    "folke/tokyonight.nvim",
     lazy = false,    -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
-      vim.cmd.colorscheme("solarized8_flat")
+      require("tokyonight").setup({
+        style = "storm", -- storm, day, night, moon
+        transparent = false, -- Enable transparent background
+        terminal_colors = true, -- Enable terminal colors
+        styles = {
+          keywords = {
+            italic = false,
+          },
+          floats = "normal",
+        },
+
+        on_colors = function(colors)
+          colors.hint = colors.warning
+        end,
+
+        on_highlights = function(hl, c)
+          --
+          -- Telescope highlights
+          --
+
+          hl.TelescopePromptBorder = { fg = c.border_highlight }
+          hl.TelescopePromptTitle = { fg = c.bg_highlight }
+
+          --
+          -- TODO highlights
+          --
+
+          -- Native Neovim TODO (non-Tree-sitter)
+          -- hl.Todo = { bg = c.magenta2, fg = c.white } -- Captures eyes a bit too much
+          hl.Todo = { bg = c.bg_highlight, fg = c.magenta2 } -- Less distracting, though still noticeable
+
+          -- Tree-sitter comment highlights
+          -- hl["@comment.todo"] = { bg = c.magenta2, fg = c.white }
+          hl["@comment.todo"] = { bg = c.bg_highlight, fg = c.magenta2 }
+          hl["@comment.note"] = { bg = c.bg_highlight, fg = c.hint }
+          hl["@comment.warning"] = { bg = c.bg_highlight, fg = c.warning }
+          hl["@comment.error"] = { bg = c.bg_highlight, fg = c.error }
+        end,
+      })
+
+      vim.cmd.colorscheme("tokyonight")
+    end,
+    enabled = true,
+  },
+
+  --
+  -- Catppuccino
+  --
+
+  -- Catppuccin "Macchiato" Theme
+  -- https://github.com/catppuccin/nvim
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      require("catppuccin").setup({
+        flavour = "macchiato", -- latte, frappe, macchiato, mocha
+        styles = {
+          conditionals = {
+            -- Disables italics for conditionals
+          },
+        },
+
+        -- Expand the default integrations
+        integrations = {
+          telescope = true, -- telescope.nvim
+        },
+      })
+
+      vim.cmd.colorscheme("catppuccin")
     end,
     enabled = false,
   },
 
-  -- Tweaks (treesitter highlighting):
-  -- - Adds a lot of reds (arguments, (), {}, html, etc.)
-  -- - Whites are brighter compared to srvana/neosolarized.nvim, though they are easier to scan at times
+
+  --
+  -- Nord
+  --
+
   {
-    "ishan9299/nvim-solarized-lua",
+    "nordtheme/vim",
     lazy = false,    -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
-      vim.cmd.colorscheme("solarized-flat")
-
-      -- For avante.tokenizers and templates to work
-      require("avante_lib").load()
+      vim.cmd.colorscheme("nord")
     end,
     enabled = false,
   },
 
-  "tjdevries/colorbuddy.nvim",
+  ---
+  --- Solarized
+  ---
 
   -- https://github.com/svrana/neosolarized.nvim
   -- - Easier on the eyes as the whites are not as bright
@@ -40,7 +118,7 @@ return {
       "tjdevries/colorbuddy.nvim",
     },
     config = function()
-      local sol = require("neosolarized").setup({
+      require("neosolarized").setup({
         comment_italics = true,
         background_set = false,
       })
@@ -62,19 +140,10 @@ return {
       -- For avante.tokenizers and templates to work
       require("avante_lib").load()
     end,
-    -- enabled = false,
-  },
-
-  -- Too many red hue's!
-  {
-    "Tsuzat/NeoSolarized.nvim",
-    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      vim.cmd.colorscheme("NeoSolarized")
-    end,
     enabled = false,
   },
+
+  "tjdevries/colorbuddy.nvim",
 
   {
     "folke/which-key.nvim",
@@ -343,18 +412,28 @@ return {
     "folke/todo-comments.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "nvim-lua/plenary.nvim" },
-    keys = function()
+    config = function()
+      require("todo-comments").setup({
+        signs = false, -- Don't show signs within the signs column
+
+        highlight = {
+          keyword = "wide",
+          after = "",
+        },
+
+        keywords = {
+          PERF = {
+            alt = { "ENHANCEMENT", },
+          },
+        }
+      })
+
+      -- Set up keymaps after plugin is loaded
       local todo_comments = require("todo-comments")
-      vim.keymap.set("n", "]t", todo_comments.jump_next, { desc = "Next todo comment" })
-      vim.keymap.set("n", "[t", todo_comments.jump_prev, { desc = "Previous todo comment" })
+      vim.keymap.set("n", "]t", todo_comments.jump_next, { desc = "Next TODO comment" })
+      vim.keymap.set("n", "[t", todo_comments.jump_prev, { desc = "Previous TODO comment" })
     end,
-    opts = {
-      signs = false, -- Don't show signs within the signs column
-      highlight = {
-        keyword = "bg",
-      },
-    },
-    enabled = false,
+    enabled = true,
   },
 
   -- Trouble
