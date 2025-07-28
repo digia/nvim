@@ -49,7 +49,7 @@ autocmd({ "BufWritePre" }, {
   group = DigiaGroup,
   pattern = "*",
   callback = function()
-    -- Save the current view to restore it after the substitution, avoidingn cursor jump
+    -- Save the current view to restore it after the substitution, avoidingn cur
     local save = vim.fn.winsaveview()
     vim.cmd([[%s/\s\+$//e]])
     vim.fn.winrestview(save)
