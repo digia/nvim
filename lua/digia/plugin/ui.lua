@@ -293,6 +293,25 @@ return {
     },
   },
 
+  -- File icons with Astro support
+  {
+    "nvim-tree/nvim-web-devicons",
+    opts = {
+      override_by_extension = {
+        astro = {
+          icon = "",
+          color = "#EF8547",
+          name = "astro",
+        },
+        mdx = {
+          icon = "",
+          color = "#519aba",
+          name = "mdx",
+        },
+      },
+    },
+  },
+
   -- Minimalistic UI for notifications, defaulting to bottom right corner -- https://github.com/j-hui/fidget.nvim
   -- folke/noice.nvim has a similar feature builtin
   -- { "j-hui/fidget.nvim", }
