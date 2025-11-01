@@ -23,7 +23,7 @@ return {
         },
 
         on_colors = function(colors)
-          colors.hint = colors.warning
+          colors.hint = colors.bg_highlight
         end,
 
         on_highlights = function(hl, c)
@@ -35,19 +35,19 @@ return {
           hl.TelescopePromptTitle = { fg = c.bg_highlight }
 
           --
-          -- TODO highlights
+          -- TODO: highlights
           --
 
           -- Native Neovim TODO (non-Tree-sitter)
           -- hl.Todo = { bg = c.magenta2, fg = c.white } -- Captures eyes a bit too much
-          hl.Todo = { bg = c.bg_highlight, fg = c.magenta2 } -- Less distracting, though still noticeable
+          -- hl.Todo = { bg = c.bg_highlight, fg = c.magenta2 } -- Less distracting, though still noticeable
 
           -- Tree-sitter comment highlights
           -- hl["@comment.todo"] = { bg = c.magenta2, fg = c.white }
-          hl["@comment.todo"] = { bg = c.bg_highlight, fg = c.magenta2 }
+          -- hl["@comment.todo"] = { bg = c.bg_highlight, fg = c.magenta2 }
           hl["@comment.note"] = { bg = c.bg_highlight, fg = c.hint }
-          hl["@comment.warning"] = { bg = c.bg_highlight, fg = c.warning }
-          hl["@comment.error"] = { bg = c.bg_highlight, fg = c.error }
+          -- hl["@comment.warning"] = { bg = c.bg_highlight, fg = c.warning }
+          -- hl["@comment.error"] = { bg = c.bg_highlight, fg = c.error }
         end,
       })
 
@@ -444,7 +444,7 @@ return {
           PERF = {
             alt = { "ENHANCEMENT", },
           },
-        }
+        },
       })
 
       -- Set up keymaps after plugin is loaded
