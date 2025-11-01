@@ -303,9 +303,8 @@ return {
           prev = "<C-[>",
           -- next = "<M-]>",
           next = "<C-]>",
-          -- Is dismiss necessary? If so, <C-x> is probably the route to go here
           -- dismiss = "<C-]>",
-          -- dismiss = "<C-x>",
+          dismiss = "<C-\\>",
         },
       },
     },
