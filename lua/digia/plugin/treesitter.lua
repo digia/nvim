@@ -4,6 +4,7 @@ return {
   build = ":TSUpdate",
 
   event = { "BufReadPre", "BufNewFile" },
+  -- event = "BufReadPost",
   lazy = vim.fn.argc(-1) == 0,   -- load treesitter early when opening a file from the cmdline
 
   dependencies = {
@@ -21,6 +22,9 @@ return {
         "csv",
         "diff",
         "dockerfile",
+        "elixir",
+        "heex",
+        "eex",
         "go",
         "html",
         "htmldjango",
@@ -61,20 +65,21 @@ return {
       -- Recommendation: set to false if you don"t have `tree-sitter` CLI installed locally
       auto_install = true,
 
+      ignore_install = {},
+
       indent = {
         enable = true,
       },
 
       -- Enable autotagging with windwp/nvim-ts-autotag
-      -- TODO: Understand why it's not working
       autotag = {
         enable = true,
       },
 
-      -- TODO: Refine the harsh highlighting when using treesitter
       highlight = {
         -- `false` will disable the whole extension
-        -- enable = true,
+        enable = true,
+        -- enable = false,
 
         -- Name of the parser, not the filetype
         -- disable = { "tsx" },
@@ -83,7 +88,7 @@ return {
         -- Set this to `true` if you depend on "syntax" being enabled (like for indentation).
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
         -- Instead of true it can also be a list of languages
-        -- additional_vim_regex_highlighting = { "markdown", },
+        additional_vim_regex_highlighting = false,
       },
 
       -- Enable treesitter-based incremental selection
@@ -97,6 +102,8 @@ return {
       -- node_decremental = "grm",
       -- },
       -- },
+
+      modules = {},
     })
   end,
 }

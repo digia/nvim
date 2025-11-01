@@ -10,7 +10,13 @@ end
 
 return {
   { "onsails/lspkind.nvim" },
-  { "sheerun/vim-polyglot" },
+  {
+    "sheerun/vim-polyglot",
+    init = function()
+      -- Disable polyglot's elixir handling - using treesitter instead
+      vim.g.polyglot_disabled = { "elixir" }
+    end,
+  },
 
   {
     "neovim/nvim-lspconfig",
