@@ -63,3 +63,46 @@ autocmd("BufEnter", {
     -- vim.cmd.colorscheme("solarized8_flat")
   end
 })
+
+-- Create ThemeColors command
+vim.api.nvim_create_user_command("ThemeColors", function()
+  require("digia.theme").show_colors()
+end, { desc = "Show current theme colors in a scratch buffer" })
+
+-- Create CleanseQuotes command for converting smart quotes to standard quotes
+vim.api.nvim_create_user_command("CleanseQuotes", function(opts)
+  local range = opts.range > 0 and opts.line1 .. "," .. opts.line2 or "."
+  local flags = "ge" .. (opts.bang and "c" or "")
+
+  -- Save cursor position and search register
+  local save_pos = vim.fn.getpos(".")
+  local save_search = vim.fn.getreg("/")
+
+  -- Track if any changes occur
+  local changenr_before = vim.fn.changenr()
+
+  -- Execute substitutions silently
+  vim.cmd(string.format([[
+    silent! %ss/[""„‟]/"/g%s
+    silent! %ss/[''‚‛'']/'/g%s
+  ]], range, flags, range, flags))
+
+  -- Restore cursor (unless in confirmation mode)
+  if not opts.bang then
+    vim.fn.setpos(".", save_pos)
+  end
+  vim.fn.setreg("/", save_search)
+
+  -- Check if changes were made
+  local changenr_after = vim.fn.changenr()
+
+  if changenr_after > changenr_before then
+    vim.notify("Cleansed smart quotes")
+  else
+    vim.notify("No smart quotes found")
+  end
+end, {
+  range = true,
+  bang = true,
+  desc = "Convert smart quotes to standard quotes. Use ! for confirmation mode"
+})
