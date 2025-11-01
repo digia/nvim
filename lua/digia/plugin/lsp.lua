@@ -195,4 +195,10 @@ return {
       },
     },
   },
+
+  -- mfussenegger/nvim-ansible - Ansible plugin for neovim (2025-09-02)
+  -- https://github.com/mfussenegger/nvim-ansible
+  {
+    "mfussenegger/nvim-ansible"
+  },
 }
