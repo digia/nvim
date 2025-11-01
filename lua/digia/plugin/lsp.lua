@@ -115,6 +115,7 @@ return {
                   dialyzerEnabled = true,
                   enableTestLenses = false,
                   fetchDeps = false,
+                  mcpEnabled = false,
                   suggestSpecs = true,
                 },
               },
