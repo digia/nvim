@@ -58,6 +58,9 @@ return {
     end
   },
 
+  -- Emmet for HTML/CSS abbreviation expansion
+  { "mattn/emmet-vim" },
+
   -- nvim-cmp: A completion plugin for neovim coded in Lua
   -- https://github.com/hrsh7th/nvim-cmp
   {
