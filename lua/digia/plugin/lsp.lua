@@ -110,6 +110,14 @@ return {
           elixirls = function()
             local elixir_opts = build_config({
               cmd = { "/Users/digia/.local/share/nvim/mason/bin/elixir-ls" },
+              settings = {
+                elixirLS = {
+                  dialyzerEnabled = true,
+                  enableTestLenses = false,
+                  fetchDeps = false,
+                  suggestSpecs = true,
+                },
+              },
             })
             lspconfig.elixirls.setup(elixir_opts)
           end,
