@@ -29,11 +29,16 @@ return {
     { "<leader>fg",  "<cmd>Telescope git_files<cr>",                                desc = "Find Files (git)" },
     { "<leader>fr",  "<cmd>Telescope oldfiles<cr>",                                 desc = "Recent Files" }, -- Previously opened files
 
+    -- Search Utilities
+    { "<leader>sr",  "<cmd>Telescope resume<cr>",                                   desc = "Resume" },
+
     -- Search
+    { "<leader>ss",  "<cmd>Telescope lsp_document_symbols<cr>",                     desc = "Document Symbols" },
+    { "<leader>sS",  "<cmd>Telescope lsp_workspace_symbols<cr>",                    desc = "Workspace Symbols" },
     { "<leader>sb",  "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers", },
     { "<leader>sgc", "<cmd>Telescope git_commits<CR>",                              desc = "Git Commits" },
     { "<leader>sgs", "<cmd>Telescope git_status<CR>",                               desc = "Git Status" },
-    { "<leader>s",   "<cmd>Telescope registers<cr>",                                desc = "Registers" },
+    { "<leader>sR",  "<cmd>Telescope registers<cr>",                                desc = "Registers" },
     { "<leader>sa",  "<cmd>Telescope autocommands<cr>",                             desc = "Auto Commands" },
     { "<leader>sc",  "<cmd>Telescope command_history<cr>",                          desc = "Command History" },
     { "<leader>sC",  "<cmd>Telescope commands<cr>",                                 desc = "Commands" },
@@ -45,7 +50,6 @@ return {
     { "<leader>sM",  "<cmd>Telescope man_pages<cr>",                                desc = "Man Pages" },
     { "<leader>sm",  "<cmd>Telescope marks<cr>",                                    desc = "Jump to Mark" },
     { "<leader>so",  "<cmd>Telescope vim_options<cr>",                              desc = "Options" },
-    { "<leader>sR",  "<cmd>Telescope resume<cr>",                                   desc = "Resume" },
     { "<leader>sq",  "<cmd>Telescope quickfix<cr>",                                 desc = "Quickfix List" },
     { "<leader>sw",  "<cmd>Telescope grep_string word_match=-w<cr>",                desc = "Word (Root Dir)" },
     { "<leader>sW",  "<cmd>Telescope grep_string root=false word_match=-w<cr>",     desc = "Word (cwd)" },
