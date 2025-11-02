@@ -326,7 +326,7 @@ return {
 
       terminal = {
         split_side = "left",
-        split_width_percentage = 0.27,
+        split_width_percentage = 0.25,
       },
     },
 
@@ -337,6 +337,9 @@ return {
       vim.api.nvim_create_autocmd("TermOpen", {
         pattern = "term://*claude*",
         callback = function()
+          -- Set buffer name
+          vim.api.nvim_buf_set_name(0, "Claude Code")
+
           vim.keymap.set("t", "<C-w>q", "<C-\\><C-n>:hide<CR>", {
             buffer = true,
             noremap = true,
