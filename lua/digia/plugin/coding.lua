@@ -2,9 +2,11 @@
 -- Plugins related to coding, completion, and other coding utilities
 --
 return {
-  { "qpkorr/vim-bufkill" },        -- Killing buffers without loosing split
+  -- Replaced 2025-11-01: snacks.bufdelete handles this now
+  -- { "qpkorr/vim-bufkill" },        -- Killing buffers without loosing split
   { "benizi/vim-automkdir" },      -- Automatically create missing directories when saving
-  { "AndrewRadev/splitjoin.vim" }, -- Better support for joins (gS, gJ)
+  -- Replaced 2025-11-01: mini.splitjoin is more modern
+  -- { "AndrewRadev/splitjoin.vim" }, -- Better support for joins (gS, gJ)
 
   -- TODO: Silence tpope/unimpaired commands from showing within cmdline
   { "tpope/vim-unimpaired" }, -- [<Space>, ]<Space>, [u, ]u, [f, ]f, [e, ]e
@@ -16,7 +18,7 @@ return {
   { "echasnovski/mini.ai", version = "*", config = true, }, -- Adds vaf, vif, caf, cif, etc.
   { "echasnovski/mini.surround", version = "*", config = true, }, -- TEST: Potential replacement for tpop/vim-surround
   { "echasnovski/mini.bracketed", version = "*", config = true, }, -- Navigate with []
-  -- { "echasnovski/mini.splitjoin", version = "*", config = true, }, -- TEST: Potential replacement for AndrewRadev/splitjoin.vim
+  { "echasnovski/mini.splitjoin", version = "*", config = true, }, -- Better support for joins (gS, gJ)
 
   -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
 
@@ -320,9 +322,14 @@ return {
     dependencies = { "folke/snacks.nvim" },
     opts = {
       terminal_cmd = "/Users/digia/.claude/local/node_modules/.bin/claude",
+
+      terminal = {
+        split_side = "left",
+        -- split_width_percentage = 0.20,
+      },
     },
-    config = function()
-      require("claudecode").setup()
+    config = function(_, opts)
+      require("claudecode").setup(opts)
 
       -- Set keybind for hiding Claude terminal
       vim.api.nvim_create_autocmd("TermOpen", {
