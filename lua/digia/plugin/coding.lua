@@ -343,6 +343,12 @@ return {
             silent = true,
             desc = "Hide Claude terminal"
           })
+          vim.keymap.set("n", "<CR>", "i", {
+            buffer = true,
+            noremap = true,
+            silent = true,
+            desc = "Activate Claude terminal"
+          })
         end,
       })
     end,
