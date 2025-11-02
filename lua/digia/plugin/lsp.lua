@@ -167,7 +167,15 @@ return {
       end
 
       vim.diagnostic.config({
-        virtual_text = true,
+        virtual_text = {
+          format = function(diagnostic)
+            -- Hide unused variable warnings from virtual text (return nil to hide, otherwise the icon & virtual line shows)
+            if diagnostic.message:match("variable .* is unused") or diagnostic.message:match("unused variable") then
+              return nil
+            end
+            return diagnostic.message
+          end,
+        },
         -- update_in_insert = true,
         float = {
           focusable = false,
