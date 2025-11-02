@@ -314,70 +314,108 @@ return {
     -- enabled = false,
   },
 
-  -- AI assistant
+  -- Claude Code integration - primary context-aware Claude instance in nvim
   {
-    "yetone/avante.nvim",
-
-    event = "VeryLazy",
-    lazy = true,
-    version = false, -- set this if you want to always pull the latest change
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-    dependencies = {
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-
-      --- The below dependencies are optional,
-      "hrsh7th/nvim-cmp",            -- autocompletion for avante commands and mentions
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua",      -- for providers='copilot'
-
-      -- Uses markdown preview for responses within the AvanteAsk buffer
-      {
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
-
-      -- {
-      -- -- support for image pasting
-      -- "HakonHarnes/img-clip.nvim",
-      -- event = "VeryLazy",
-
-      -- -- recommended settings
-      -- opts = {
-      -- default = {
-      -- embed_image_as_base64 = false,
-      -- prompt_for_file_name = false,
-      -- drag_and_drop = { insert_mode = true },
-      -- -- required for Windows users
-      -- use_absolute_path = true,
-      -- },
-      -- },
-      -- },
+    "coder/claudecode.nvim",
+    dependencies = { "folke/snacks.nvim" },
+    opts = {
+      terminal_cmd = "/Users/digia/.claude/local/node_modules/.bin/claude",
     },
+    config = function()
+      require("claudecode").setup()
 
-    opts = function()
-      -- Check if hostname ends with .linkedin.biz
-      local provider = "claude"
-      if vim.fn.hostname():match("%.linkedin%.biz$") then
-        provider = "copilot"
-      end
-
-      return {
-        hints = { enabled = false },
-        provider = provider,
-        auto_suggestions_provider = "copilot",
-        behaviour = {
-          -- auto_suggestions = true, -- Experimental stage
-        },
-      }
-    end
+      -- Set keybind for hiding Claude terminal
+      vim.api.nvim_create_autocmd("TermOpen", {
+        pattern = "term://*claude*",
+        callback = function()
+          vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>:hide<CR>", {
+            buffer = true,
+            noremap = true,
+            silent = true,
+            desc = "Hide Claude terminal"
+          })
+        end,
+      })
+    end,
+    keys = {
+      { "<leader>a", nil, desc = "AI/Claude Code" },
+      { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+      { "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+      { "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+      { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+      { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+      { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+      { "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send selection to Claude" },
+      { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+      { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+    },
   },
+
+  -- AI assistant (DISABLED - using claudecode.nvim instead)
+  -- {
+  --   "yetone/avante.nvim",
+  --
+  --   event = "VeryLazy",
+  --   lazy = true,
+  --   version = false, -- set this if you want to always pull the latest change
+  --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+  --   build = "make",
+  --   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+  --   dependencies = {
+  --     "stevearc/dressing.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --
+  --     --- The below dependencies are optional,
+  --     "hrsh7th/nvim-cmp",            -- autocompletion for avante commands and mentions
+  --     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+  --     "zbirenbaum/copilot.lua",      -- for providers='copilot'
+  --
+  --     -- Uses markdown preview for responses within the AvanteAsk buffer
+  --     {
+  --       "MeanderingProgrammer/render-markdown.nvim",
+  --       opts = {
+  --         file_types = { "markdown", "Avante" },
+  --       },
+  --       ft = { "markdown", "Avante" },
+  --     },
+  --
+  --     -- {
+  --     -- -- support for image pasting
+  --     -- "HakonHarnes/img-clip.nvim",
+  --     -- event = "VeryLazy",
+  --
+  --     -- -- recommended settings
+  --     -- opts = {
+  --     -- default = {
+  --     -- embed_image_as_base64 = false,
+  --     -- prompt_for_file_name = false,
+  --     -- drag_and_drop = { insert_mode = true },
+  --     -- -- required for Windows users
+  --     -- use_absolute_path = true,
+  --     -- },
+  --     -- },
+  --     -- },
+  --   },
+  --
+  --   opts = function()
+  --     -- Check if hostname ends with .linkedin.biz
+  --     local provider = "claude"
+  --     if vim.fn.hostname():match("%.linkedin%.biz$") then
+  --       provider = "copilot"
+  --     end
+  --
+  --     return {
+  --       hints = { enabled = false },
+  --       provider = provider,
+  --       auto_suggestions_provider = "copilot",
+  --       behaviour = {
+  --         -- auto_suggestions = true, -- Experimental stage
+  --       },
+  --     }
+  --   end,
+  --   enabled = false,
+  -- },
 
   -- https://github.com/folke/trouble.nvim
   {
