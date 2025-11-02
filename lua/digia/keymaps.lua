@@ -11,7 +11,14 @@ vim.keymap.set("c", "<Esc>", "<Esc>", { noremap = true })
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 -- Reload nvim config
-vim.keymap.set("n", "<leader><leader>r", ":source $MYVIMRC<CR>")
+local function reload_config()
+  vim.cmd("source $MYVIMRC")
+  print("Config reloaded")
+end
+
+-- Create :ReloadConfig command
+vim.api.nvim_create_user_command("ReloadConfig", reload_config, { desc = "Reload Neovim configuration" })
+vim.keymap.set("n", "<leader><leader>r", reload_config, { desc = "Reload config" })
 
 -- System clipboard with <leader>y
 vim.keymap.set({"n", "v"}, "<leader>y", '"+y', { desc = "Yank to system clipboard (cmd-v)" })
@@ -22,6 +29,10 @@ vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
+
+-- Terminal mode: escape and navigate splits (left/right only for agent splits)
+vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h")
+vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l")
 
 -- Run the last command
 vim.keymap.set("n", "<leader><leader>c", ":<up>")
