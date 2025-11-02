@@ -343,11 +343,20 @@ return {
             silent = true,
             desc = "Hide Claude terminal"
           })
+
           vim.keymap.set("n", "<CR>", "i", {
             buffer = true,
             noremap = true,
             silent = true,
             desc = "Activate Claude terminal"
+          })
+
+          -- Auto-copy visual selection to system clipboard on mouse release (Mirror Tmux/Terminal behavior)
+          vim.keymap.set("v", "<LeftRelease>", '"+y<LeftRelease>', {
+            buffer = true,
+            noremap = true,
+            silent = true,
+            desc = "Copy selection to clipboard"
           })
         end,
       })
