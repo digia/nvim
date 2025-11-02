@@ -340,6 +340,7 @@ return {
           -- Set buffer name
           vim.api.nvim_buf_set_name(0, "Claude Code")
 
+          -- Keymap to hide terminal - Mirror standard window closing behavior
           vim.keymap.set("t", "<C-w>q", "<C-\\><C-n>:hide<CR>", {
             buffer = true,
             noremap = true,
@@ -347,6 +348,7 @@ return {
             desc = "Hide Claude terminal"
           })
 
+          -- Keymap to switch focus back to claudecode session from normal mode
           vim.keymap.set("n", "<CR>", "i", {
             buffer = true,
             noremap = true,
