@@ -325,7 +325,7 @@ return {
 
       terminal = {
         split_side = "left",
-        -- split_width_percentage = 0.20,
+        split_width_percentage = 0.25,
       },
     },
     config = function(_, opts)
