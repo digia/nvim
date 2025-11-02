@@ -80,6 +80,59 @@ return {
         return vim.tbl_deep_extend("force", {}, config_base, config or {})
       end
 
+      local function setup_lsp(server_name, opts)
+        local final_opts = vim.tbl_deep_extend("force", {}, config_base, opts or {})
+        lspconfig[server_name].setup(final_opts)
+      end
+
+      local handlers_table = {
+        function(server_name)
+          setup_lsp(server_name)
+        end,
+        ["elixirls"] = function()
+          setup_lsp("elixirls", {
+            cmd = { "/Users/digia/.local/share/nvim/mason/bin/elixir-ls" },
+            settings = {
+              elixirLS = {
+                dialyzerEnabled = true,
+                enableTestLenses = false,
+                fetchDeps = false,
+                mcpEnabled = false,
+                suggestSpecs = true,
+              },
+            },
+          })
+        end,
+        ["pyright"] = function()
+          setup_lsp("pyright", { enabled = true })
+        end,
+        ["lua_ls"] = function()
+          setup_lsp("lua_ls", {
+            settings = {
+              Lua = {
+                runtime = { version = "LuaJIT" },
+                diagnostics = {
+                  globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
+                },
+                workspace = {
+                  library = vim.api.nvim_get_runtime_file("", true),
+                  checkThirdParty = false,
+                },
+                telemetry = { enable = false },
+              }
+            }
+          })
+        end,
+        ["tailwindcss"] = function()
+          setup_lsp("tailwindcss", {
+            filetypes = {
+              "html", "css", "scss", "javascript", "typescript",
+              "javascriptreact", "typescriptreact", "astro", "mdx",
+            },
+          })
+        end,
+      }
+
       mason.setup()
       mason_lspconfig.setup({
         ensure_installed = {
@@ -101,82 +154,17 @@ return {
           "elixirls",
           "astro",
         },
-
-        handlers = {
-          function(server_name) -- default handler (optional)
-            lspconfig[server_name].setup(config_base)
-          end,
-
-          elixirls = function()
-            local elixir_opts = build_config({
-              cmd = { "/Users/digia/.local/share/nvim/mason/bin/elixir-ls" },
-              settings = {
-                elixirLS = {
-                  dialyzerEnabled = true,
-                  enableTestLenses = false,
-                  fetchDeps = false,
-                  mcpEnabled = false,
-                  suggestSpecs = true,
-                },
-              },
-            })
-            lspconfig.elixirls.setup(elixir_opts)
-          end,
-
-          pyright = function()
-            local pyright_opts = build_config({ enabled = true, })
-            lspconfig.pyright.setup(pyright_opts)
-          end,
-
-          -- basedpyright = function()
-          --   local basedpyright_opts = build_config({ enabled = true, })
-          --   lspconfig.basedpyright.setup(basedpyright_opts)
-          -- end,
-
-          ["lua_ls"] = function()
-            local lua_config = build_config({
-              settings = {
-                Lua = {
-                  runtime = { version = "LuaJIT" },
-                  diagnostics = {
-                    globals = {
-                      "bit",
-                      "vim",
-                      "it",
-                      "describe",
-                      "before_each",
-                      "after_each",
-                    },
-                  },
-                  workspace = {
-                    library = vim.api.nvim_get_runtime_file("", true),
-                    checkThirdParty = false,
-                  },
-                  telemetry = { enable = false },
-                }
-              }
-            })
-            lspconfig.lua_ls.setup(lua_config)
-          end,
-
-          tailwindcss = function()
-            local tailwind_config = build_config({
-              filetypes = {
-                "html",
-                "css",
-                "scss",
-                "javascript",
-                "typescript",
-                "javascriptreact",
-                "typescriptreact",
-                "astro",
-                "mdx",
-              },
-            })
-            lspconfig.tailwindcss.setup(tailwind_config)
-          end,
-        }
+        automatic_installation = false,
       })
+
+      for _, server_name in ipairs(mason_lspconfig.get_installed_servers()) do
+        local handler = handlers_table[server_name] or handlers_table[1]
+        if handlers_table[server_name] then
+          handler()
+        else
+          handler(server_name)
+        end
+      end
 
       vim.diagnostic.config({
         virtual_text = true,
