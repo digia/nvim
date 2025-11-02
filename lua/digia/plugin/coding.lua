@@ -320,14 +320,16 @@ return {
   {
     "coder/claudecode.nvim",
     dependencies = { "folke/snacks.nvim" },
+
     opts = {
       terminal_cmd = "/Users/digia/.claude/local/node_modules/.bin/claude",
 
       terminal = {
         split_side = "left",
-        split_width_percentage = 0.25,
+        split_width_percentage = 0.27,
       },
     },
+
     config = function(_, opts)
       require("claudecode").setup(opts)
 
@@ -335,7 +337,7 @@ return {
       vim.api.nvim_create_autocmd("TermOpen", {
         pattern = "term://*claude*",
         callback = function()
-          vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>:hide<CR>", {
+          vim.keymap.set("t", "<C-w>q", "<C-\\><C-n>:hide<CR>", {
             buffer = true,
             noremap = true,
             silent = true,
@@ -344,6 +346,7 @@ return {
         end,
       })
     end,
+
     keys = {
       { "<leader>a", nil, desc = "AI/Claude Code" },
       { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
