@@ -16,12 +16,29 @@ return {
         enabled = true,
       },
 
-      -- qpkorr/vim-bufkill handles this already, don't see a reason to move, yet
-      bufdelete = { enabled = false },
+      -- Enabled 2025-11-01: replacing vim-bufkill
+      bufdelete = { enabled = true },
 
       -- https://github.com/folke/snacks.nvim/blob/main/docs/debug.md
       debug = {
         enabled = true,
+      },
+
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/indent.md
+      -- Enabled 2025-11-01: replacing Yggdroot/indentLine
+      indent = {
+        enabled = true,
+        indent = {
+          -- char = "┆",
+          char = "╎", -- Subtle broken line with gaps
+          only_scope = false, -- Show all indent guides, not just current scope
+        },
+        animate = {
+          enabled = false, -- No animation, just subtle lines
+        },
+        scope = {
+          enabled = false, -- Don't highlight current scope specially
+        },
       },
 
       -- https://github.com/folke/snacks.nvim/blob/main/docs/dim.md
@@ -80,6 +97,11 @@ return {
             Snacks.debug.backtrace()
           end
           vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+          -- Create :BD command for buffer deletion (replaces vim-bufkill)
+          vim.api.nvim_create_user_command("BD", function()
+            Snacks.bufdelete()
+          end, { desc = "Delete buffer without closing split" })
 
           -- Create some toggle mappings
           Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
