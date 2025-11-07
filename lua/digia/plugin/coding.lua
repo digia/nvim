@@ -340,12 +340,37 @@ return {
           -- Set buffer name
           vim.api.nvim_buf_set_name(0, "Claude Code")
 
+          -- Store original width for toggling
+          local original_width = nil
+
           -- Keymap to hide terminal - Mirror standard window closing behavior
           vim.keymap.set("t", "<C-w>q", "<C-\\><C-n>:hide<CR>", {
             buffer = true,
             noremap = true,
             silent = true,
             desc = "Hide Claude terminal"
+          })
+
+          -- Keymap to toggle terminal width between max and original
+          vim.keymap.set("t", "<C-w>|", function()
+            local current_width = vim.api.nvim_win_get_width(0)
+            local max_width = vim.o.columns
+
+            if current_width >= max_width - 5 then
+              -- Currently maximized, restore original
+              if original_width then
+                vim.cmd("normal! " .. original_width .. "\030|")
+              end
+            else
+              -- Not maximized, save current and maximize
+              original_width = current_width
+              vim.cmd("normal! \030|")
+            end
+          end, {
+            buffer = true,
+            noremap = true,
+            silent = true,
+            desc = "Toggle Claude terminal width"
           })
 
           -- Keymap to switch focus back to claudecode session from normal mode
