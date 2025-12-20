@@ -24,6 +24,36 @@ vim.keymap.set("n", "<leader><leader>r", reload_config, { desc = "Reload config"
 vim.keymap.set({"n", "v"}, "<leader>y", '"+y', { desc = "Yank to system clipboard (cmd-v)" })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line(s) to system clipboard (cmd-v)" })
 
+-- Copy filename (normal) or filename:lines (visual) to clipboard for Claude Code
+vim.keymap.set("n", "<leader>ys", function()
+  local filepath = vim.fn.expand("%:.")
+  if filepath == "" then
+    print("No filename")
+    return
+  end
+  vim.fn.setreg("+", filepath)
+  print("Copied: " .. filepath)
+end, { desc = "Copy filename to clipboard" })
+
+vim.keymap.set("v", "<leader>ys", function()
+  local filepath = vim.fn.expand("%:.")
+  if filepath == "" then
+    print("No filename")
+    return
+  end
+  local start_line = vim.fn.line("v")
+  local end_line = vim.fn.line(".")
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+  local result = start_line == end_line
+    and string.format("%s:%d", filepath, start_line)
+    or string.format("%s:%d-%d", filepath, start_line, end_line)
+  vim.fn.setreg("+", result)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+  print("Copied: " .. result)
+end, { desc = "Copy filename:lines to clipboard" })
+
 -- Window movement
 vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
