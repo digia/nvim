@@ -12,6 +12,12 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 -- Reload nvim config
 local function reload_config()
+  -- Clear cached digia modules so they actually reload
+  for name, _ in pairs(package.loaded) do
+    if name:match("^digia") then
+      package.loaded[name] = nil
+    end
+  end
   vim.cmd("source $MYVIMRC")
   print("Config reloaded")
 end
