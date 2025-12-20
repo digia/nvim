@@ -326,7 +326,7 @@ return {
 
       terminal = {
         split_side = "left",
-        split_width_percentage = 0.23,
+        split_width_percentage = 0.27,
       },
     },
 
