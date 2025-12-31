@@ -34,11 +34,11 @@ The configuration emphasizes performance through lazy loading and provides a com
 
 ### Configuration Structure
 - **Options & Keymaps**: Core Neovim settings in `lua/digia/options.lua` and `lua/digia/keymaps.lua`
-- **Plugin Categories**:
+- **Plugin Categories** (see `lua/digia/plugin/` for actual plugin specs):
   - `ui.lua`: Themes, statusline, visual enhancements
-  - `coding.lua`: Completion, snippets, AI assistance (Copilot, Avante)
+  - `coding.lua`: Completion, snippets, AI assistance
   - `lsp.lua`: Language servers, diagnostics, formatting
-  - `git.lua`: Git integration (Gitsigns, Neogit)
+  - `git.lua`: Git integration
   - `telescope.lua`: Fuzzy finding and search
   - `treesitter.lua`: Syntax highlighting and text objects
 
