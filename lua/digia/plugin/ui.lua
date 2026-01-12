@@ -33,6 +33,10 @@ return {
 
           hl.TelescopePromptBorder = { fg = c.border_highlight }
           hl.TelescopePromptTitle = { fg = c.bg_highlight }
+          hl.TelescopeResultsNormal = { fg = c.comment }
+          -- hl.TelescopeMatching = { fg = c.fg_dark, bold = true }
+          hl.TelescopeMatching = { fg = c.fg_dark }
+          hl.TelescopeSelection = { fg = c.fg, bg = c.bg_highlight }
 
           --
           -- TODO: highlights
