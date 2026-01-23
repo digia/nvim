@@ -7,7 +7,7 @@ return {
       { "<leader>gd", "<cmd>Git diff<cr>" },
       { "<leader>gl", "<cmd>Git log<cr>" },
       { "<leader>gp", "<cmd>Git push<cr>" },
-      { "<leader>gs", "<cmd>Git<cr><cmd>resize 20<cr>" },
+      { "<leader>gs", "<cmd>Git<cr><cmd>resize 23<cr>" },
     },
   },
 
