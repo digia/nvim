@@ -43,7 +43,7 @@ vim.opt.cursorline = true
 -- vim.opt.colorcolumn = "80,120"
 -- Or... show colorcolumn at 80 and from 120 to 999
 -- Build a string of all columns from 120 to 999, to later use as a comma separated list for colorcolumn
-local colorcolumns = {}; for i = 120, 999 do colorcolumns[#colorcolumns + 1] = tostring(i) end;
+local colorcolumns = {}; for i = 121, 999 do colorcolumns[#colorcolumns + 1] = tostring(i) end;
 vim.opt.colorcolumn = "80," .. table.concat(colorcolumns, ",")
 
 vim.opt.laststatus = 2
