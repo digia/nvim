@@ -60,6 +60,8 @@ return {
         nmap("<leader>vr", vim.lsp.buf.references)
         nmap("<leader>vh", vim.lsp.buf.signature_help) -- Necessary with `K`?
 
+        nmap("K", function() vim.lsp.buf.hover({ border = "rounded" }) end, "Hover")
+
         nmap("]d", vim.diagnostic.goto_next)
         nmap("[d", vim.diagnostic.goto_prev)
         nmap("]e", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, "Next Error")
