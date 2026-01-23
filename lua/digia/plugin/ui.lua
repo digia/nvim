@@ -205,17 +205,17 @@ return {
       local filename_location = require("digia.statusline.filename_location")
 
       -- Show the active LSP clients, including the AI assistant (claude, copilot, etc.)
-      local active_lsp_clients = function()
-        local clients = vim.lsp.get_active_clients()
-        if next(clients) == nil then
-          return ""
-        end
-        local client_names = {}
-        for _, client in pairs(clients) do
-          table.insert(client_names, client.name)
-        end
-        return table.concat(client_names, ", ")
-      end
+      -- local active_lsp_clients = function()
+      --   local clients = vim.lsp.get_active_clients()
+      --   if next(clients) == nil then
+      --     return ""
+      --   end
+      --   local client_names = {}
+      --   for _, client in pairs(clients) do
+      --     table.insert(client_names, client.name)
+      --   end
+      --   return table.concat(client_names, ", ")
+      -- end
 
       local not_avante_filetype = function()
         local ft = vim.bo.filetype
@@ -223,16 +223,14 @@ return {
       end
 
       local filename_section = {
-        "filename",
+        filename_location,
         path = 1,
-        shorting_target = 80, -- Space to __leave__ within the window
+        shorting_target = 80,
         cond = not_avante_filetype
-        -- Maybe, add on_click to open the file directory in either finder or a terminal
-        -- on_click = function() end
       }
 
       local filetype_section = { "filetype", icons_enabled = false }
-      local lsp_clients_section = { active_lsp_clients, cond = not_avante_filetype }
+      -- local lsp_clients_section = { active_lsp_clients, cond = not_avante_filetype }
       local navic_section = { "navic" }
       local diagnostics_section = { "diagnostics" }
 
