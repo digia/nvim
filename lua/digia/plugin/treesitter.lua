@@ -1,18 +1,18 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  version = false,
-  build = ":TSUpdate",
+  {
+    "nvim-treesitter/nvim-treesitter",
+    version = false,
+    build = ":TSUpdate",
 
-  event = { "BufReadPre", "BufNewFile" },
-  -- event = "BufReadPost",
-  lazy = vim.fn.argc(-1) == 0,   -- load treesitter early when opening a file from the cmdline
+    event = { "BufReadPre", "BufNewFile" },
+    -- event = "BufReadPost",
+    lazy = vim.fn.argc(-1) == 0,
 
-  dependencies = {
-    -- Automatically add closing tags for HTML and JSX
-    "windwp/nvim-ts-autotag",
-  },
+    dependencies = {
+      "windwp/nvim-ts-autotag",
+    },
 
-  config = function()
+    config = function()
     require("nvim-treesitter.configs").setup({
       -- A list of parser names, or "all"
       -- ensure_installed = "all",
@@ -106,4 +106,14 @@ return {
       modules = {},
     })
   end,
+  },
+
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = {
+      max_lines = 5,
+    },
+  },
 }
