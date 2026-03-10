@@ -30,8 +30,8 @@ vim.opt.smartcase = true
 
 vim.opt.termguicolors = true
 
-vim.opt.scrolloff = 7         -- new, prev 3
-vim.opt.sidescrolloff = 7     -- new, prev 5
+vim.opt.scrolloff = 5         -- new, prev 7, 3
+vim.opt.sidescrolloff = 5     -- new, prev 7, 5
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@") -- new
 
