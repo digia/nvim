@@ -93,7 +93,6 @@ return {
         end,
         ["elixirls"] = function()
           setup_lsp("elixirls", {
-            cmd = { "/Users/digia/.local/share/nvim/mason/bin/elixir-ls" },
             settings = {
               elixirLS = {
                 dialyzerEnabled = true,
