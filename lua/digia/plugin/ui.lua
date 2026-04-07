@@ -231,7 +231,7 @@ return {
 
       local filetype_section = { "filetype", icons_enabled = false }
       -- local lsp_clients_section = { active_lsp_clients, cond = not_avante_filetype }
-      -- local navic_section = { "navic" }
+      local navic_section = { "navic" }
       local diagnostics_section = { "diagnostics" }
 
       local sections = {
@@ -248,7 +248,7 @@ return {
         },
 
         lualine_x = {
-          -- navic_section
+          navic_section
         },
 
         lualine_y = {
@@ -272,7 +272,7 @@ return {
         },
 
         lualine_x = {
-          -- navic_section,
+          navic_section,
         },
 
         lualine_y = {
