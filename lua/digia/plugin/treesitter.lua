@@ -108,12 +108,13 @@ return {
   end,
   },
 
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    opts = {
-      max_lines = 5,
-    },
-  },
+  -- NOTE: Distracting within front-end as it'll show all the destructured variables
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-context",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   dependencies = { "nvim-treesitter/nvim-treesitter" },
+  --   opts = {
+  --     max_lines = 5,
+  --   },
+  -- },
 }
