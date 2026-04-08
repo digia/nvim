@@ -24,25 +24,13 @@ return {
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       { "antosha417/nvim-lsp-file-operations", config = true },
-      -- ENHANCEMENT: `williamboman/mason.nvim` and `williamboman/mason-lspconfig.nvim`
-      -- were transferred on GitHub to the `mason-org` organization. The williamboman
-      -- URLs still work (transparent GitHub redirect), but the canonical owner is now
-      -- mason-org. Update to `mason-org/mason.nvim` and `mason-org/mason-lspconfig.nvim`
-      -- in a separate change to keep this migration's rollback story clean.
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp",
+      "mason-org/mason.nvim",
+      "mason-org/mason-lspconfig.nvim",
+      "SmiteshP/nvim-navic",
     },
 
     config = function()
       local cmp_lsp = require("cmp_nvim_lsp")
-
-      -- ENHANCEMENT: `nvim-navic` is not declared in this plugin's `dependencies`
-      -- array. It resolves today only because lualine.nvim lists it as a dep in
-      -- lua/digia/plugin/ui.lua, and lualine loads before BufReadPre. If lualine's
-      -- load ordering ever changes (or if navic moves), this require could throw
-      -- and break all LSP setup. Fix: add "SmiteshP/nvim-navic" to `dependencies`
-      -- at the top of this plugin spec.
       local navic = require("nvim-navic")
 
       local capabilities = vim.tbl_deep_extend(
