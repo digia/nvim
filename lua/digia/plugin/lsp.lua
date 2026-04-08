@@ -24,19 +24,16 @@ return {
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       { "antosha417/nvim-lsp-file-operations", config = true },
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp",
+      "mason-org/mason.nvim",
+      "mason-org/mason-lspconfig.nvim",
+      "SmiteshP/nvim-navic",
     },
 
     config = function()
-      local mason = require("mason")
-      local mason_lspconfig = require("mason-lspconfig")
       local cmp_lsp = require("cmp_nvim_lsp")
-      local lspconfig = require("lspconfig")
       local navic = require("nvim-navic")
 
-      local capabilities_base = vim.tbl_deep_extend(
+      local capabilities = vim.tbl_deep_extend(
         "force",
         {},
         vim.lsp.protocol.make_client_capabilities(),
@@ -73,70 +70,71 @@ return {
         end
       end
 
-      local config_base = {
-        capabilities = capabilities_base,
+      -- ENHANCEMENT: Neovim 0.11+ docs recommend an `LspAttach` autocmd as the
+      -- modern pattern for buffer-local LSP setup. `on_attach` in vim.lsp.ClientConfig
+      -- is NOT deprecated and is kept here to minimize the diff from the previous
+      -- lspconfig.setup() pattern. Migrate if per-server on_attach chains ever
+      -- become awkward (e.g. multiple servers needing distinct attach sequences).
+      vim.lsp.config("*", {
+        capabilities = capabilities,
         on_attach = on_attach,
-      }
+      })
 
-      local function build_config(config)
-        return vim.tbl_deep_extend("force", {}, config_base, config or {})
-      end
+      -- ENHANCEMENT: For servers where `mason-lspconfig/lua/mason-lspconfig/lsp/<name>.lua`
+      -- exists AND sets fields that also appear in these overrides, mason-lspconfig's
+      -- scheduled `automatic_enable.enable_all()` call (running on the next event-loop
+      -- tick after setup) deep-merges mason's bundled defaults ON TOP of these values
+      -- via tbl_deep_extend("force", ...), potentially clobbering them at conflicting
+      -- leaf keys. Verified safe today: elixirls' bundled file only sets `cmd`;
+      -- lua_ls and tailwindcss have no bundled files. When adding a new per-server
+      -- override, spot-check the corresponding mason-lspconfig/lsp/<name>.lua file
+      -- first. If it clobbers a key you care about, wrap the override in
+      -- `vim.schedule(function() vim.lsp.config(name, ...) end)` to push it past
+      -- mason's scheduled call, or move it to `~/.config/nvim/lsp/<name>.lua`.
+      vim.lsp.config("elixirls", {
+        settings = {
+          elixirLS = {
+            dialyzerEnabled = true,
+            enableTestLenses = false,
+            fetchDeps = false,
+            mcpEnabled = false,
+            suggestSpecs = true,
+          },
+        },
+      })
 
-      local function setup_lsp(server_name, opts)
-        local final_opts = vim.tbl_deep_extend("force", {}, config_base, opts or {})
-        lspconfig[server_name].setup(final_opts)
-      end
-
-      local handlers_table = {
-        function(server_name)
-          setup_lsp(server_name)
-        end,
-        ["elixirls"] = function()
-          setup_lsp("elixirls", {
-            cmd = { "/Users/digia/.local/share/nvim/mason/bin/elixir-ls" },
-            settings = {
-              elixirLS = {
-                dialyzerEnabled = true,
-                enableTestLenses = false,
-                fetchDeps = false,
-                mcpEnabled = false,
-                suggestSpecs = true,
-              },
+      vim.lsp.config("lua_ls", {
+        settings = {
+          Lua = {
+            runtime = { version = "LuaJIT" },
+            diagnostics = {
+              globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
             },
-          })
-        end,
-        ["pyright"] = function()
-          setup_lsp("pyright", { enabled = true })
-        end,
-        ["lua_ls"] = function()
-          setup_lsp("lua_ls", {
-            settings = {
-              Lua = {
-                runtime = { version = "LuaJIT" },
-                diagnostics = {
-                  globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
-                },
-                workspace = {
-                  library = vim.api.nvim_get_runtime_file("", true),
-                  checkThirdParty = false,
-                },
-                telemetry = { enable = false },
-              }
-            }
-          })
-        end,
-        ["tailwindcss"] = function()
-          setup_lsp("tailwindcss", {
-            filetypes = {
-              "html", "css", "scss", "javascript", "typescript",
-              "javascriptreact", "typescriptreact", "astro", "mdx",
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
             },
-          })
-        end,
-      }
+            telemetry = { enable = false },
+          },
+        },
+      })
 
-      mason.setup()
-      mason_lspconfig.setup({
+      vim.lsp.config("tailwindcss", {
+        filetypes = {
+          "html", "css", "scss", "javascript", "typescript",
+          "javascriptreact", "typescriptreact", "astro", "mdx",
+        },
+      })
+
+      require("mason").setup()
+
+      -- ENHANCEMENT: `automatic_enable = true` (the default in mason-lspconfig 2.x)
+      -- auto-enables ALL mason-installed servers, not just `ensure_installed`.
+      -- Ad-hoc `:MasonInstall <server>` calls will therefore auto-attach the next
+      -- time a matching filetype is opened. For strict "only ensure_installed
+      -- attaches" control, use the allow-list form `automatic_enable = { "lua_ls",
+      -- "rust_analyzer", ... }` or the exclude form `{ exclude = { ... } }`.
+      require("mason-lspconfig").setup({
         ensure_installed = {
           "lua_ls",
           "rust_analyzer",
@@ -152,21 +150,10 @@ return {
           "jsonls",
           "dockerls",
           "phpactor",
-          "gopls",
           "elixirls",
           "astro",
         },
-        automatic_installation = false,
       })
-
-      for _, server_name in ipairs(mason_lspconfig.get_installed_servers()) do
-        local handler = handlers_table[server_name] or handlers_table[1]
-        if handlers_table[server_name] then
-          handler()
-        else
-          handler(server_name)
-        end
-      end
 
       vim.diagnostic.config({
         virtual_text = {

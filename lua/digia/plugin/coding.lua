@@ -513,29 +513,6 @@ return {
     enabled = false,
   },
 
-  -- Generate text using LLM, specifically Ollama
-  -- https://github.com/David-Kunz/gen.nvim
-  {
-    "David-Kunz/gen.nvim",
-    cmd = "Gen",
-    lazy = true,
-    config = function()
-      local gen = require("gen")
-      gen.setup({
-        model = "qwen2.5-coder",
-        display_mode = "horizontal-split",
-      })
-
-      gen.prompts['DevOps me! (omerxx)'] = {
-        prompt =
-        "You are a senior devops engineer, acting as an assistant. You offer help with cloud technologies like: Terraform, AWS, kubernetes, python. You answer with code examples when possible. $input:\n$text",
-        replace = true
-      }
-    end,
-    -- enabled = false,
-  }
-
-
   -- Formatting (TODO) https://github.com/josean-dev/dev-environment-files/blob/main/.config/nvim/lua/josean/plugins/formatting.lua
   -- return {
   -- "stevearch/conformat.nvim",
