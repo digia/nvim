@@ -1,121 +1,71 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master",
-    version = false,
+    branch = "main",
+    -- main branch does not support lazy-loading; parsers must be on rtp before BufRead
+    lazy = false,
     build = ":TSUpdate",
 
-    event = { "BufReadPre", "BufNewFile" },
-    -- event = "BufReadPost",
-    lazy = vim.fn.argc(-1) == 0,
-
-    dependencies = {
-      "windwp/nvim-ts-autotag",
-    },
-
     config = function()
-    require("nvim-treesitter.configs").setup({
-      -- A list of parser names, or "all"
-      -- ensure_installed = "all",
-      ensure_installed = {
-        "bash",
-        "c",
-        "csv",
-        "diff",
-        "dockerfile",
-        "elixir",
-        "heex",
-        "eex",
-        "go",
-        "html",
-        "htmldjango",
-        "java",
-        "javascript",
-        "jq",
-        "jsdoc",
-        "json",
-        "json5",
-        "jsonc",
-        "lua",
-        "luadoc",
-        "luap",
-        "markdown",
-        "markdown_inline",
-        "php",
-        "printf",
-        "python",
-        "query",
-        "regex",
-        "sql",
-        "tmux",
-        "toml",
-        "tsx",
-        "typescript",
-        "vim",
-        "vimdoc",
-        "xml",
-        "yaml",
-        "astro",
-        -- "mdx",
-      },
+      local ts = require("nvim-treesitter")
 
-      -- Install parsers synchronously (only applied to `ensure_installed`)
-      sync_install = false,
+      ts.setup({
+        -- default install_dir: vim.fn.stdpath("data") .. "/site"
+      })
 
-      -- Automatically install missing parsers when entering buffer
-      -- Recommendation: set to false if you don"t have `tree-sitter` CLI installed locally
-      auto_install = true,
+      local parsers = {
+        "bash", "c", "csv", "diff", "dockerfile", "elixir", "heex", "eex",
+        "go", "html", "htmldjango", "java", "javascript", "jq", "jsdoc",
+        "json", "json5", "lua", "luadoc", "luap", "markdown",
+        "markdown_inline", "php", "printf", "python", "query", "regex",
+        "sql", "tmux", "toml", "tsx", "typescript", "vim", "vimdoc", "xml",
+        "yaml", "astro",
+      }
 
-      ignore_install = {},
+      -- Replaces `ensure_installed` + `auto_install`. Async; no-op if installed.
+      ts.install(parsers)
 
-      indent = {
-        enable = true,
-      },
+      -- Parser name -> filetype(s). Most parsers match their filetype directly;
+      -- list only the divergences (injection-only parsers and renamed filetypes).
+      local parser_to_ft = {
+        markdown_inline = {}, -- injection-only
+        luap            = {}, -- injection-only
+        luadoc          = {}, -- injection-only
+        jsdoc           = {}, -- injection-only
+        printf          = {}, -- injection-only
+        regex           = {}, -- injection-only
+        query           = { "query" },
+        vimdoc          = { "help" },
+        tsx             = { "typescriptreact" },
+      }
 
-      -- Enable autotagging with windwp/nvim-ts-autotag
-      autotag = {
-        enable = true,
-      },
+      local filetypes = {}
+      for _, p in ipairs(parsers) do
+        local fts = parser_to_ft[p]
+        if fts == nil then
+          table.insert(filetypes, p)
+        else
+          for _, ft in ipairs(fts) do table.insert(filetypes, ft) end
+        end
+      end
 
-      highlight = {
-        -- `false` will disable the whole extension
-        enable = true,
-        -- enable = false,
-
-        -- Name of the parser, not the filetype
-        -- disable = { "tsx" },
-
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on "syntax" being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-      },
-
-      -- Enable treesitter-based incremental selection
-      -- TODO: Figure out how to use this, allowing to select nodes (words, parents, etc)
-      -- incremental_selection = {
-      -- enable = true,
-      -- keymaps = {
-      -- init_selection = "gnn",
-      -- node_incremental = "grn",
-      -- scope_incremental = "grc",
-      -- node_decremental = "grm",
-      -- },
-      -- },
-
-      modules = {},
-    })
-  end,
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("digia.treesitter", { clear = true }),
+        pattern = filetypes,
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          -- Folding handled globally via lua/digia/options.lua +
+          -- lua/digia/util/folding.lua (lazy-detects parser, foldlevelstart=99).
+        end,
+      })
+    end,
   },
 
-  -- NOTE: Distracting within front-end as it'll show all the destructured variables
-  -- {
-  --   "nvim-treesitter/nvim-treesitter-context",
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   dependencies = { "nvim-treesitter/nvim-treesitter" },
-  --   opts = {
-  --     max_lines = 5,
-  --   },
-  -- },
+  -- nvim-ts-autotag configures itself now; split out of the treesitter config.
+  {
+    "windwp/nvim-ts-autotag",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+  },
 }
