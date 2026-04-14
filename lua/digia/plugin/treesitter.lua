@@ -19,7 +19,7 @@ return {
         "json", "json5", "lua", "luadoc", "luap", "markdown",
         "markdown_inline", "php", "printf", "python", "query", "regex",
         "sql", "tmux", "toml", "tsx", "typescript", "vim", "vimdoc", "xml",
-        "yaml", "astro",
+        "yaml", "astro", "terraform"
       }
 
       -- Replaces `ensure_installed` + `auto_install`. Async; no-op if installed.
