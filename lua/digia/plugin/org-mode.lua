@@ -50,17 +50,17 @@ return {
         org_capture_templates = {
           t = {
             description = "Todo (daily)",
-            template = "* TODO %?\n  %U",
+            template = "* TODO %?\n%U",
             target = brain_dir .. "/daily/%<%Y-%m-%d>.org",
           },
           n = {
             description = "Note (inbox)",
-            template = "* %U %?\n",
+            template = "* %U %?",
             target = brain_dir .. "/inbox.org",
           },
           m = {
             description = "Meeting (daily)",
-            template = "* MEETING %? :meeting:\n  %U",
+            template = "* MEETING %? :meeting:\n%U",
             target = brain_dir .. "/daily/%<%Y-%m-%d>.org",
           },
         },
