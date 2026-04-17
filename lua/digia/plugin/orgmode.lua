@@ -102,6 +102,26 @@ return {
         -- For per-keyword coloring, prefer `org_todo_keyword_faces` in setup().
         -- vim.api.nvim_set_hl(0, "@org.keyword.todo", { fg = "#e06c75", bold = true })
         -- vim.api.nvim_set_hl(0, "@org.keyword.done", { fg = "#98c379", bold = true })
+
+        -- Tame source blocks + inline code. Orgmode links these to @comment /
+        -- @markup.raw, which in most themes is yellow/orange — louder than
+        -- render-markdown.nvim's subtle treatment. Explicit bg/fg so you can
+        -- tune both without worrying about highlight-group inheritance chains.
+        local code_hl = {
+          bg = "#414868",  -- matches render-markdown's inline code bg
+          fg = "#7aa2f7",  -- matches render-markdown's inline code fg
+        }
+        for _, g in ipairs({
+          "@org.block",
+          "@org.block.delimiter",
+          "@org.code",
+          "@org.code.delimiter",
+          "@org.verbatim",
+          "@org.verbatim.delimiter",
+          "@org.inline_block",
+        }) do
+          vim.api.nvim_set_hl(0, g, code_hl)
+        end
       end
       vim.api.nvim_create_autocmd("ColorScheme", {
         group = vim.api.nvim_create_augroup("digia.org_highlights", { clear = true }),
