@@ -178,6 +178,12 @@ return {
         -- {}
         )
       })
+
+      -- cmp's default sources (env vars, buffer words, paths) are noise in
+      -- org-roam / orgmode UI buffers — silence them.
+      for _, ft in ipairs({ "org-roam-select", "org-roam-node-buffer", "orgagenda" }) do
+        cmp.setup.filetype(ft, { enabled = false })
+      end
     end
 
   },
