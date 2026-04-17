@@ -38,11 +38,11 @@ return {
 
         org_id_link_to_org_use_id = true,
 
-        -- Tmux (leader = C-Space) eats the default <C-Space> binding.
-        -- <C-t> is normally tag-pop, but unused in org notes — reclaim it here
-        -- as "control toggle".
         mappings = {
           org = {
+            -- Tmux (leader = C-Space) eats the default <C-Space> binding.
+            -- <C-t> is normally tag-pop, but unused in org notes — reclaim it here
+            -- as "control toggle".
             org_toggle_checkbox = "<C-t>",
           },
         },
@@ -65,6 +65,10 @@ return {
           },
         },
       })
+
+      -- Experimental: enable orgmode's built-in LSP for document/workspace
+      -- symbols, references, and completion.
+      vim.lsp.enable("org")
     end,
   },
 
