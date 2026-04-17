@@ -74,12 +74,12 @@ return {
     ft = { "org" },
     dependencies = { "nvim-orgmode/orgmode" },
     keys = {
-      { "<leader>of",  function() require("org-roam").api.find_node() end,                              desc = "Roam find node" },
-      { "<leader>oi",  function() require("org-roam").api.insert_node() end,                            desc = "Roam insert link" },
-      { "<leader>ob",  function() require("org-roam").ui.toggle_node_buffer() end,                      desc = "Roam backlinks buffer" },
-      { "<leader>odt", function() require("org-roam").ext.dailies.goto_today() end,                     desc = "Daily: today" },
-      { "<leader>ody", function() require("org-roam").ext.dailies.goto_yesterday() end,                 desc = "Daily: yesterday" },
-      { "<leader>odd", function() require("org-roam").ext.dailies.goto_date() end,                      desc = "Daily: pick date" },
+      { "<leader>of",  function() require("org-roam").api.find_node() end, desc = "Roam find node" },
+      { "<leader>oi",  function() require("org-roam").api.insert_node() end, desc = "Roam insert link" },
+      { "<leader>ob",  function() require("org-roam").ui.toggle_node_buffer() end, desc = "Roam backlinks buffer" },
+      { "<leader>odt", function() require("org-roam").ext.dailies.goto_today() end, desc = "Daily: today" },
+      { "<leader>ody", function() require("org-roam").ext.dailies.goto_yesterday() end, desc = "Daily: yesterday" },
+      { "<leader>odd", function() require("org-roam").ext.dailies.goto_date() end, desc = "Daily: pick date" },
     },
     config = function()
       require("org-roam").setup({
