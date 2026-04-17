@@ -4,6 +4,19 @@ opt.wrap = true
 opt.conceallevel = 0
 opt.concealcursor = "nc"
 
+-- Kill orgmode's auto-indent. `indent/org.lua` forces autoindent=true and an
+-- indentexpr that carries context-aware indentation onto `o`/`O`. We prefer
+-- folding as the structural indicator, so flatten all of it.
+-- Deferred because orgmode lazy-loads *after* this ftplugin, and its
+-- `indent/org.lua` would clobber these otherwise.
+vim.schedule(function()
+  vim.bo.autoindent = false
+  vim.bo.smartindent = false
+  vim.bo.cindent = false
+  vim.bo.indentexpr = ""
+  vim.bo.indentkeys = ""
+end)
+
 vim.keymap.set("n", "<leader>rp", function()
   if vim.wo.conceallevel > 0 then
     vim.wo.conceallevel = 0
