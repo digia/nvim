@@ -31,6 +31,17 @@ return {
         org_agenda_start_on_weekday = 0,
 
         org_todo_keywords = { "TODO", "NEXT", "INPROGRESS", "WAITING", "|", "DONE", "CANCELLED" },
+        -- Per-keyword coloring (overrides the binary @org.keyword.todo / .done
+        -- defaults). Accepted face props: foreground, background, weight,
+        -- slant, underline. Use color names, #rrggbb, or cterm numbers.
+        -- org_todo_keyword_faces = {
+        --   TODO       = ":foreground #e06c75 :weight bold",
+        --   NEXT       = ":foreground #61afef :weight bold",
+        --   INPROGRESS = ":foreground #d19a66 :weight bold",
+        --   WAITING    = ":foreground #c678dd :weight bold :slant italic",
+        --   DONE       = ":foreground #98c379 :weight bold",
+        --   CANCELLED  = ":foreground #5c6370 :weight bold :slant italic",
+        -- },
         org_log_into_drawer = "LOGBOOK",
         org_log_done = "time",
 
@@ -69,6 +80,34 @@ return {
       -- Experimental: enable orgmode's built-in LSP for document/workspace
       -- symbols, references, and completion.
       vim.lsp.enable("org")
+
+      -- Org highlight overrides live here. Orgmode links its @org.* treesitter
+      -- groups to standard groups (Title, Constant, Identifier, …) — see
+      -- lua/orgmode/colors/highlights.lua in the plugin for the full list.
+      -- Redefine via `vim.api.nvim_set_hl(0, <group>, { fg = ..., bold = ... })`
+      -- inside this callback, then call :so % or restart.
+      local function apply_org_highlights()
+        -- Examples — uncomment and tweak:
+        -- vim.api.nvim_set_hl(0, "@org.headline.level1", { fg = "#c678dd", bold = true })
+        -- vim.api.nvim_set_hl(0, "@org.headline.level2", { fg = "#61afef", bold = true })
+        -- vim.api.nvim_set_hl(0, "@org.headline.level3", { fg = "#98c379" })
+        -- vim.api.nvim_set_hl(0, "@org.headline.level4", { fg = "#e5c07b" })
+        -- vim.api.nvim_set_hl(0, "@org.tag",             { fg = "#56b6c2", italic = true })
+        -- vim.api.nvim_set_hl(0, "@org.timestamp.active", { fg = "#d19a66" })
+        -- vim.api.nvim_set_hl(0, "@org.checkbox.checked", { fg = "#98c379", bold = true })
+        -- vim.api.nvim_set_hl(0, "@org.properties",      { fg = "#5c6370", italic = true })
+        -- vim.api.nvim_set_hl(0, "@org.bullet",          { fg = "#5c6370" })
+
+        -- Binary TODO/DONE coloring (covers ALL undone vs done keywords).
+        -- For per-keyword coloring, prefer `org_todo_keyword_faces` in setup().
+        -- vim.api.nvim_set_hl(0, "@org.keyword.todo", { fg = "#e06c75", bold = true })
+        -- vim.api.nvim_set_hl(0, "@org.keyword.done", { fg = "#98c379", bold = true })
+      end
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        group = vim.api.nvim_create_augroup("digia.org_highlights", { clear = true }),
+        callback = apply_org_highlights,
+      })
+      apply_org_highlights()
     end,
   },
 
