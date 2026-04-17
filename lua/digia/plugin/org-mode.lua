@@ -104,6 +104,36 @@ return {
           },
         },
       })
+
+      -- org-roam's goto_* writes `#+TITLE: YYYY-MM-DD` into new daily buffers.
+      -- Rewrite to `#+title: YYYY-MM-DD, Day - Daily` before the user saves.
+      local daily_glob = brain_dir .. "/daily/*.org"
+      vim.api.nvim_create_autocmd({ "BufWinEnter", "BufNewFile" }, {
+        group = vim.api.nvim_create_augroup("digia.org_roam_daily_title", { clear = true }),
+        pattern = daily_glob,
+        callback = function(args)
+          vim.schedule(function()
+            if not vim.api.nvim_buf_is_valid(args.buf) then return end
+            local name = vim.api.nvim_buf_get_name(args.buf)
+            if vim.fn.filereadable(name) == 1 then return end
+
+            local fname = vim.fn.fnamemodify(name, ":t:r")
+            local y, m, d = fname:match("^(%d%d%d%d)%-(%d%d)%-(%d%d)$")
+            if not y then return end
+
+            local ts = os.time({ year = tonumber(y), month = tonumber(m), day = tonumber(d) })
+            local pretty = os.date("%Y-%m-%d, %a", ts) .. " - Daily"
+
+            local lines = vim.api.nvim_buf_get_lines(args.buf, 0, 10, false)
+            for i, line in ipairs(lines) do
+              if line:match("^#%+TITLE:%s+%d%d%d%d%-%d%d%-%d%d%s*$") then
+                vim.api.nvim_buf_set_lines(args.buf, i - 1, i, false, { "#+title: " .. pretty })
+                return
+              end
+            end
+          end)
+        end,
+      })
     end,
   },
 
