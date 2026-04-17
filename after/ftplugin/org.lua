@@ -27,10 +27,35 @@ vim.keymap.set("n", "<leader>rp", function()
   end
 end, { buffer = 0, desc = "Toggle org render (raw/reader)" })
 
--- Close :PROPERTIES: / :LOGBOOK: drawers on open.
--- org_startup_folded = "content" sets foldlevel=1, so drawers inside headings
--- (fold level 2) are already closed. File-level drawers sit at fold level 1
--- and stay open — close those to match Emacs's startup behavior.
+-- nvim-orgmode ignores file-level `#+STARTUP:` fold directives — it only
+-- honors the global `org_startup_folded` config. Parse them ourselves and
+-- apply the right foldlevel, mirroring Emacs org-mode's set of directives
+-- (overview, content, showall, showeverything, show{N}levels).
+local STARTUP_FOLD = {
+  overview       = 0,
+  content        = 1,
+  showall        = 99,
+  showeverything = 99,
+}
+
+local function startup_fold_override()
+  for _, line in ipairs(vim.api.nvim_buf_get_lines(0, 0, 40, false)) do
+    local val = line:lower():match("^#%+startup:%s*(.+)$")
+    if val then
+      for tok in val:gmatch("%S+") do
+        local n = tok:match("^show(%d+)levels$")
+        if n then return tonumber(n) end
+        if STARTUP_FOLD[tok] then return STARTUP_FOLD[tok] end
+      end
+    end
+  end
+  return nil
+end
+
+-- Close :PROPERTIES: / :LOGBOOK: drawers on open — except when the file says
+-- to show everything. org_startup_folded = "content" sets foldlevel=1, so
+-- drawers inside headings (fold level 2) are already closed; file-level
+-- drawers sit at fold level 1 and stay open — close those to match Emacs.
 local function close_drawers()
   local ok, parser = pcall(vim.treesitter.get_parser, 0, "org")
   if not ok or not parser then return end
@@ -46,4 +71,12 @@ local function close_drawers()
   end
 end
 
-vim.schedule(close_drawers)
+vim.schedule(function()
+  local override = startup_fold_override()
+  if override then
+    vim.wo.foldlevel = override
+    if override >= 99 then return end -- show everything: leave drawers alone
+  end
+  close_drawers()
+end)
+
