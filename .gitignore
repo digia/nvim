@@ -1,5 +1,8 @@
 .env*
 
+# Per-machine override loaded by lua/digia/local_config.lua
+local.lua
+
 .DS_Store
 
 plugged
