@@ -17,7 +17,8 @@ return {
         terminal_colors = true, -- Enable terminal colors
         styles = {
           keywords = {
-            italic = false,
+            -- NOTE: Italic has been disabled prior to 2026-04-17, however I don't recall why...
+            -- italic = false,
           },
           floats = "normal",
         },
