@@ -181,7 +181,7 @@ return {
             if not y then return end
 
             local ts = os.time({ year = tonumber(y), month = tonumber(m), day = tonumber(d) })
-            local pretty = os.date("%Y-%m-%d, %a", ts) .. " - Daily"
+            local pretty = "Daily - " .. os.date("%Y-%m-%d, %a", ts)
 
             local lines = vim.api.nvim_buf_get_lines(args.buf, 0, 10, false)
             for i, line in ipairs(lines) do
