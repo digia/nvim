@@ -8,10 +8,10 @@ return {
     ft = { "org" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     keys = {
-      { "<leader>oc", "<cmd>lua require('orgmode').action('capture.prompt')<cr>",            desc = "Org capture" },
-      { "<leader>oa", "<cmd>lua require('orgmode').action('agenda.prompt')<cr>",             desc = "Org agenda" },
-      { "<leader>ol", "<cmd>lua require('orgmode').action('org_mappings.store_link')<cr>",   desc = "Org store link" },
-      { "<leader>oI", "<cmd>lua require('orgmode').action('org_mappings.store_link')<cr>",   desc = "Org add/get ID for current heading" },
+      { "<leader>oc", function() require("orgmode").action("capture.prompt") end,          desc = "Org capture" },
+      { "<leader>oa", function() require("orgmode").action("agenda.prompt") end,           desc = "Org agenda" },
+      { "<leader>ol", function() require("orgmode").action("org_mappings.store_link") end, desc = "Org store link" },
+      { "<leader>oI", function() require("orgmode").action("org_mappings.store_link") end, desc = "Org add/get ID for current heading" },
     },
     config = function()
       require("orgmode").setup({
