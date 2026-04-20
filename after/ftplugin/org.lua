@@ -16,7 +16,11 @@ opt.formatlistpat = [[^\s*[-*+]\s\+\(\[[ xX-]\]\s\+\)\?\|^\s*\d\+[.)]\s\+\(\[[ x
 -- Deferred because orgmode lazy-loads *after* this ftplugin, and its
 -- `indent/org.lua` would clobber these otherwise.
 vim.schedule(function()
-  vim.bo.autoindent = false
+  -- Leave autoindent on: `formatoptions+=n` (list-aware gq) requires it to
+  -- carry the list indent across wrapped continuation lines. The
+  -- context-aware indent we actually want to flatten lives in smartindent /
+  -- indentexpr / indentkeys below.
+  -- vim.bo.autoindent = false
   vim.bo.smartindent = false
   vim.bo.cindent = false
   vim.bo.indentexpr = ""
