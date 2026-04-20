@@ -4,6 +4,12 @@ opt.wrap = true
 opt.conceallevel = 0
 opt.concealcursor = "nc"
 
+opt.textwidth = 100
+opt.formatoptions:append("n") -- recognize lists when formatting (gq)
+opt.formatoptions:append("q") -- allow gq on comments/quotes
+-- bullets: - + *   numbered: 1. 1)   either can carry a checkbox [ ] / [x] / [-]
+opt.formatlistpat = [[^\s*[-*+]\s\+\(\[[ xX-]\]\s\+\)\?\|^\s*\d\+[.)]\s\+\(\[[ xX-]\]\s\+\)\?]]
+
 -- Kill orgmode's auto-indent. `indent/org.lua` forces autoindent=true and an
 -- indentexpr that carries context-aware indentation onto `o`/`O`. We prefer
 -- folding as the structural indicator, so flatten all of it.
