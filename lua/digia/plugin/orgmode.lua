@@ -1,6 +1,20 @@
 local local_config = require("digia.local_config")
 local brain_dir = vim.fn.expand(local_config.get("brain_dir", "~/Code/digia/digia-brain"))
 
+-- Ensure the entity at cursor has an `:ID:` property. Heading when cursor is
+-- inside a section, otherwise the file-level property drawer. The built-in
+-- `org_mappings.store_link` errors with "No headline found" above the first
+-- heading — this dispatches so it works on file-level notes too.
+local function org_ensure_id()
+  local file = require("orgmode.api").current()
+  local headline = file:get_closest_headline()
+  if headline then
+    vim.notify("Org heading ID: " .. headline:id_get_or_create())
+  else
+    vim.notify("Org file ID: " .. file._file:id_get_or_create())
+  end
+end
+
 return {
   {
     "nvim-orgmode/orgmode",
@@ -11,7 +25,7 @@ return {
       { "<leader>oc", function() require("orgmode").action("capture.prompt") end,          desc = "Org capture" },
       { "<leader>oa", function() require("orgmode").action("agenda.prompt") end,           desc = "Org agenda" },
       { "<leader>ol", function() require("orgmode").action("org_mappings.store_link") end, desc = "Org store link" },
-      { "<leader>oI", function() require("orgmode").action("org_mappings.store_link") end, desc = "Org add/get ID for current heading" },
+      { "<leader>oI", org_ensure_id,                                                       desc = "Org ensure ID" },
     },
     config = function()
       require("orgmode").setup({
