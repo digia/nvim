@@ -69,6 +69,9 @@ return {
             -- <C-t> is normally tag-pop, but unused in org notes — reclaim it here
             -- as "control toggle".
             org_toggle_checkbox = "<C-t>",
+            -- Emacs Org-mode parity: <RET> on a link follows it (file/http/id://).
+            -- Default is <Leader>oo; <CR> in normal mode is unused in org buffers.
+            org_open_at_point = "<CR>",
           },
         },
 
