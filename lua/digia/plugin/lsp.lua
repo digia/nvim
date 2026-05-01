@@ -13,8 +13,11 @@ return {
   {
     "sheerun/vim-polyglot",
     init = function()
-      -- Disable polyglot's elixir handling - using treesitter instead
-      vim.g.polyglot_disabled = { "elixir" }
+      -- Disable polyglot's elixir handling - using treesitter instead.
+      -- Also disable org: polyglot ships an ftplugin/org.vim that guards with
+      -- did_ftplugin, which prevents nvim-orgmode's own ftplugin (and thus its
+      -- treesitter-based folds) from loading.
+      vim.g.polyglot_disabled = { "elixir", "org" }
     end,
   },
 
