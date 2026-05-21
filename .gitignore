@@ -5,6 +5,8 @@ local.lua
 
 .DS_Store
 
+*.log
+
 plugged
 plugin/packer_compiled.vim
 

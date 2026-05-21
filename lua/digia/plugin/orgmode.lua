@@ -1,6 +1,14 @@
 local local_config = require("digia.local_config")
 local brain_dir = vim.fn.expand(local_config.get("brain_dir", "~/Code/digia/digia-brain"))
 
+-- A brain repo with a top-level `doc/` directory uses it as the effective org
+-- root (inbox, daily/, db). Flat repos keep using the repo root.
+local function detect_org_root(base)
+  if vim.fn.isdirectory(base .. "/doc") == 1 then return base .. "/doc" end
+  return base
+end
+local org_root = detect_org_root(brain_dir)
+
 -- Ensure the entity at cursor has an `:ID:` property. Heading when cursor is
 -- inside a section, otherwise the file-level property drawer. The built-in
 -- `org_mappings.store_link` errors with "No headline found" above the first
@@ -29,8 +37,8 @@ return {
     },
     config = function()
       require("orgmode").setup({
-        org_agenda_files = { brain_dir .. "/**/*" },
-        org_default_notes_file = brain_dir .. "/inbox.org",
+        org_agenda_files = { org_root .. "/**/*" },
+        org_default_notes_file = org_root .. "/inbox.org",
 
         org_tags_column = -101,
         org_startup_folded = "content",
@@ -79,17 +87,17 @@ return {
           t = {
             description = "Todo (daily)",
             template = "* TODO %?\n%U",
-            target = brain_dir .. "/daily/%<%Y-%m-%d>.org",
+            target = org_root .. "/daily/%<%Y-%m-%d>.org",
           },
           n = {
             description = "Note (inbox)",
             template = "* %U %?",
-            target = brain_dir .. "/inbox.org",
+            target = org_root .. "/inbox.org",
           },
           m = {
             description = "Meeting (daily)",
             template = "* MEETING %? :meeting:\n%U",
-            target = brain_dir .. "/daily/%<%Y-%m-%d>.org",
+            target = org_root .. "/daily/%<%Y-%m-%d>.org",
           },
         },
       })
@@ -164,9 +172,9 @@ return {
     },
     config = function()
       require("org-roam").setup({
-        directory = brain_dir,
+        directory = org_root,
         database = {
-          path = brain_dir .. "/org-roam.db",
+          path = org_root .. "/org-roam.db",
         },
         extensions = {
           dailies = {
@@ -184,7 +192,7 @@ return {
 
       -- org-roam's goto_* writes `#+TITLE: YYYY-MM-DD` into new daily buffers.
       -- Rewrite to `#+title: YYYY-MM-DD, Day - Daily` before the user saves.
-      local daily_glob = brain_dir .. "/daily/*.org"
+      local daily_glob = org_root .. "/daily/*.org"
       vim.api.nvim_create_autocmd({ "BufWinEnter", "BufNewFile" }, {
         group = vim.api.nvim_create_augroup("digia.org_roam_daily_title", { clear = true }),
         pattern = daily_glob,
