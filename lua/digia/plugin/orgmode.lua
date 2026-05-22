@@ -31,6 +31,8 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     keys = {
       { "<leader>oc", function() require("orgmode").action("capture.prompt") end,          desc = "Org capture" },
+      -- `oo` was nvim-orgmode's default for `org_open_at_point`; we moved that to <CR> (see mappings.org below), freeing this slot for inbox-jump.
+      { "<leader>oo", function() vim.cmd("edit " .. org_root .. "/inbox.org") end,         desc = "Org open inbox" },
       { "<leader>oa", function() require("orgmode").action("agenda.prompt") end,           desc = "Org agenda" },
       { "<leader>ol", function() require("orgmode").action("org_mappings.store_link") end, desc = "Org store link" },
       { "<leader>oI", org_ensure_id,                                                       desc = "Org ensure ID" },
