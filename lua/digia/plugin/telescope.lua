@@ -25,7 +25,12 @@ return {
     -- Files
     { "<leader>f/",  "<cmd>Telescope live_grep<cr>",                                desc = "Search Workspace" },
     { "<leader>fp",  "<cmd>Telescope find_files<cr>",                               desc = "Find Files" },
-    { "<leader>fP",  function() require("telescope.builtin").find_files({ find_command = { "rg", "--files", "--color", "never", "--no-ignore", "--hidden", "-g", "!.git" } }) end, desc = "Find Files (All)" },
+    { "<leader>fP",  function()
+      require("telescope.builtin").find_files({
+        prompt_title = "Find Files (All)",
+        find_command = { "rg", "--files", "--color", "never", "--no-ignore", "--hidden", "-g", "!.git" }
+      })
+    end,                                                                            desc = "Find Files (All)" },
     { "<leader>fg",  "<cmd>Telescope git_files<cr>",                                desc = "Find Files (git)" },
     { "<leader>fd",  function()
       local root = vim.fn.getcwd()
