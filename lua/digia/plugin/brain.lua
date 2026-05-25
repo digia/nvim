@@ -119,6 +119,9 @@ return {
         link = { style = "wiki" },
         daily_notes = { enabled = false },
         ui = { enable = false },
+        footer = {
+          format = "{{backlinks}} backlinks  {{words}} words  {{chars}} chars",
+        },
         legacy_commands = false,
         checkbox = {
           enabled = true,
