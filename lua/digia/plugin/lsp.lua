@@ -155,6 +155,7 @@ return {
           "phpactor",
           "elixirls",
           "astro",
+          "marksman",
         },
       })
 

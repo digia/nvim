@@ -176,6 +176,18 @@ return {
 
   {
     "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      enabled = false,
+      checkbox = {
+        custom = {
+          todo        = { raw = "[-]", rendered = "󰜺 ", highlight = "RenderMarkdownError" },
+          in_progress = { raw = "[/]", rendered = "󰥔 ", highlight = "RenderMarkdownWarn" },
+          forwarded   = { raw = "[>]", rendered = "󰁔 ", highlight = "RenderMarkdownHint" },
+          question    = { raw = "[?]", rendered = "󰘥 ", highlight = "RenderMarkdownWarn" },
+          important   = { raw = "[!]", rendered = "󰀦 ", highlight = "RenderMarkdownError" },
+        },
+      },
+    },
   },
 
   -- Visually distracting (2024-01-01)
