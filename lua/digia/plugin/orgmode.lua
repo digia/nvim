@@ -26,6 +26,7 @@ end
 return {
   {
     "nvim-orgmode/orgmode",
+    enabled = false,
     event = "VeryLazy",
     ft = { "org" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
@@ -160,6 +161,7 @@ return {
 
   {
     "chipsenkbeil/org-roam.nvim",
+    enabled = false,
     event = "VeryLazy",
     ft = { "org" },
     dependencies = { "nvim-orgmode/orgmode" },
@@ -226,6 +228,7 @@ return {
 
   {
     "hamidi-dev/org-super-agenda.nvim",
+    enabled = false,
     cmd = { "OrgSuperAgenda" },
     dependencies = { "nvim-orgmode/orgmode" },
     keys = {
