@@ -2,8 +2,13 @@ local brain = require("digia.brain")
 
 local function daily_template(date_str)
   local t = { year = date_str:sub(1, 4), month = date_str:sub(6, 7), day = date_str:sub(9, 10) }
-  local label = os.date("%a, %Y-%m-%d", os.time(t))
-  return "Daily note for " .. label .. ".\n"
+  local label = os.date("%A, %Y-%m-%d", os.time(t))
+
+  -- Example:
+  -- # Monday, 2026-05-25 - Daily
+  --
+  -- ---
+  return "# " .. label .. " - Daily\n\n---"
 end
 
 local function slugify(title)
