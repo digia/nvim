@@ -37,8 +37,8 @@ return {
         vim.notify("No doc/ or docs/ in " .. root, vim.log.levels.WARN)
         return
       end
-      require("telescope.builtin").find_files({ cwd = dir })
-    end,                                                                              desc = "Find Doc Files" },
+      require("telescope.builtin").find_files({ cwd = dir, prompt_title = "Find Doc Files" })
+    end,                                                                            desc = "Find Doc Files" },
     { "<leader>fr",  "<cmd>Telescope oldfiles<cr>",                                 desc = "Recent Files" }, -- Previously opened files
 
     -- Search Utilities
