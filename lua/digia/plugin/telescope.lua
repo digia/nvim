@@ -25,8 +25,25 @@ return {
     -- Files
     { "<leader>f/",  "<cmd>Telescope live_grep<cr>",                                desc = "Search Workspace" },
     { "<leader>fp",  "<cmd>Telescope find_files<cr>",                               desc = "Find Files" },
-    { "<leader>fP",  function() require("telescope.builtin").find_files({ find_command = { "rg", "--files", "--color", "never", "--no-ignore", "--hidden", "-g", "!.git" } }) end, desc = "Find Files (All)" },
+    { "<leader>fP",  function()
+      require("telescope.builtin").find_files({
+        prompt_title = "Find Files (All)",
+        find_command = { "rg", "--files", "--color", "never", "--no-ignore", "--hidden", "-g", "!.git" }
+      })
+    end,                                                                            desc = "Find Files (All)" },
     { "<leader>fg",  "<cmd>Telescope git_files<cr>",                                desc = "Find Files (git)" },
+    { "<leader>fd",  function()
+      local root = vim.fn.getcwd()
+      local dir
+      if vim.fn.isdirectory(root .. "/doc") == 1 then dir = root .. "/doc"
+      elseif vim.fn.isdirectory(root .. "/docs") == 1 then dir = root .. "/docs"
+      end
+      if not dir then
+        vim.notify("No doc/ or docs/ in " .. root, vim.log.levels.WARN)
+        return
+      end
+      require("telescope.builtin").find_files({ cwd = dir, prompt_title = "Find Doc Files" })
+    end,                                                                            desc = "Find Doc Files" },
     { "<leader>fr",  "<cmd>Telescope oldfiles<cr>",                                 desc = "Recent Files" }, -- Previously opened files
 
     -- Search Utilities
