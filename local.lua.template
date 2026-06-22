@@ -1,0 +1,25 @@
+-- local.lua -- per-machine override (NOT committed; see .gitignore)
+--
+-- Copy this file to ~/.config/nvim/local.lua and edit the paths below.
+--   cp local.lua.template ~/.config/nvim/local.lua
+--
+-- Loaded by lua/digia/local_config.lua via dofile(). This file MUST return a
+-- table. Keys are read lazily through local_config.get(key, default).
+
+return {
+  -- Obsidian / second-brain vaults.
+  --   - Consumed by lua/digia/brain/init.lua and the obsidian.nvim spec.
+  --   - Each entry: { name = <label>, path = <dir> }.
+  --   - `path` is run through vim.fn.expand(), so "~" and "$ENV" work.
+  --   - WARNING: a path whose directory does NOT exist is silently dropped.
+  --     If a vault "isn't picked up", check the dir exists on this machine.
+  --   - The FIRST surviving entry is the default / active workspace.
+  brain_workspaces = {
+    { name = "brain",    path = "~/Code/digia/digia-brain/doc" },
+    { name = "personal", path = "~/Obsidian/personal" },
+  },
+
+  -- Optional. Fold level for vault markdown buffers (H3+ by default).
+  -- Omit to keep the default of 3.
+  brain_foldlevel = 3,
+}
