@@ -18,7 +18,7 @@ return {
         "go", "html", "htmldjango", "java", "javascript", "jq", "jsdoc",
         "json", "json5", "lua", "luadoc", "luap", "markdown",
         "markdown_inline", "php", "printf", "python", "query", "regex",
-        "sql", "tmux", "toml", "tsx", "typescript", "vim", "vimdoc", "xml",
+        "sql", "toml", "tsx", "typescript", "vim", "vimdoc", "xml",
         "yaml", "astro", "terraform", "make"
       }
 
