@@ -42,7 +42,3 @@ vim.keymap.set("n", "<leader>vt", function()
         print("Tabs hidden")
     end
 end, { buffer = 0, desc = "Toggle visible tabs" })
-
--- Go-specific keybindings
-vim.keymap.set("n", "<leader>gt", "<cmd>GoTest<cr>", { buffer = 0, desc = "Run Go tests" })
-vim.keymap.set("n", "<leader>gr", "<cmd>GoRun<cr>", { buffer = 0, desc = "Run Go file" })

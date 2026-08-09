@@ -15,17 +15,18 @@ local TEST_PATTERNS = { "%.test%.", "%.spec%.", "^test_", "_test%." }
 
 -- Extension mappings for language ecosystems
 local EXT_MAPPINGS = {
-  ts = { "ts", "tsx" },
-  tsx = { "tsx", "ts" },
-  js = { "js", "jsx" },
-  jsx = { "jsx", "js" },
-  mts = { "mts" },
-  cts = { "cts" },
-  mjs = { "mjs", "js" },
   cjs = { "cjs", "js" },
+  cts = { "cts" },
   ex = { "exs" },
   exs = { "ex" },
+  js = { "js", "jsx" },
+  jsx = { "jsx", "js" },
+  mjs = { "mjs", "js" },
+  mts = { "mts" },
+  go = { "go" },
   py = { "py" },
+  ts = { "ts", "tsx" },
+  tsx = { "tsx", "ts" },
 }
 
 -- Cache project roots per directory
@@ -49,7 +50,7 @@ find_project_root = function()
 
   -- Fallback to other markers
   path = buf_dir
-  local markers = { "package.json", "mix.exs", "pyproject.toml", "Cargo.toml" }
+  local markers = { "package.json", "mix.exs", "pyproject.toml", "go.work", "go.mod", "Cargo.toml" }
   while path ~= "/" do
     for _, marker in ipairs(markers) do
       if vim.fn.filereadable(path .. "/" .. marker) == 1 then
@@ -87,7 +88,7 @@ find_test_file = function(impl_path)
   local basename = vim.fn.fnamemodify(impl_path, ":t:r")
   local ext = vim.fn.fnamemodify(impl_path, ":e")
 
-  local suffixes = (ext == "ex" or ext == "py") and { "_test." } or { ".test.", ".spec." }
+  local suffixes = (ext == "ex" or ext == "go" or ext == "py") and { "_test." } or { ".test.", ".spec." }
   if ext == "py" then
     suffixes = { "_test." }
   end
@@ -241,6 +242,8 @@ suggest_test_path = function(impl_path)
     return vim.fs.normalize(dir .. "/test_" .. basename .. ".py")
   elseif ext == "ex" then
     return vim.fs.normalize(dir .. "/" .. basename .. "_test.exs")
+  elseif ext == "go" then
+    return vim.fs.normalize(dir .. "/" .. basename .. "_test.go")
   else
     return vim.fs.normalize(dir .. "/" .. basename .. ".test." .. ext)
   end
@@ -297,6 +300,7 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "marilari88/neotest-vitest",
+      { "fredrikaverpil/neotest-golang", version = "*" },
       "nvim-neotest/neotest-python",
       "jfpedroza/neotest-elixir",
       { "thenbe/neotest-playwright", dependencies = "nvim-telescope/telescope.nvim" },
@@ -327,6 +331,7 @@ return {
           require("neotest-vitest")({
             -- Uses vitest.config.* by default
           }),
+          require("neotest-golang")({}),
           require("neotest-python")({
             dap = { justMyCode = false },
             runner = "pytest",
