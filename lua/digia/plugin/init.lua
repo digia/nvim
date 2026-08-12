@@ -47,14 +47,21 @@ return {
       -- https://github.com/folke/snacks.nvim/blob/main/docs/explorer.md
       explorer = {
         enabled = true,
-        -- NOTE: Didn't seem to make a difference with the default settings
-        -- hidden = true,
-        -- ignored = true,
       },
 
       -- https://github.com/folke/snacks.nvim/blob/main/docs/gitbrowse.md
       gitbrowse = {
         enabled = true,
+      },
+
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+      picker = {
+        sources = {
+          explorer = {
+            hidden = true, -- Show dotfiles by default
+            ignored = true, -- Show gitignored files by default
+          },
+        },
       },
 
       -- https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
