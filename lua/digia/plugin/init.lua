@@ -60,6 +60,12 @@ return {
           explorer = {
             hidden = true, -- Show dotfiles by default
             ignored = true, -- Show gitignored files by default
+            -- Sidebar is a winfixwidth split; equalize once shown so doc
+            -- splits shrink symmetrically instead of one absorbing the width
+            -- NOTE: Disabled due to the jarring effect that feels like a "refresh" of the windows
+            -- on_show = function()
+            --   vim.cmd("wincmd =")
+            -- end,
           },
         },
       },
