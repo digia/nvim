@@ -60,6 +60,10 @@ return {
         nmap("<leader>vr", vim.lsp.buf.references)
         nmap("<leader>vh", vim.lsp.buf.signature_help) -- Necessary with `K`?
 
+        if client.server_capabilities.definitionProvider then
+          nmap("gd", vim.lsp.buf.definition, "Go to Definition")
+        end
+
         nmap("K", function() vim.lsp.buf.hover({ border = "rounded" }) end, "Hover")
 
         nmap("]d", vim.diagnostic.goto_next)
