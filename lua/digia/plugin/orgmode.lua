@@ -4,7 +4,7 @@ local brain_dir = vim.fn.expand(local_config.get("brain_dir", "~/Code/digia/digi
 -- A brain repo with a top-level `doc/` directory uses it as the effective org
 -- root (inbox, daily/, db). Flat repos keep using the repo root.
 local function detect_org_root(base)
-  if vim.fn.isdirectory(base .. "/doc") == 1 then return base .. "/doc" end
+  if vim.fn.isdirectory(base .. "/kb") == 1 then return base .. "/kb" end
   return base
 end
 local org_root = detect_org_root(brain_dir)

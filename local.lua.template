@@ -15,7 +15,7 @@ return {
   --     If a vault "isn't picked up", check the dir exists on this machine.
   --   - The FIRST surviving entry is the default / active workspace.
   brain_workspaces = {
-    { name = "brain",    path = "~/Code/digia/digia-brain/doc" },
+    { name = "brain",    path = "~/Code/digia/digia-brain/kb" },
     { name = "personal", path = "~/Obsidian/personal" },
   },
 

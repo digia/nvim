@@ -35,14 +35,34 @@ return {
     { "<leader>fd",  function()
       local root = vim.fn.getcwd()
       local dir
-      if vim.fn.isdirectory(root .. "/doc") == 1 then dir = root .. "/doc"
-      elseif vim.fn.isdirectory(root .. "/docs") == 1 then dir = root .. "/docs"
+
+      if vim.fn.isdirectory(root .. "/doc") == 1 then
+        dir = root .. "/doc"
+      elseif vim.fn.isdirectory(root .. "/docs") == 1 then
+        dir = root .. "/docs"
       end
+
       if not dir then
         vim.notify("No doc/ or docs/ in " .. root, vim.log.levels.WARN)
         return
       end
+
       require("telescope.builtin").find_files({ cwd = dir, prompt_title = "Find Doc Files" })
+    end,                                                                            desc = "Find Doc Files" },
+    { "<leader>fk",  function()
+      local root = vim.fn.getcwd()
+
+      local dir
+      if vim.fn.isdirectory(root .. "/kb") == 1 then
+        dir = root .. "/kb"
+      end
+
+      if not dir then
+        vim.notify("No kb/ in " .. root, vim.log.levels.WARN)
+        return
+      end
+
+      require("telescope.builtin").find_files({ cwd = dir, prompt_title = "Find Knowledge Files" })
     end,                                                                            desc = "Find Doc Files" },
     { "<leader>fr",  "<cmd>Telescope oldfiles<cr>",                                 desc = "Recent Files" }, -- Previously opened files
 

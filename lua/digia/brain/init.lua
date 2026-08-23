@@ -8,7 +8,7 @@ local function resolve_workspaces()
   if _WORKSPACES then return _WORKSPACES end
 
   local specs = local_config.get("brain_workspaces", {
-    { name = "brain", path = "~/Code/digia/digia-brain/doc" },
+    { name = "brain", path = "~/Code/digia/digia-brain/kb" },
   })
 
   _WORKSPACES = {}
