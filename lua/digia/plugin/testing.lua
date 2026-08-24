@@ -331,7 +331,10 @@ return {
           require("neotest-vitest")({
             -- Uses vitest.config.* by default
           }),
-          require("neotest-golang")({}),
+          require("neotest-golang")({
+            -- Mute warning about duplicate test names; aware of what they look like, not confusing -- e.g. `#00` suffix
+            warn_test_name_dupes = false,
+          }),
           require("neotest-python")({
             dap = { justMyCode = false },
             runner = "pytest",
