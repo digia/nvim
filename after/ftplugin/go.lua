@@ -1,6 +1,8 @@
 -- Go-specific settings
 local opt = vim.opt_local
 
+opt.textwidth = 100
+
 -- Indentation: use tabs, not spaces
 opt.expandtab = false
 opt.tabstop = 4
