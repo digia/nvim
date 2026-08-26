@@ -49,7 +49,12 @@ local DigiaGroup = augroup("Digia", {})
 autocmd({ "BufWritePre" }, {
   group = DigiaGroup,
   pattern = "*",
-  callback = function()
+  callback = function(args)
+    -- Don't trim trailing whitespace in markdown files, as it is used for line breaks
+    if vim.bo[args.buf].filetype == "markdown" then
+      return
+    end
+
     -- Save the current view to restore it after the substitution, avoidingn cur
     local save = vim.fn.winsaveview()
     vim.cmd([[%s/\s\+$//e]])
