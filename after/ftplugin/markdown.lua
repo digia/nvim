@@ -7,7 +7,7 @@ opt.formatoptions:append("q")
 opt.formatlistpat = [[^\s*[-*+]\s\+\(\[[ xX-]\]\s\+\)\?\|^\s*\d\+[.)]\s\+\(\[[ xX-]\]\s\+\)\?]]
 
 --- [r]ender markdown [p]review
-vim.keymap.set("n", "<leader>rp", "<cmd>RenderMarkdown toggle<cr>", { buffer = 0 })
+vim.keymap.set("n", "<leader>rp", "<cmd>RenderMarkdown buf_toggle<cr>", { buffer = 0 })
 
 local CHECKBOX_ORDER = { " ", "/", "x", "-", ">", "?", "!" }
 vim.keymap.set("n", "<C-t>", function()
