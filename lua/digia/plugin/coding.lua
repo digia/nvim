@@ -453,6 +453,9 @@ return {
         prompt_logger = {
           enabled = false,
         },
+        input = {
+          provider = "snacks",
+        },
         acp_providers = {
           codex = {
             mcp_servers = {
