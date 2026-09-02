@@ -192,6 +192,24 @@ return {
       },
     },
     ft = { "markdown", "Avante" },
+    config = function(_, opts)
+      local render_markdown = require("render-markdown")
+      render_markdown.setup(opts)
+
+      vim.api.nvim_create_autocmd("User", {
+        group = vim.api.nvim_create_augroup("digia.avante_markdown", { clear = true }),
+        pattern = "AvanteViewBufferUpdated",
+        desc = "Render completed Avante responses",
+        callback = function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local bufnr = vim.api.nvim_win_get_buf(win)
+            if vim.bo[bufnr].filetype == "Avante" then
+              render_markdown.render({ buf = bufnr, win = win })
+            end
+          end
+        end,
+      })
+    end,
   },
 
   -- Visually distracting (2024-01-01)
