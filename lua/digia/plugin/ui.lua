@@ -41,6 +41,7 @@ return {
 
           -- Avante sidebar boundary
           hl.AvanteSidebarWinSeparator = { link = "WinSeparator" }
+          hl.AvanteStateSpinnerSucceeded = { fg = c.green, bg = c.bg_highlight }
 
           --
           -- TODO: highlights
