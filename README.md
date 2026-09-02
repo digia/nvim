@@ -56,7 +56,7 @@ The configuration emphasizes performance through lazy loading and provides a com
 - Automatically removes trailing whitespace on save
 - Creates parent directories when saving new files
 - Uses treesitter-based folding (Neovim 0.10+)
-- Avante.nvim configuration switches between Claude and Copilot based on hostname
+- Avante.nvim handles quick in-editor questions through Codex ACP; Copilot handles inline suggestions; external TUI agents handle planning and long sessions.
 
 ## Vim/Neovim Wiki
 

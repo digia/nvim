@@ -278,6 +278,15 @@ return {
     cmd = "Copilot",
     event = "InsertEnter",
     lazy = true,
+    keys = {
+      {
+        "<leader>as",
+        function()
+          require("copilot.suggestion").toggle_auto_trigger()
+        end,
+        desc = "AI: toggle inline suggestions",
+      },
+    },
 
     opts = {
       filetypes = {
@@ -322,10 +331,11 @@ return {
     -- enabled = false,
   },
 
-  -- Claude Code integration - primary context-aware Claude instance in nvim
+  -- Claude Code integration - disabled in favor of external TUI agents
   {
     "coder/claudecode.nvim",
     dependencies = { "folke/snacks.nvim" },
+    enabled = false,
 
     opts = {
       terminal_cmd = "/Users/digia/.claude/local/node_modules/.bin/claude",
@@ -412,71 +422,52 @@ return {
     },
   },
 
-  -- AI assistant (DISABLED - using claudecode.nvim instead)
-  -- {
-  --   "yetone/avante.nvim",
-  --
-  --   event = "VeryLazy",
-  --   lazy = true,
-  --   version = false, -- set this if you want to always pull the latest change
-  --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  --   build = "make",
-  --   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-  --   dependencies = {
-  --     "stevearc/dressing.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --     "MunifTanjim/nui.nvim",
-  --
-  --     --- The below dependencies are optional,
-  --     "hrsh7th/nvim-cmp",            -- autocompletion for avante commands and mentions
-  --     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-  --     "zbirenbaum/copilot.lua",      -- for providers='copilot'
-  --
-  --     -- Uses markdown preview for responses within the AvanteAsk buffer
-  --     {
-  --       "MeanderingProgrammer/render-markdown.nvim",
-  --       opts = {
-  --         file_types = { "markdown", "Avante" },
-  --       },
-  --       ft = { "markdown", "Avante" },
-  --     },
-  --
-  --     -- {
-  --     -- -- support for image pasting
-  --     -- "HakonHarnes/img-clip.nvim",
-  --     -- event = "VeryLazy",
-  --
-  --     -- -- recommended settings
-  --     -- opts = {
-  --     -- default = {
-  --     -- embed_image_as_base64 = false,
-  --     -- prompt_for_file_name = false,
-  --     -- drag_and_drop = { insert_mode = true },
-  --     -- -- required for Windows users
-  --     -- use_absolute_path = true,
-  --     -- },
-  --     -- },
-  --     -- },
-  --   },
-  --
-  --   opts = function()
-  --     -- Check if hostname ends with .linkedin.biz
-  --     local provider = "claude"
-  --     if vim.fn.hostname():match("%.linkedin%.biz$") then
-  --       provider = "copilot"
-  --     end
-  --
-  --     return {
-  --       hints = { enabled = false },
-  --       provider = provider,
-  --       auto_suggestions_provider = "copilot",
-  --       behaviour = {
-  --         -- auto_suggestions = true, -- Experimental stage
-  --       },
-  --     }
-  --   end,
-  --   enabled = false,
-  -- },
+  -- Primary in-editor AI for quick questions and checks.
+  -- Use external TUI agents for planning and long-running sessions.
+  {
+    "avante-corp/avante.nvim",
+    event = "VeryLazy",
+    version = false,
+    build = "make",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    opts = function()
+      local history_path = vim.fn.tempname()
+      vim.api.nvim_create_autocmd("VimLeavePre", {
+        desc = "Remove process-local Avante chat history",
+        callback = function() vim.fn.delete(history_path, "rf") end,
+      })
+
+      return {
+        provider = "codex",
+        behaviour = {
+          auto_suggestions = false,
+          auto_approve_tool_permissions = false,
+        },
+        -- Keep chat history for this Neovim process only.
+        history = {
+          storage_path = history_path,
+        },
+        prompt_logger = {
+          enabled = false,
+        },
+        acp_providers = {
+          codex = {
+            mcp_servers = {
+              {
+                name = "exa",
+                type = "http",
+                url = "https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa",
+                headers = {},
+              },
+            },
+          },
+        },
+      }
+    end,
+  },
 
   -- https://github.com/folke/trouble.nvim
   {

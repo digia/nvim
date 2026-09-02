@@ -39,6 +39,9 @@ return {
           hl.TelescopeMatching = { fg = c.fg_dark }
           hl.TelescopeSelection = { fg = c.fg, bg = c.bg_highlight }
 
+          -- Avante sidebar boundary
+          hl.AvanteSidebarWinSeparator = { link = "WinSeparator" }
+
           --
           -- TODO: highlights
           --
@@ -177,7 +180,7 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
-      enabled = false,
+      file_types = { "markdown", "Avante" },
       checkbox = {
         custom = {
           todo        = { raw = "[-]", rendered = "󰜺 ", highlight = "RenderMarkdownError" },
@@ -188,6 +191,7 @@ return {
         },
       },
     },
+    ft = { "markdown", "Avante" },
   },
 
   -- Visually distracting (2024-01-01)
