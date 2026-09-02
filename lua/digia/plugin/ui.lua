@@ -180,7 +180,13 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
+      enabled = false,
       file_types = { "markdown", "Avante" },
+      overrides = {
+        filetype = {
+          Avante = { enabled = true },
+        },
+      },
       checkbox = {
         custom = {
           todo        = { raw = "[-]", rendered = "󰜺 ", highlight = "RenderMarkdownError" },
