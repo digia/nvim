@@ -456,6 +456,9 @@ return {
         input = {
           provider = "snacks",
         },
+        selector = {
+          provider = "telescope",
+        },
         acp_providers = {
           codex = {
             mcp_servers = {
