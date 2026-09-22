@@ -24,7 +24,10 @@ vim.keymap.set("n", "<C-t>", function()
   vim.api.nvim_set_current_line(line:sub(1, s) .. next_char .. line:sub(e))
 end, { buffer = 0, desc = "Toggle checkbox" })
 
-local brain = require("digia.brain")
-if brain.is_vault_buffer() then
-  opt.foldlevel = brain.foldlevel()
-end
+-- 2026-09-22: With this configuration, list under a heading inherit the heading's
+-- baseline level and then increments from there. Which isn't what is expected or
+-- desired. Disabling for now to see if it's missed.
+-- local brain = require("digia.brain")
+-- if brain.is_vault_buffer() then
+--   opt.foldlevel = brain.foldlevel()
+-- end
