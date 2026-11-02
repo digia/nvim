@@ -2,7 +2,7 @@
 -- Plugins which don't fit into any specific category
 --
 return {
-  { "nvim-lua/plenary.nvim", name = "plenary" },
+  { "nvim-lua/plenary.nvim" },
 
   {
     "folke/snacks.nvim",
