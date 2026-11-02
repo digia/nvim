@@ -39,10 +39,6 @@ return {
           hl.TelescopeMatching = { fg = c.fg_dark }
           hl.TelescopeSelection = { fg = c.fg, bg = c.bg_highlight }
 
-          -- Avante sidebar boundary
-          hl.AvanteSidebarWinSeparator = { link = "WinSeparator" }
-          hl.AvanteStateSpinnerSucceeded = { fg = c.green, bg = c.bg_highlight }
-
           --
           -- TODO: highlights
           --
@@ -145,9 +141,6 @@ return {
       -- sol.Group.new("@variable.builtin", sol.colors.white)
       -- sol.Group.new("@variable.parameter.builtin", sol.colors.white)
       -- sol.Group.new("@lsp.type.parameter", sol.colors.white)
-
-      -- For avante.tokenizers and templates to work
-      require("avante_lib").load()
     end,
     enabled = false,
   },
@@ -182,12 +175,6 @@ return {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
       enabled = false,
-      file_types = { "markdown", "Avante" },
-      overrides = {
-        filetype = {
-          Avante = { enabled = true },
-        },
-      },
       checkbox = {
         custom = {
           todo        = { raw = "[-]", rendered = "󰜺 ", highlight = "RenderMarkdownError" },
@@ -198,25 +185,7 @@ return {
         },
       },
     },
-    ft = { "markdown", "Avante" },
-    config = function(_, opts)
-      local render_markdown = require("render-markdown")
-      render_markdown.setup(opts)
-
-      vim.api.nvim_create_autocmd("User", {
-        group = vim.api.nvim_create_augroup("digia.avante_markdown", { clear = true }),
-        pattern = "AvanteViewBufferUpdated",
-        desc = "Render completed Avante responses",
-        callback = function()
-          for _, win in ipairs(vim.api.nvim_list_wins()) do
-            local bufnr = vim.api.nvim_win_get_buf(win)
-            if vim.bo[bufnr].filetype == "Avante" then
-              render_markdown.render({ buf = bufnr, win = win })
-            end
-          end
-        end,
-      })
-    end,
+    ft = { "markdown" },
   },
 
   -- Visually distracting (2024-01-01)
@@ -259,20 +228,13 @@ return {
       --   return table.concat(client_names, ", ")
       -- end
 
-      local not_avante_filetype = function()
-        local ft = vim.bo.filetype
-        return not string.match(ft, "^Avante")
-      end
-
       local filename_section = {
         filename_location,
         path = 1,
         shorting_target = 80,
-        cond = not_avante_filetype
       }
 
       local filetype_section = { "filetype", icons_enabled = false }
-      -- local lsp_clients_section = { active_lsp_clients, cond = not_avante_filetype }
       local navic_section = { "navic" }
       local diagnostics_section = { "diagnostics" }
 
