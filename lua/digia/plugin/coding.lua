@@ -422,59 +422,6 @@ return {
     },
   },
 
-  -- Primary in-editor AI for quick questions and checks.
-  -- Use external TUI agents for planning and long-running sessions.
-  {
-    "avante-corp/avante.nvim",
-    event = "VeryLazy",
-    version = false,
-    build = "make",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-    },
-    opts = function()
-      local history_path = vim.fn.tempname()
-      vim.api.nvim_create_autocmd("VimLeavePre", {
-        desc = "Remove process-local Avante chat history",
-        callback = function() vim.fn.delete(history_path, "rf") end,
-      })
-
-      return {
-        provider = "codex",
-        behaviour = {
-          auto_suggestions = false,
-          auto_approve_tool_permissions = false,
-        },
-        -- Keep chat history for this Neovim process only.
-        history = {
-          storage_path = history_path,
-        },
-        prompt_logger = {
-          enabled = false,
-        },
-        input = {
-          provider = "snacks",
-        },
-        selector = {
-          provider = "telescope",
-        },
-        acp_providers = {
-          codex = {
-            mcp_servers = {
-              {
-                name = "exa",
-                type = "http",
-                url = "https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa",
-                headers = {},
-              },
-            },
-          },
-        },
-      }
-    end,
-  },
-
   -- https://github.com/folke/trouble.nvim
   {
     "folke/trouble.nvim",
