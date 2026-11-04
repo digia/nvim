@@ -97,9 +97,9 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- vnoremap <leader>p "_dp
 
 -- Turn off search highlighting
--- iTerm2 interprets <C-/> as <C-/>
--- vim.keymap.set("n", "<C-/>", ":nohl<CR>", { silent = true })
--- WezTerm interprets <C-_> as <C-_>
+-- Ctrl-/ arrives as <C-/> via the kitty keyboard protocol (Rex, iTerm2) and as
+-- <C-_> (legacy 0x1F) via tmux/WezTerm. Unmapped <C-/> falls back to /.
+vim.keymap.set("n", "<C-/>", ":nohl<CR>", { silent = true })
 vim.keymap.set("n", "<C-_>", ":nohl<CR>", { silent = true })
 
 -- Reselect visual block after indent
