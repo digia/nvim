@@ -141,9 +141,6 @@ return {
       -- sol.Group.new("@variable.builtin", sol.colors.white)
       -- sol.Group.new("@variable.parameter.builtin", sol.colors.white)
       -- sol.Group.new("@lsp.type.parameter", sol.colors.white)
-
-      -- For avante.tokenizers and templates to work
-      require("avante_lib").load()
     end,
     enabled = false,
   },
@@ -188,6 +185,7 @@ return {
         },
       },
     },
+    ft = { "markdown" },
   },
 
   -- Visually distracting (2024-01-01)
@@ -230,20 +228,13 @@ return {
       --   return table.concat(client_names, ", ")
       -- end
 
-      local not_avante_filetype = function()
-        local ft = vim.bo.filetype
-        return not string.match(ft, "^Avante")
-      end
-
       local filename_section = {
         filename_location,
         path = 1,
         shorting_target = 80,
-        cond = not_avante_filetype
       }
 
       local filetype_section = { "filetype", icons_enabled = false }
-      -- local lsp_clients_section = { active_lsp_clients, cond = not_avante_filetype }
       local navic_section = { "navic" }
       local diagnostics_section = { "diagnostics" }
 
